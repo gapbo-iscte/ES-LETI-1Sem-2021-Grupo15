@@ -3,4 +3,14 @@
   <groupId>pt.tecsis</groupId>
   <artifactId>ES-LETI-1Sem-2021-Grupo15</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  <dependencies>
+  	<!-- https://mvnrepository.com/artifact/com.taskadapter/trello-java-wrapper -->
+	<dependency>
+	    <groupId>com.taskadapter</groupId>
+	    <artifactId>trello-java-wrapper</artifactId>
+	    <version>0.14</version>
+	</dependency>
+  </dependencies>
+  
 </project>
