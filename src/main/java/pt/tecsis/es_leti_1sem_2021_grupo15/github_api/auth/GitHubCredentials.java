@@ -17,10 +17,14 @@ public class GitHubCredentials {
 	
 	/**
 	 * Constroi uma instância desta classe com as credenciais indicadas.
-	 * @param personalAccessToken
+	 * @param personalAccessToken ({@link String})
 	 */
 	
 	public GitHubCredentials(String personalAccessToken) {
+		
+		if (personalAccessToken == null)
+			throw new NullPointerException("O personal access token não pode ser nulo.");
+		
 		this.httpClient = new OkHttpClient();
 		this.personalAccessToken = personalAccessToken;
 	}
