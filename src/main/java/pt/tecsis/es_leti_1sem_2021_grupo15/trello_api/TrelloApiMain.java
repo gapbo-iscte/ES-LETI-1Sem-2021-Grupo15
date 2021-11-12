@@ -11,21 +11,30 @@ import com.julienvey.trello.impl.http.ApacheHttpClient;
 
 public class TrelloApiMain {
 	
-	 String trelloKey="Key_utilizador";
-     String trelloAccessToken="Token_utilizador";
-     Trello trelloApi = new TrelloImpl(Key_utilizado, Token_utilizador, new ApacheHttpClient());
-   
-     Board board;
-     List<Board> member=trelloApi.getMemberBoards("nome_utilizador");{
-     //podem consultar o vosso nome_utilizador na opção "profile and visibility" da vossa conta no trello
-     for (Board  quadro: member) {
-         System.out.println(quadro.getName()+ "-" +quadro.getId());
-         board = trelloApi.getBoard(quadro.getId());
-         List<TList> lists = board.fetchLists();
-         for (TList lista : lists) {
-             System.out.println(lista.getName()+"- "+ lista.getId()+"-"+lista.getIdBoard());
-         }
-     }
+	
+	private static final String trelloKey="coloca_a_tua_key";
+	private static final String trelloAccessToken="coloca_o_teu_token";
+	
+	
+	public static void main(String[] args) {
+	     
+	     Trello trelloApi = new TrelloImpl(trelloKey, trelloAccessToken, new ApacheHttpClient());
+	   
+	     
+	    List<Board> boards = TrelloQuadros.getNomeDoProjeto(trelloApi);
+	    List<TList> quadros = TrelloQuadros.getQuadros(trelloApi,boards.get(0));
+	
+	
+	
+	
+	
+	
+	}
+	
+	
+	
+	
      
-     }
 }
+
+
