@@ -1,39 +1,49 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>pt.tecsis</groupId>
-  <artifactId>ES-LETI-1Sem-2021-Grupo15</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-  <dependencies>
-  	
-  	<!-- https://mvnrepository.com/artifact/com.taskadapter/trello-java-wrapper -->
-	<dependency>
-	    <groupId>com.taskadapter</groupId>
-	    <artifactId>trello-java-wrapper</artifactId>
-	    <version>0.14</version>
-	</dependency>
-	
-	<!-- https://search.maven.org/artifact/com.squareup.okhttp3/okhttp/4.9.2/jar -->
-	<dependency>
-	  	<groupId>com.squareup.okhttp3</groupId>
-	  	<artifactId>okhttp</artifactId>
-	  	<version>4.9.2</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/org.json/json -->
-	<dependency>
-	    <groupId>org.json</groupId>
-	    <artifactId>json</artifactId>
-	    <version>20210307</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
-	<dependency>
-	    <groupId>joda-time</groupId>
-	    <artifactId>joda-time</artifactId>
-	    <version>2.10.13</version>
-	</dependency>
-	
-  </dependencies>
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>pt.tecsis</groupId>
+	<artifactId>ES-LETI-1Sem-2021-Grupo15</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<repositories>
+		<repository>
+			<id>joelso-mvn-repo</id>
+			<name>joelso github mvn repo</name>
+			<url>https://raw.github.com/joelso/joelso-mvn-repo/master/snapshots/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/com.taskadapter/trello-java-wrapper -->
+		<dependency>
+			<groupId>org.trello4j</groupId>
+			<artifactId>trello4j</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<!-- https://search.maven.org/artifact/com.squareup.okhttp3/okhttp/4.9.2/jar -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.9.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20210307</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.10.13</version>
+		</dependency>
+
+	</dependencies>
+
 </project>
