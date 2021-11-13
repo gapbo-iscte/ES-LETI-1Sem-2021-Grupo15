@@ -1,5 +1,6 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.trello4j.Trello;
@@ -21,14 +22,19 @@ public class TrelloApiMain {
 		Trello trelloApi = new TrelloImpl(trelloKey, trelloAccessToken); 
 	   
 	     
-	    //List<Board> boards = TrelloQuadros.getNomeDoProjeto(trelloApi);
-	    List<Card> quadros = TrelloQuadros.getQuadros(trelloApi);//,boards.get(0));
+		//HashMap<String,String> projetos = TrelloQuadros.getNomeDoProjeto(trelloApi);
+	   // List<Card> quadros = TrelloQuadros.getQuadros(trelloApi);//,boards.get(0));
 	    
-		//List<org.trello4j.model.List> checklists =  TrelloQuadros.getList(trelloApi);
+		//List<Card> checklists =  TrelloCartas.getTituloDeTodasAsCartas(trelloApi,"Projeto_ES");
 	
-	    List<Action> actions = TrelloQuadros.getActions(trelloApi, quadros.get(0).getId());
+	//    List<Action> actions = TrelloQuadros.getActions(trelloApi, quadros.get(0).getId());
+		
+		
+		//HashMap<String,String> filas = TrelloFilas.getFilasQuadro(trelloApi,"Projeto_ES");
 	
-
+		//List<Card> checklists =  TrelloCartas.getTituloDasCartasPorFila(trelloApi,"Reuniões","Projeto_ES");
+		
+		List<Card> checklists =  TrelloCartas.getCartasDescricaoPorFila(trelloApi,"Reuniões","Projeto_ES");
 	
 	}
 	
