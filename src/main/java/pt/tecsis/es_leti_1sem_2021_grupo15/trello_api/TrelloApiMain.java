@@ -1,13 +1,10 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
-import org.trello4j.model.Action;
-import org.trello4j.model.Card;
-import org.trello4j.model.Checklist;
+import org.trello4j.model.Card.Attachment;
 
 
 public class TrelloApiMain {
@@ -27,15 +24,23 @@ public class TrelloApiMain {
 	    
 		//List<Card> checklists =  TrelloCartas.getTituloDeTodasAsCartas(trelloApi,"Projeto_ES");
 	
-	//    List<Action> actions = TrelloQuadros.getActions(trelloApi, quadros.get(0).getId());
+	    //List<Action> actions = TrelloAcoes.getAcoesPorQuadro(trelloApi,"Projeto_ES");
 		
 		
 		//HashMap<String,String> filas = TrelloFilas.getFilasQuadro(trelloApi,"Projeto_ES");
 	
 		//List<Card> checklists =  TrelloCartas.getTituloDasCartasPorFila(trelloApi,"Reuniões","Projeto_ES");
 		
-		List<Card> checklists =  TrelloCartas.getCartasDescricaoPorFila(trelloApi,"Reuniões","Projeto_ES");
-	
+	//	List<Card> checklists =  TrelloCartas.getCartasDescricaoPorFila(trelloApi,"Sprints","Projeto_ES");
+		
+		
+		
+		//List<Checklist> checks = TrelloChecklists.getCheckList(trelloApi, "Projeto_ES");
+	    
+	    
+	    //List<Member> membros = TrelloMembros.getMemberDoQuadro(trelloApi,"Projeto_ES");
+	    
+		List<Attachment> attaches = TrelloCartas.getAttachmentPorCarta(trelloApi,"Texto resultante das reuniões de SPRINT Planning, SPRINT Review e SPRINT Retrospective, para cada SPRINT do projeto","Projeto_ES");
 	}
 	
 	

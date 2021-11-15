@@ -1,11 +1,10 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.trello4j.Trello;
-import org.trello4j.model.Board;
 import org.trello4j.model.Card;
+import org.trello4j.model.Card.Attachment;
 
 public class TrelloCartas {
 	
@@ -72,5 +71,49 @@ public class TrelloCartas {
 	     
 	     
 	}
+	
+	
+	
+	
+	
+	/*public static List<Attachment> getAttachmentPorCarta(Trello trelloApi, String Carta, String NomeDoQuadro){
+		
+		List<Card> cartas = getTituloDeTodasAsCartas(trelloApi,NomeDoQuadro);
+		
+		List<Attachment> attaches = null;
+		
+		for(Card carta : cartas){
+			if(carta.getName() == Carta){
+				
+				attaches = trelloApi.getAttachmentsByCard(carta.getId());		
+			}
+		}
+		
+		for(Attachment attach : attaches){
+			
+			System.out.println(attach.getName());
+			
+		}
+		
+		return attaches;
+		
+		
+	}*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

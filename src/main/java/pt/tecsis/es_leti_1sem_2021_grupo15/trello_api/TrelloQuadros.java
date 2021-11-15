@@ -8,6 +8,7 @@ import org.trello4j.Trello;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
+import org.trello4j.model.Member;
 
 
 
@@ -38,6 +39,7 @@ public class TrelloQuadros {
 		return projetos;
 	}
 	
+	
 
 	
 	
@@ -64,31 +66,6 @@ public class TrelloQuadros {
 		return ProjectID;
 		
 	}*/
-	
-	
-	
-	
-	
-	
-	
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-	public static  List<Action> getActions(Trello trelloApi, String cartaId ){
-			
-		
-		
-		List<Action> actions = trelloApi.getActionsByCard(cartaId);
-		
-		for (Action action : actions) {
-            System.out.println(action.getMemberCreator().getUsername()+"-"+action.getData().getText() + action.getDate());
-		}
-		
-		
-		return actions;  	
-	}
-	
 	
 	
 	
