@@ -10,24 +10,28 @@ public class TrelloID {
 	
 	
 	//Passagem de um nome para a obtenção do seu ID    
-		public static String getQuadroID(Trello trelloApi, String nomeQuadro) {
+		public static String getQuadroID(String nomeQuadro) {
 							
 				String ObterID ="";
 				
 				
 				//if (map == TrelloQuadros.projetos){
-					HashMap<String,String> projetos = TrelloQuadros.getNomeDoQuadros(trelloApi);
+					//HashMap<String,String> projetos = TrelloQuadros.getNomeDoQuadros(trelloApi);
 				
 					
 				//}
+				
+				
 					
-				for (String ID: projetos.keySet()) {
-					if (nomeQuadro.equals(projetos.get(ID))){
+				for (int i = 0 ; i < TrelloQuadros.quadros.size() ; i++) {
+					if (TrelloQuadros.quadros.get(i).getName().equalsIgnoreCase(nomeQuadro)){
 						
-						ObterID = ID;			
+						ObterID = TrelloQuadros.quadros.get(i).getId();			
 					}
 					
 				}
+				
+				System.out.println(ObterID);
 				return ObterID;
 				
 			}

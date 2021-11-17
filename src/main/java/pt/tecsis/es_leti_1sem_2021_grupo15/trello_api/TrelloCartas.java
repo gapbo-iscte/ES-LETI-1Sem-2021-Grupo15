@@ -10,12 +10,12 @@ public class TrelloCartas {
 	
 
 	//Tambem da título dos cartoes, Requerimento feito com os ID do Board (EX:Reuni�es, Daily Scrum, etc...)		
-	public static List<Card> getTituloDeTodasAsCartas(Trello trelloApi, String NomeDoQuadro){
+	public static List<Card> getTodasAsCartas(String NomeDoQuadro){
 		
 		
-		String ProjectID= TrelloID.getQuadroID(trelloApi,NomeDoQuadro);
+		String ProjectID= TrelloID.getQuadroID(NomeDoQuadro);
 		
-		List<Card> cartas = trelloApi.getCardsByBoard(ProjectID);
+		List<Card> cartas = TrelloQuadros.trelloApi.getCardsByBoard(ProjectID);
 		
 		for (Card carta : cartas) {
             System.out.println(carta.getName());//+"- "+ cartas.getId()+"-"+cartas.getIdBoard());
@@ -29,11 +29,11 @@ public class TrelloCartas {
 	
 	
 	
-	private static List<Card> getCartasPorFila(Trello trelloApi, String Fila, String NomeDoQuadro){
+	private static List<Card> getCartasPorFila(String Fila, String NomeDoQuadro){
 		
-		String FilaID= TrelloID.getFilaID(trelloApi, NomeDoQuadro,Fila);
+		String FilaID= TrelloID.getFilaID(TrelloQuadros.trelloApi, NomeDoQuadro,Fila);
 		
-		List<Card> cards = trelloApi.getCardsByList(FilaID);
+		List<Card> cards = TrelloQuadros.trelloApi.getCardsByList(FilaID);
 		
 		return cards;
 		
@@ -42,9 +42,9 @@ public class TrelloCartas {
 	
 	
 	
-	public static List<Card> getTituloDasCartasPorFila(Trello trelloApi, String Fila, String NomeDoQuadro){
+	public static List<Card> getTitulosCartasPorFila(String Fila, String NomeDoQuadro){
 				
-			List<Card> checklists = getCartasPorFila(trelloApi, Fila, NomeDoQuadro);
+			List<Card> checklists = getCartasPorFila(Fila, NomeDoQuadro);
 			
 			for (Card cartas : checklists) {
 	            System.out.println(cartas.getName());//+"- "+ cartas.getId()+"-"+cartas.getIdBoard());
@@ -58,13 +58,31 @@ public class TrelloCartas {
 	
 	
 	//Retorna o Título de cada Carta, e o conteudo de cada carta, requerimento feito com os nome da fila e o nome do Quadro  (EX:[R0] - Entendimento do projeto e configura��es iniciais -------- etc...)
-	public static  List<Card> getCartasDescricaoPorFila(Trello trelloApi,String Fila, String NomeDoQuadro){  //, //Board projectName) {
+	public static  List<Card> getCartasDescricaoPorFila(String Fila, String NomeDoQuadro){  
 			
 		
-		List<Card> cards = getCartasPorFila(trelloApi, Fila, NomeDoQuadro);
+		List<Card> cards = getCartasPorFila(Fila, NomeDoQuadro);
 
 		for (Card cartas : cards) {
+            System.out.println(cartas.getName()+ "  -----------------  " + cartas.getDesc() );
+		}
+		
+		return cards;
+	     
+	     
+	}
+	
+	
+	
+	public static  List<Card> getCartasDescricaoPorQuadro(String NomeDaCarta, String NomeDoQuadro){  //, //Board projectName) {
+			
+		
+		List<Card> cards = getTodasAsCartas(NomeDoQuadro);
+
+		for (Card cartas : cards) {
+			if(cartas.getName().equalsIgnoreCase(NomeDaCarta)){
             System.out.println(cartas.getName()+ "  -----------------  " + cartas.getDesc() );//+"-"+cartas.getIdBoard());
+			}
 		}
 		
 		return cards;

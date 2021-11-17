@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.trello4j.Trello;
+import org.trello4j.TrelloImpl;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
@@ -18,54 +19,32 @@ public class TrelloQuadros {
 	
 	//public static HashMap<String,String> projetos = new HashMap<String,String>();
 	
-	
-	
+	public static String NomeMembro = null;
+	public static List<Board> quadros= null;
+	public static Trello trelloApi = null;
 	
 	//Requerimento feito com os dados da conta do utilizador (EX:Projeto_ES)
-	public static HashMap<String,String> getNomeDoQuadros(Trello trelloApi) {
+	public static List<Board> InicializarQuadros(String NomeDoMembro, String trelloKey, String trelloAccessToken) {
 		
+		trelloApi = new TrelloImpl(trelloKey, trelloAccessToken);
+	
+		NomeMembro = NomeDoMembro;
 		
-		List<Board> boards = trelloApi.getBoardsByMember("goncalobenido");
+		quadros = trelloApi.getBoardsByMember(NomeMembro);
 		
-		HashMap<String,String> projetos = new HashMap<String,String>();
+		//HashMap<String,String> projetos = new HashMap<String,String>();
 	     
-		for (Board  quadro: boards) {
-		  projetos.put(quadro.getId(),quadro.getName());
+		for (Board  quadro: quadros) {
+		  //projetos.put(quadro.getId(),quadro.getName());
 	    
 			System.out.println(quadro.getName() + "-" + quadro.getId() );
 			
-		}
-		
-		return projetos;
-	}
-	
-	
-
-	
-	
-	
-	
-	
-	
-	/*public static String getQuadroID(Trello trelloApi,String NomeDoQuadro) {
-		
-		
-		String ProjectID ="";
-		
-		HashMap<String,String> projetos= getNomeDoQuadros(trelloApi);
-		
-		for (String ID: projetos.keySet()) {
-			if (NomeDoQuadro.equals(projetos.get(ID))){
-				
-				ProjectID = ID;
-				
-				
-			}
 			
 		}
-		return ProjectID;
 		
-	}*/
+		return quadros;
+	}
+
 	
 	
 	

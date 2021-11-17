@@ -5,6 +5,11 @@ import java.util.List;
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
 import org.trello4j.model.Card.Attachment;
+import org.trello4j.model.Checklist;
+import org.trello4j.model.Action;
+import org.trello4j.model.Board;
+import org.trello4j.model.Card;
+import org.trello4j.model.Member;
 
 
 public class TrelloApiMain {
@@ -16,31 +21,44 @@ public class TrelloApiMain {
 	
 	public static void main(String[] args) {
 	     
-		Trello trelloApi = new TrelloImpl(trelloKey, trelloAccessToken); 
+		//Trello trelloApi = new TrelloImpl(trelloKey, trelloAccessToken); 
+		
+		
+		String NomeMembro= "goncalobenido";
+		
+		String QuadroNome = "Projeto_ES";
 	   
-	     
-		//HashMap<String,String> projetos = TrelloQuadros.getNomeDoProjeto(trelloApi);
-	   // List<Card> quadros = TrelloQuadros.getQuadros(trelloApi);//,boards.get(0));
 	    
-		//List<Card> checklists =  TrelloCartas.getTituloDeTodasAsCartas(trelloApi,"Projeto_ES");
+		//PRIMEIRO METODO OBRIGATÓRIO A SER CHAMADO *******************************************************************************************************************
+		List<Board> quadros =  TrelloQuadros.InicializarQuadros(NomeMembro, trelloKey, trelloAccessToken);
+	   
+		
+		
+		
+		
+	    
+//		List<Card> checklists =  TrelloCartas.getTodasAsCartas(QuadroNome);
 	
-	    //List<Action> actions = TrelloAcoes.getAcoesPorQuadro(trelloApi,"Projeto_ES");
+//	    List<Action> actions = TrelloAcoes.getAcoesPorQuadro("Projeto_ES");
 		
 		
 		//HashMap<String,String> filas = TrelloFilas.getFilasQuadro(trelloApi,"Projeto_ES");
 	
-		//List<Card> checklists =  TrelloCartas.getTituloDasCartasPorFila(trelloApi,"Reuniões","Projeto_ES");
+//		List<Card> checklists =  TrelloCartas.getTituloDasCartasPorFila("Reuniões",QuadroNome);
 		
-	//	List<Card> checklists =  TrelloCartas.getCartasDescricaoPorFila(trelloApi,"Sprints","Projeto_ES");
+//		List<Card> checklists =  TrelloCartas.getCartasDescricaoPorFila("Sprints","Projeto_ES");
 		
+//		List<Card> checklists =  TrelloCartas.getCartasDescricaoPorQuadro("[DS1] - Daily Scrum","Projeto_ES");
 		
-		
-		//List<Checklist> checks = TrelloChecklists.getCheckList(trelloApi, "Projeto_ES");
+//		List<Checklist> checks = TrelloChecklists.getCheckList("Projeto_ES");
 	    
+//	    TrelloAcoes.getTempoPorQuadro(QuadroNome);
 	    
-	    //List<Member> membros = TrelloMembros.getMemberDoQuadro(trelloApi,"Projeto_ES");
+	    TrelloAcoes.getTempoPorMembro(QuadroNome);
 	    
-		List<Attachment> attaches = TrelloCartas.getAttachmentPorCarta(trelloApi,"Texto resultante das reuniões de SPRINT Planning, SPRINT Review e SPRINT Retrospective, para cada SPRINT do projeto","Projeto_ES");
+//	   List<Member> membros = TrelloMembros.getMemberDoQuadro("Projeto_ES");
+	    
+	//Perceber o que é um attach	List<Attachment> attaches = TrelloCartas.getAttachmentPorCarta("Texto resultante das reuniões de SPRINT Planning, SPRINT Review e SPRINT Retrospective, para cada SPRINT do projeto","Projeto_ES");
 	}
 	
 	

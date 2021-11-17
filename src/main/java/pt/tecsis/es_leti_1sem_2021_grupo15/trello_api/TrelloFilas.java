@@ -11,24 +11,24 @@ public class TrelloFilas {
 	
 	
 	
-	public static HashMap<String,String> getFilasQuadro(Trello trelloApi, String NomeDoQuadro){
+	public static List<org.trello4j.model.List> getFilasQuadro(Trello trelloApi, String NomeDoQuadro){
 			
-			String ProjectID= TrelloID.getQuadroID(trelloApi, NomeDoQuadro);
+			String ProjectID= TrelloID.getQuadroID(NomeDoQuadro);
 			
-			HashMap<String,String> filas = new HashMap<String,String>();
+			
 			
 			
 			List<org.trello4j.model.List> filasQuadro = trelloApi.getListByBoard(ProjectID);
 			
 			
 			for (org.trello4j.model.List  fila: filasQuadro) {
-				filas.put(fila.getId(),fila.getName());
+				//filas.put(fila.getId(),fila.getName());
 				
 				System.out.println(fila.getName() + "-" + fila.getId() );
 				
 			}
 			
-			return filas;
+			return filasQuadro;
 			
 			
 		}
