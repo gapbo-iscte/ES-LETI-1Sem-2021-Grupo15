@@ -4,9 +4,9 @@ import java.awt.Component;
 import java.awt.Container;
 import javax.swing.BoxLayout;
 
-import static org.junit.Assert.assertArrayEquals;
 
-import java.awt.BorderLayout;
+
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,23 +15,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.fasterxml.jackson.databind.deser.std.ContainerDeserializerBase;
-
 import javax.swing.JTextArea;
-//import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
-//import javax.swing.plaf.basic.BasicSliderUI.ComponentHandler;
 
-public class GUI implements ActionListener  {
+
+public class GUI implements ActionListener {
 	   	String token;
 	   	private static JTextArea textArea = new JTextArea(5, 40);
-	   //	private static JButton button;
+	   	private static JButton button;
 	 
 	   	
 	 
 	    private static void addAButton(String text, Container container) {
-	        JButton button = new JButton(text);
+	        button = new JButton(text);
 	        button.setAlignmentX(Component.CENTER_ALIGNMENT);
 	        container.add(button);
+	        button.setActionCommand(text);
 	        button.addActionListener(new GUI());
 	    }
 	    private static void addTokenField(String text, Container container) {
@@ -104,10 +102,8 @@ public class GUI implements ActionListener  {
 	    }
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-		String	buttonName = button.getText();
-			//if ("Enter".equals(button.getText())){
-			System.out.printf(button.getText());
-			//}
+			System.out.printf("Action: " + button.getActionCommand());
 		}
+		
 	}
 
