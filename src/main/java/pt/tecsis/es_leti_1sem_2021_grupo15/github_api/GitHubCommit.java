@@ -4,6 +4,11 @@ import org.joda.time.DateTime;
 import org.json.JSONObject;
 
 
+/**
+ * Representa um commit de um repositório GitHub.
+ * @author manuel-covas
+ */
+
 public class GitHubCommit {
 
 	public final String hash, htmlURL, message;

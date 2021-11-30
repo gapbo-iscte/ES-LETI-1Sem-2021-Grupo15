@@ -124,7 +124,7 @@ public class GitHubAPI {
 	 * @param  owner - nome de utilizador do dono do repositório ({@link String})
 	 * @param  repository - nome do repositório ({@link String})
 	 * @param  credentials - credenciais a utilizar ou {@code null} para aceder sem credenciais ({@link GitHubCredentials})
-	 * @return as tags do repositório indicado ({@link String})
+	 * @return as tags do repositório indicado ({@link GitHubTag}[])
 	 * @throws IOException
 	 * @throws AuthenticationException
 	 */
