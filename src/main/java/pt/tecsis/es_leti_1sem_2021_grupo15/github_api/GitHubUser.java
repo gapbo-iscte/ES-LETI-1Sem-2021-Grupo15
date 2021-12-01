@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class GitHubUser {
 	
 	public final int id, publicRepos, publicGists, followers, following;
-	public final String login, avatar_url, url, htmlUrl, reposUrl, type, name, location;
+	public final String login, avatar_url, url, htmlUrl, reposUrl, name, location;
 	public final DateTime createdAt, updatedAt;
 	
 	
@@ -33,9 +33,8 @@ public class GitHubUser {
 		this.url = json.getString("url");
 		this.htmlUrl = json.getString("html_url");
 		this.reposUrl = json.getString("repos_url");
-		this.type = json.getString("type");
-		this.name = json.getString("name");
-		this.location = json.getString("location");
+		this.name = json.isNull("name") ? "" : json.getString("name");
+		this.location = json.isNull("location") ? "" : json.getString("location");
 		this.publicRepos = json.getInt("public_repos");
 		this.publicGists = json.getInt("public_gists");
 		this.followers = json.getInt("followers");
