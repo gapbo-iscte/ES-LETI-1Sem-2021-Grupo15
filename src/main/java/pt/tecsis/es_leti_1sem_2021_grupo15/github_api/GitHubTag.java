@@ -1,10 +1,7 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.github_api;
 
 import java.io.IOException;
-
 import javax.naming.AuthenticationException;
-
-import org.joda.time.DateTime;
 import org.json.JSONObject;
 
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
