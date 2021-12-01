@@ -1,6 +1,7 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.trello4j.Trello;
 
@@ -10,7 +11,7 @@ public class TrelloID {
 	
 	
 	//Passagem de um nome para a obtenção do seu ID    
-		public static String getQuadroID(String nomeQuadro) {
+		public String getQuadroID(String nomeQuadro) {
 							
 				String ObterID ="";
 				
@@ -38,17 +39,17 @@ public class TrelloID {
 		
 		
 		
-		public static String getFilaID(Trello trelloApi, String nomeQuadro , String NomeFila) {
+		public String getFilaID(String nomeQuadro , String NomeFila) {
 			
 			String ObterID ="";	
 			
-			HashMap<String,String> filas = TrelloFilas.getFilasQuadro(trelloApi, nomeQuadro);
+			List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(nomeQuadro);
 
 				
-			for (String ID: filas.keySet()) {
-				if (NomeFila.equals(filas.get(ID))){
+			for (int i = 0 ; i < filas.size() ; i++) {
+				if (filas.get(i).getName().equalsIgnoreCase(NomeFila)){
 					
-					ObterID = ID;			
+					ObterID = filas.get(i).getId();			
 				}
 				
 			}

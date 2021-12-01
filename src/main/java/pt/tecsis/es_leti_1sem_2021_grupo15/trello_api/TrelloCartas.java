@@ -9,16 +9,14 @@ import org.trello4j.model.Card.Attachment;
 public class TrelloCartas {
 	
 
-	//Tambem da título dos cartoes, Requerimento feito com os ID do Board (EX:Reuni�es, Daily Scrum, etc...)		
-	public static List<Card> getTodasAsCartas(String NomeDoQuadro){
+	//Vai devolver uma lista com todas as caratas existentes num Quadro (EX:Reuni�es, Daily Scrum, etc...)		
+	public List<Card> getTodasAsCartas(String IdDoQuadro){
 		
 		
-		String ProjectID= TrelloID.getQuadroID(NomeDoQuadro);
-		
-		List<Card> cartas = TrelloQuadros.trelloApi.getCardsByBoard(ProjectID);
+		List<Card> cartas = TrelloQuadros.trelloApi.getCardsByBoard(IdDoQuadro);
 		
 		for (Card carta : cartas) {
-            System.out.println(carta.getName());//+"- "+ cartas.getId()+"-"+cartas.getIdBoard());
+            System.out.println(carta.getName());
 		}
 		
 		return cartas;
@@ -26,69 +24,88 @@ public class TrelloCartas {
 		
 	}
 	
-	
-	
-	
-	private static List<Card> getCartasPorFila(String Fila, String NomeDoQuadro){
+	//Devolve a decrições da carta sabendo o título da carta
+	public String getCartasDescricaoPorQuadro(String NomeDaCarta, String idQuadro){  //, //Board projectName) {
 		
-		String FilaID= TrelloID.getFilaID(TrelloQuadros.trelloApi, NomeDoQuadro,Fila);
+		List<Card> cartas = getTodasAsCartas(idQuadro);
 		
-		List<Card> cards = TrelloQuadros.trelloApi.getCardsByList(FilaID);
+		String desc = null;
 		
-		return cards;
-		
-	}
-	
-	
-	
-	
-	public static List<Card> getTitulosCartasPorFila(String Fila, String NomeDoQuadro){
+		for (Card carta : cartas) {
+			if(carta.getName().equalsIgnoreCase(NomeDaCarta)){
+				System.out.println(carta.getName()+ "  -----------------  " + carta.getDesc() );//+"-"+cartas.getIdBoard());
 				
-			List<Card> checklists = getCartasPorFila(Fila, NomeDoQuadro);
-			
-			for (Card cartas : checklists) {
-	            System.out.println(cartas.getName());//+"- "+ cartas.getId()+"-"+cartas.getIdBoard());
-			}
-			
-			return checklists;
-			
-			
-	}
-	
-	
-	
-	//Retorna o Título de cada Carta, e o conteudo de cada carta, requerimento feito com os nome da fila e o nome do Quadro  (EX:[R0] - Entendimento do projeto e configura��es iniciais -------- etc...)
-	public static  List<Card> getCartasDescricaoPorFila(String Fila, String NomeDoQuadro){  
-			
-		
-		List<Card> cards = getCartasPorFila(Fila, NomeDoQuadro);
-
-		for (Card cartas : cards) {
-            System.out.println(cartas.getName()+ "  -----------------  " + cartas.getDesc() );
+				desc = carta.getDesc();
+			}	
 		}
 		
-		return cards;
-	     
-	     
+		return desc;
+		
 	}
 	
 	
 	
-	public static  List<Card> getCartasDescricaoPorQuadro(String NomeDaCarta, String NomeDoQuadro){  //, //Board projectName) {
+	
+	//Devolve as cartas existetes numa fila (Uma fila é considerada um conjunto de cartas restritas a um bloco)
+	public static List<Card> getCartasPorFila(String idFila, String IdDoQuadro){
+		
+		//String FilaID= TrelloID.getFilaID(TrelloQuadros.trelloApi, IdDoQuadro,Fila);
+		
+		List<Card> cards = TrelloQuadros.trelloApi.getCardsByList(idFila);
+		
+		return cards;
+		
+	}
+	
+	
+	
+	//Devolve os títulos de todas as cartas se encontrão numa fila especificada
+	public String[] getCartasTítuloPorFila(String Fila, String IdDoQuadro){
+		
+				
+			List<Card> cartasPorFila = getCartasPorFila(Fila, IdDoQuadro);
+			
+			String[] titulos = new String[cartasPorFila.size()];
+			
+			int i = 0;
+			
+			for (Card carta : cartasPorFila) {
+	            System.out.println(carta.getName());//+"- "+ cartas.getId()+"-"+cartas.getIdBoard());
+	            titulos[i]=carta.getName();
+	            i++;
+			}
+			
+			
+			
+			return titulos;
+			
+			
+	}
+	
+	
+	
+	//Retorna o conteudo de cada carta, feito com o id da Fila e o id do Quadro  (EX:[R0] - Entendimento do projeto e configura��es iniciais -------- etc...)
+	public String[] getCartasDescricaoPorFila(String idFila, String idQuadro){  
 			
 		
-		List<Card> cards = getTodasAsCartas(NomeDoQuadro);
+		List<Card> cartas = getCartasPorFila(idFila, idQuadro);
+		
+		String[] desc = new String[cartas.size()];
+		
+		int i = 0;
 
-		for (Card cartas : cards) {
-			if(cartas.getName().equalsIgnoreCase(NomeDaCarta)){
-            System.out.println(cartas.getName()+ "  -----------------  " + cartas.getDesc() );//+"-"+cartas.getIdBoard());
-			}
+		for (Card carta : cartas) {
+            System.out.println(carta.getName()+ "  -----------------  " + carta.getDesc() );
+            desc[i]=carta.getDesc();
 		}
 		
-		return cards;
+		return desc;
 	     
 	     
 	}
+	
+	
+	
 	
 	
 	
