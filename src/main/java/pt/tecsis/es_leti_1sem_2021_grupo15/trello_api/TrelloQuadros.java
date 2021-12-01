@@ -23,22 +23,25 @@ public class TrelloQuadros {
 	public static Trello trelloApi = null;
 	
 	
+	//INICIALIZAR O TRELLO
+	public static void Inicializar(String trelloKey, String trelloAccessToken) {
+			
+			trelloApi = new TrelloImpl(trelloKey, trelloAccessToken);
+		     
+			
+	}
+	
+
 	
 	//Método de inicialização da conexão das credencias do utilizador com a API trello4j, vai devolver todos os quadros existentes na conta do utilizador (EX:Projeto_ES)
-	public static List<Board> InicializarQuadros(String NomeDoMembro, String trelloKey, String trelloAccessToken) {
+	public static List<Board> BuscarQuadros(String NomeDoMembro) {
 		
-		trelloApi = new TrelloImpl(trelloKey, trelloAccessToken);
-	
 		quadros = trelloApi.getBoardsByMember(NomeDoMembro);
-		
-		//HashMap<String,String> projetos = new HashMap<String,String>();
 	     
 		for (Board  quadro: quadros) {
-		  //projetos.put(quadro.getId(),quadro.getName());
 	    
 			System.out.println(quadro.getName() + "-" + quadro.getId() );
-			
-			
+					
 		}
 		
 		return quadros;

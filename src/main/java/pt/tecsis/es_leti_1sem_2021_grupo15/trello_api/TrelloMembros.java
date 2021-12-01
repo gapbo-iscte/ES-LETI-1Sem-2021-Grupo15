@@ -8,7 +8,7 @@ public class TrelloMembros {
 	
 	
 	//Devolve uma lista do tipo Member onde contém todos os membros existentes em um quadro
-	public List<Member> getMemberDoQuadro(String IdDoQuadro) {
+	public static List<Member> getMemberDoQuadro(String IdDoQuadro) {
 		
 		//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
 		

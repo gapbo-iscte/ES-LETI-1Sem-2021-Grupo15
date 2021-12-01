@@ -10,7 +10,7 @@ public class TrelloCartas {
 	
 
 	//Vai devolver uma lista com todas as caratas existentes num Quadro (EX:Reuni�es, Daily Scrum, etc...)		
-	public List<Card> getTodasAsCartas(String IdDoQuadro){
+	public static List<Card> getTodasAsCartas(String IdDoQuadro){
 		
 		
 		List<Card> cartas = TrelloQuadros.trelloApi.getCardsByBoard(IdDoQuadro);
@@ -25,7 +25,7 @@ public class TrelloCartas {
 	}
 	
 	//Devolve a decrições da carta sabendo o título da carta
-	public String getCartasDescricaoPorQuadro(String NomeDaCarta, String idQuadro){  //, //Board projectName) {
+	public static String getCartasDescricaoPorQuadro(String NomeDaCarta, String idQuadro){  //, //Board projectName) {
 		
 		List<Card> cartas = getTodasAsCartas(idQuadro);
 		
@@ -60,7 +60,7 @@ public class TrelloCartas {
 	
 	
 	//Devolve os títulos de todas as cartas se encontrão numa fila especificada
-	public String[] getCartasTítuloPorFila(String Fila, String IdDoQuadro){
+	public static String[] getCartasTítuloPorFila(String Fila, String IdDoQuadro){
 		
 				
 			List<Card> cartasPorFila = getCartasPorFila(Fila, IdDoQuadro);
@@ -85,7 +85,7 @@ public class TrelloCartas {
 	
 	
 	//Retorna o conteudo de cada carta, feito com o id da Fila e o id do Quadro  (EX:[R0] - Entendimento do projeto e configura��es iniciais -------- etc...)
-	public String[] getCartasDescricaoPorFila(String idFila, String idQuadro){  
+	public static String[] getCartasDescricaoPorFila(String idFila, String idQuadro){  
 			
 		
 		List<Card> cartas = getCartasPorFila(idFila, idQuadro);
