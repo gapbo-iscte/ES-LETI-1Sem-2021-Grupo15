@@ -25,7 +25,9 @@ public class GitHubAPI {
 	
 	public static GitHubUser getSelf(GitHubCredentials credentials) throws IOException, AuthenticationException {
 		
-		Request.Builder requestBuilder = new Request.Builder().url(GithubEndpoints.GET_SELF_USER_URL).addHeader("Accept", "application/json");
+		String selfURL = GithubEndpoints.GET_SELF_USER_URL; 
+		
+		Request.Builder requestBuilder = new Request.Builder().url(selfURL).addHeader("Accept", "application/json");
 		
 		Request request = credentials.authenticateRequest(requestBuilder).build();
 		Response response = credentials.getHttpClient().newCall(request).execute();
@@ -50,7 +52,9 @@ public class GitHubAPI {
 	
 	public static String getRepositoryFile(String owner, String repository, String path, GitHubCredentials credentials) throws IOException, AuthenticationException {
 		
-		Request.Builder requestBuilder = new Request.Builder().url(GithubEndpoints.GET_REPOSITORY_CONTENT_URL(owner, repository, path)).addHeader("Accept", "application/json");
+		String contentURL = GithubEndpoints.GET_REPOSITORY_CONTENT_URL(owner, repository, path);
+		
+		Request.Builder requestBuilder = new Request.Builder().url(contentURL).addHeader("Accept", "application/json");
 		Response response;
 		
 		if (credentials == null) {
@@ -131,9 +135,9 @@ public class GitHubAPI {
 	
 	public static GitHubTag[] getRepositoryTags(String owner, String repository, GitHubCredentials credentials) throws IOException, AuthenticationException {
 		
-		String commitURL = GithubEndpoints.GET_REPOSITORY_TAGS_URL(owner, repository);
+		String tagsURL = GithubEndpoints.GET_REPOSITORY_TAGS_URL(owner, repository);
 		
-		Request.Builder requestBuilder = new Request.Builder().url(commitURL).addHeader("Accept", "application/json");
+		Request.Builder requestBuilder = new Request.Builder().url(tagsURL).addHeader("Accept", "application/json");
 		Response response;
 		
 		if (credentials == null) {
@@ -145,7 +149,7 @@ public class GitHubAPI {
 		}
 		
 		if (response.code() != 200)
-			throw new AuthenticationException("Obtenção do commit de URL " + commitURL + " falhou: HTTP Status " + response.code() + " " + response.message());
+			throw new AuthenticationException("Obtenção do commit de URL " + tagsURL + " falhou: HTTP Status " + response.code() + " " + response.message());
 		
 		// Parse response
 		
@@ -156,5 +160,45 @@ public class GitHubAPI {
 			tags[i] = new GitHubTag(responseJSON.get(i).toString());
 		
 		return tags;
+	}
+	
+	
+	/**
+	 * Devolve os branches do repositório indicado.
+	 * @param  owner - nome de utilizador do dono do repositório ({@link String})
+	 * @param  repository - nome do repositório ({@link String})
+	 * @param  credentials - credenciais a utilizar ou {@code null} para aceder sem credenciais ({@link GitHubCredentials})
+	 * @return as tags do repositório indicado ({@link GitHubBranch}[])
+	 * @throws IOException
+	 * @throws AuthenticationException
+	 */
+	
+	public static GitHubBranch[] getRepositoryBranches(String owner, String repository, GitHubCredentials credentials) throws IOException, AuthenticationException {
+		
+		String branchesURL = GithubEndpoints.GET_BRANCHES_URL(owner, repository);
+		
+		Request.Builder requestBuilder = new Request.Builder().url(branchesURL).addHeader("Accept", "application/json");
+		Response response;
+		
+		if (credentials == null) {
+			Request request = requestBuilder.build();
+			response = new OkHttpClient().newCall(request).execute();
+		} else {
+			Request request = credentials.authenticateRequest(requestBuilder).build();
+			response = credentials.getHttpClient().newCall(request).execute();
+		}
+		
+		if (response.code() != 200)
+			throw new AuthenticationException("Obtenção dos branches do repositório " + owner + " / " + repository + " falhou: HTTP Status " + response.code() + " " + response.message());
+		
+		// Parse response
+		
+		JSONArray responseJSON = new JSONArray(response.body().string());
+		GitHubBranch branches[] = new GitHubBranch[responseJSON.length()];
+		
+		for (int i = 0; i < branches.length; i++)
+			branches[i] = new GitHubBranch(responseJSON.get(i).toString());
+		
+		return branches;
 	}
 }
