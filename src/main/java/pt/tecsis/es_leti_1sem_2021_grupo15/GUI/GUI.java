@@ -3,25 +3,52 @@ package pt.tecsis.es_leti_1sem_2021_grupo15.GUI;
 import java.awt.Component;
 import java.awt.Container;
 import javax.swing.BoxLayout;
+
+
+
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import javax.swing.JTextArea;
+
+
+public class GUI implements ActionListener {
+	   	String token;
+	   	private static JTextArea textArea = new JTextArea(5, 40);
+	   	private static JButton button;
 	 
-public class GUI {
-	    public static void addComponentsToPane(Container pane) {
-	        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-	 
-	        addAButton("Equipa", pane);
-	        addAButton("Sprints", pane);
-	        addAButton("Custos", pane);
-	        addAButton("Tags", pane);
-	        addAButton("Commits", pane);
-	    }
+	   	
 	 
 	    private static void addAButton(String text, Container container) {
-	        JButton button = new JButton(text);
+	        button = new JButton(text);
 	        button.setAlignmentX(Component.CENTER_ALIGNMENT);
 	        container.add(button);
+	        button.setActionCommand(text);
+	        button.addActionListener(new GUI());
 	    }
+	    private static void addTokenField(String text, Container container) {
+	    
+	        JTextField tokenBar=new JTextField(text);  
+	        tokenBar.setBounds(50,100, 200,30);  
+	        container.add(tokenBar);  
+	
+
+	    }
+	    
+	    private static void addTextBox(String text, Container container){
+	    	//JTextArea textArea = new JTextArea(5, 40);
+		    container.add(textArea);
+		    textArea.setText(text);
+		    textArea.setLineWrap(true);
+	    }
+	    
+	    
 	 
 	    /**
 	     * Create the GUI and show it.  For thread safety,
@@ -32,13 +59,35 @@ public class GUI {
 	        //Create and set up the window.
 	        JFrame frame = new JFrame("Projeto Engenharia de Software");
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	 
-	        //Set up the content pane.
-	        addComponentsToPane(frame.getContentPane());
+	        
+	        JPanel topJPanel = new JPanel();
+	        JPanel pane = new JPanel();
+	         
+	        
+	        topJPanel.setLayout(new FlowLayout());
+	        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+	        
+	        frame.setContentPane(pane);
+	        
+	        pane.add(topJPanel);
+	       
+	      
+	        addTokenField("Insira o seu Token de  Github", topJPanel);
+	        addAButton("Enter", topJPanel);
+	        addTextBox("", pane);
+	        addAButton("Equipa", pane);
+	        addAButton("Sprints", pane);
+	        addAButton("Custos", pane);
+	        addAButton("Tags", pane);
+	        addAButton("Commits", pane);
+	        
 	 
 	        //Display the window.
 	        frame.pack();
 	        frame.setVisible(true);
+	        
+	         
+	        
 	    }
 	 
 	    public static void main(String[] args) {
@@ -49,6 +98,12 @@ public class GUI {
 	                createAndShowGUI();
 	            }
 	        });
+	 
 	    }
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			System.out.printf("Action: " + button.getActionCommand());
+		}
+		
 	}
 
