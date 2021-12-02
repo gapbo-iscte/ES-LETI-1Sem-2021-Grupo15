@@ -31,7 +31,10 @@ public class TrelloApiMain {
 	   
 	    
 		//PRIMEIRO METODO OBRIGATÓRIO A SER CHAMADO *******************************************************************************************************************
-		List<Board> quadros =  TrelloQuadros.InicializarQuadros(NomeMembro, trelloKey, trelloAccessToken);
+		TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
+		
+		
+		List<Board> quadros = TrelloQuadros.BuscarQuadros(NomeMembro);
 		
 		String qu = quadros.get(0).getId();
 		
@@ -65,11 +68,13 @@ public class TrelloApiMain {
 	    
 //	    TrelloAcoes.getTempoPorQuadro(QuadroNome);
 	    
-		 //HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu,"S2");
+		/// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprintPorMembro(qu,"S2");
 		 
 		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
 		 
 		// Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
+		
+		HashMap<String,Double> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
 		 
 		 
 	    
