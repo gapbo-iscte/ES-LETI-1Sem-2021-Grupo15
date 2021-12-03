@@ -1,5 +1,6 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.trello4j.Trello;
@@ -26,11 +27,24 @@ public class TrelloApiMain {
 		
 		String NomeMembro= "goncalobenido";
 		
-		String QuadroNome = "Projeto_ES";
+		//String QuadroNome = "Projeto_ES";
 	   
 	    
 		//PRIMEIRO METODO OBRIGATÓRIO A SER CHAMADO *******************************************************************************************************************
-		List<Board> quadros =  TrelloQuadros.InicializarQuadros(NomeMembro, trelloKey, trelloAccessToken);
+		TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
+		
+		
+		List<Board> quadros = TrelloQuadros.BuscarQuadros(NomeMembro);
+		
+		String qu = quadros.get(0).getId();
+		
+		
+		for(Board quadro: quadros){
+			
+			System.out.println(quadro.getName() + quadro.getId());
+			
+			
+		}
 	   
 		
 		
@@ -54,11 +68,26 @@ public class TrelloApiMain {
 	    
 //	    TrelloAcoes.getTempoPorQuadro(QuadroNome);
 	    
-	    TrelloAcoes.getTempoPorMembro(QuadroNome);
+		/// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprintPorMembro(qu,"S2");
+		 
+		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
+		 
+		// Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
+		
+		HashMap<String,Double> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
+		 
+		 
 	    
 //	   List<Member> membros = TrelloMembros.getMemberDoQuadro("Projeto_ES");
 	    
 	//Perceber o que é um attach	List<Attachment> attaches = TrelloCartas.getAttachmentPorCarta("Texto resultante das reuniões de SPRINT Planning, SPRINT Review e SPRINT Retrospective, para cada SPRINT do projeto","Projeto_ES");
+	
+	
+	
+	
+	
+	
+	
 	}
 	
 	

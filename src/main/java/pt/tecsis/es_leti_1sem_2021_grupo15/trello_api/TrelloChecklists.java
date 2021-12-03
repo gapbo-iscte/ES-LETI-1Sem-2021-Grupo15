@@ -7,7 +7,7 @@ import org.trello4j.model.Checklist;
 public class TrelloChecklists {
 	
 	
-	public static List<Checklist> getCheckList(String NomeDoQuadro){
+	public List<Checklist> getCheckList(String NomeDoQuadro){
 		
 		String QuadroID= TrelloID.getQuadroID(NomeDoQuadro);
 		

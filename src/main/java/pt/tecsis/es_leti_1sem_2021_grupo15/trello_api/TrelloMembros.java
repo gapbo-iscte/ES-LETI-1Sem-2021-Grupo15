@@ -7,12 +7,12 @@ import org.trello4j.model.Member;
 public class TrelloMembros {
 	
 	
-	
-	public static List<Member> getMemberDoQuadro(String NomeDoQuadro) {
+	//Devolve uma lista do tipo Member onde contém todos os membros existentes em um quadro
+	public static List<Member> getMemberDoQuadro(String IdDoQuadro) {
 		
-		String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
+		//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
 		
-		List<Member> membros = TrelloQuadros.trelloApi.getMembersByBoard(QuadroID);
+		List<Member> membros = TrelloQuadros.trelloApi.getMembersByBoard(IdDoQuadro);
 		
 		for(Member membro : membros){
 			

@@ -10,15 +10,15 @@ public class TrelloFilas {
 	//public static HashMap<String,String> filas = new HashMap<String,String>();
 	
 	
-	
-	public static List<org.trello4j.model.List> getFilasQuadro(Trello trelloApi, String NomeDoQuadro){
+	//Devolve todas as filas existentes em um quadro
+	public static List<org.trello4j.model.List> getFilasQuadro(String IdDoQuadro){
 			
-			String ProjectID= TrelloID.getQuadroID(NomeDoQuadro);
-			
-			
+			//String ProjectID= TrelloID.getQuadroID(NomeDoQuadro);
 			
 			
-			List<org.trello4j.model.List> filasQuadro = trelloApi.getListByBoard(ProjectID);
+			
+			
+			List<org.trello4j.model.List> filasQuadro = TrelloQuadros.trelloApi.getListByBoard(IdDoQuadro);
 			
 			
 			for (org.trello4j.model.List  fila: filasQuadro) {
