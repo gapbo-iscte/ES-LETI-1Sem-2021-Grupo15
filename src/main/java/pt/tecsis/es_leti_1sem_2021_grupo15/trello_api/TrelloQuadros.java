@@ -37,12 +37,6 @@ public class TrelloQuadros {
 	public static List<Board> BuscarQuadros(String NomeDoMembro) {
 		
 		quadros = trelloApi.getBoardsByMember(NomeDoMembro);
-	     
-		for (Board  quadro: quadros) {
-	    
-			System.out.println(quadro.getName() + "-" + quadro.getId() );
-					
-		}
 		
 		return quadros;
 	}
