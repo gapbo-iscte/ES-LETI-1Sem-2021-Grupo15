@@ -22,14 +22,6 @@ public class TrelloApiMain {
 	
 	public static void main(String[] args) {
 	     
-		//Trello trelloApi = new TrelloImpl(trelloKey, trelloAccessToken); 
-		
-		
-		String NomeMembro=  trelloAccessToken.toString();    //"goncalobenido";
-		
-		//String QuadroNome = "Projeto_ES";
-	   
-	    
 		//PRIMEIRO METODO OBRIGATÓRIO A SER CHAMADO *******************************************************************************************************************
 		TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
 		
