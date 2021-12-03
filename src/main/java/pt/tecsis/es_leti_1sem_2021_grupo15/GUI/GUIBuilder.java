@@ -2,12 +2,14 @@ package pt.tecsis.es_leti_1sem_2021_grupo15.GUI;
 
 import java.awt.BorderLayout;
 
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,6 +28,9 @@ import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.general.PieDataset;
+import org.trello4j.model.Board;
+
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
 
@@ -38,6 +43,9 @@ import net.miginfocom.swing.MigLayout;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubAPI;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubUser;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
+import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloAcoes;
+import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloMembros;
+import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloQuadros;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -54,11 +62,14 @@ public class GUIBuilder extends JFrame {
 	private JTextField tfTrelloTokenBar;
 	private static JTextArea textArea;
 	private JTextField tfQuadroID;
-	
-	//variaveis para o menu 
-			private static JMenuBar mb;
-			private static JMenu menu;
-			private static JMenuItem s1, s2;
+
+	private static String trelloKey;
+	private static String trelloAccessToken;
+
+	// variaveis para o menu
+	private static JMenuBar mb;
+	private static JMenu menu;
+	private static JMenuItem s1, s2;
 
 	/**
 	 * Launch the application.
@@ -87,36 +98,63 @@ public class GUIBuilder extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		mb= new JMenuBar();
+
+		mb = new JMenuBar();
 		mb.setBounds(0, 0, 840, 23);
-		menu= new JMenu("Graficos de tempo");
+		menu = new JMenu("Graficos de tempo");
 		mb.add(menu);
-		s1= new JMenuItem("primeiro sprint backlog");
+		s1 = new JMenuItem("primeiro sprint backlog");
 		s1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				DefaultPieDataset sprint1= new DefaultPieDataset();
-				sprint1.setValue("Rodrigo", new Integer(200));
-				JFreeChart chart= ChartFactory.createPieChart("sprint backlog 1",sprint1,true, true,true);
-				PiePlot P = (PiePlot)chart.getPlot();
-				ChartFrame frame= new ChartFrame("Sprint backlog 1", chart);
+
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+
+				HashMap<String, Double[]> tempoPorMembro = TrelloAcoes.getTempoPorMembro(qu);
+
+				DefaultPieDataset sprint1 = new DefaultPieDataset();
+
+//						[tempoPorMembro.size()];
+
+				int i = 0;
+				for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
+					
+//					System.out.println(entry.getKey());
+//					for (Double d: entry.getValue())
+//						System.out.println(d);
+//					System.out.println("_______________________");
+
+					sprint1.insertValue(i, entry.getKey(), entry.getValue()[0]);
+					i++;
+				}
+				;
+				JFreeChart chart = ChartFactory.createPieChart("sprint backlog 1", sprint1, true, true, true);
+//				for (int j=0;j<=i;j++) {
+//				chart= ChartFactory.createPieChart("sprint backlog 1",sprint1[j],true, true,true);
+//				};
+				PiePlot P = (PiePlot) chart.getPlot();
+				ChartFrame frame = new ChartFrame("Sprint backlog 1", chart);
 				frame.setVisible(true);
-				frame.setSize(450,500);
+				frame.setSize(450, 500);
 			}
 		});
 		s2 = new JMenuItem("segundo sprint backlog");
 		menu.add(s1);
 		menu.add(s2);
 		contentPane.add(mb);
-		
+
 		JButton btnOK = new JButton("Enter");
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				credentials = new GitHubCredentials(tfGitHubTokenBar.getText());
-				
+				trelloKey = tfTrelloKey.getText();
+				trelloAccessToken = tfTrelloTokenBar.getText();
+				TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
+
 				try {
-					githubuser= GitHubAPI.getSelf(credentials);
+					githubuser = GitHubAPI.getSelf(credentials);
 				} catch (AuthenticationException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -124,9 +162,9 @@ public class GUIBuilder extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 				textArea.setText("Bem Vindo " + githubuser.name);
-				
+
 			}
 		});
 		btnOK.setBounds(764, 56, 66, 23);
@@ -136,12 +174,12 @@ public class GUIBuilder extends JFrame {
 		lblGitHubToken.setBounds(10, 32, 74, 14);
 		lblGitHubToken.setBackground(Color.WHITE);
 		contentPane.add(lblGitHubToken);
-		
+
 		JLabel lblTrelloKey = new JLabel("Trello Key:");
 		lblTrelloKey.setBackground(Color.WHITE);
 		lblTrelloKey.setBounds(10, 60, 61, 14);
 		contentPane.add(lblTrelloKey);
-		
+
 		JLabel lblTrelloToken = new JLabel("Trello Token:");
 		lblTrelloToken.setBackground(Color.WHITE);
 		lblTrelloToken.setBounds(393, 60, 69, 14);
@@ -151,12 +189,12 @@ public class GUIBuilder extends JFrame {
 		tfGitHubTokenBar.setBounds(94, 29, 736, 20);
 		contentPane.add(tfGitHubTokenBar);
 		tfGitHubTokenBar.setColumns(10);
-		
+
 		tfTrelloKey = new JTextField();
 		tfTrelloKey.setColumns(10);
 		tfTrelloKey.setBounds(81, 56, 302, 20);
 		contentPane.add(tfTrelloKey);
-		
+
 		tfTrelloTokenBar = new JTextField();
 		tfTrelloTokenBar.setColumns(10);
 		tfTrelloTokenBar.setBounds(465, 56, 289, 20);
@@ -189,24 +227,22 @@ public class GUIBuilder extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 217, 820, 525);
 		contentPane.add(scrollPane);
-		
+
 		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
-		
+
 		tfQuadroID = new JTextField();
 		tfQuadroID.setBounds(68, 189, 136, 20);
 		contentPane.add(tfQuadroID);
 		tfQuadroID.setColumns(10);
-		
+
 		JLabel lblQuadroID = new JLabel("QuadroID:");
 		lblQuadroID.setBounds(10, 192, 89, 14);
 		contentPane.add(lblQuadroID);
-		
+
 		JButton btnQuadroID = new JButton("Enter");
 		btnQuadroID.setBounds(210, 188, 66, 23);
 		contentPane.add(btnQuadroID);
-		
-	
+
 	}
 }
-

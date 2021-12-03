@@ -62,7 +62,7 @@ public class TrelloApiMain {
 	    
 		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprintPorMembro(qu,"S2");
 		 
-		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
+		 HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
 		 
 		 //Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
 		
