@@ -119,13 +119,13 @@ public class GUIBuilder extends JFrame {
 					githubuser= GitHubAPI.getSelf(credentials);
 				} catch (AuthenticationException e1) {
 					// TODO Auto-generated catch block
-					//e1.printStackTrace();
+					e1.printStackTrace();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
-					//e1.printStackTrace();
+					e1.printStackTrace();
 				}
 				
-				textArea.setText("Bem Vindo: " + githubuser.name + "/n Quadros: ");
+				textArea.setText("Bem Vindo " + githubuser.name);
 				
 			}
 		});
@@ -190,7 +190,7 @@ public class GUIBuilder extends JFrame {
 		scrollPane.setBounds(10, 217, 820, 525);
 		contentPane.add(scrollPane);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
 		
 		tfQuadroID = new JTextField();
