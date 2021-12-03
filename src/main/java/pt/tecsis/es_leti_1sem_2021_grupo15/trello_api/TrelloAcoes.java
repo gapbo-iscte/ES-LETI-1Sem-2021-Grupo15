@@ -353,6 +353,39 @@ public class TrelloAcoes {
 		
 		
 		
+		
+		//Obter a data de ínicio e fim de um Sprint
+		public static String[] getDataPorSprint(String IdDoQuadro, String NomeDoSprint ){
+			
+			String[] datas = new String[2];
+			
+			List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
+			
+			for(org.trello4j.model.List fila: filas){
+				
+				if(fila.getName().strip().toUpperCase().equalsIgnoreCase("Sprints")){
+					
+					
+					List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
+					
+					for(Card carta: cartas){
+						
+						
+						String[] des = carta.getDesc().toUpperCase().split()
+						
+					}
+					
+					
+				}
+			}
+			
+			
+			
+			
+			
+			
+			return datas;
+		}
 	
 	
 		

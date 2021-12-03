@@ -22,22 +22,22 @@ public class TrelloGitTempos {
 		List<Member> membros = TrelloQuadros.trelloApi.getMembersByBoard(IdDoQuadro);
 		
 		
+		for(Member membro: membros){
+			tempo_gasto = 0.0;
 		for(org.trello4j.model.List fila: filas){
 			
 							
 				List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
 				
 					
-				for(Member membro: membros){
 					
-					tempo_gasto = 0.0;
 					
 			
 					for(Card carta: cartas){
 						
 						String desc = carta.getDesc().strip().toUpperCase();
 						
-						if(desc.contains("COMMIT ")){
+						if(desc.contains("COMMIT")){
 						
 						
 									
@@ -72,11 +72,11 @@ public class TrelloGitTempos {
 				
 					}					
 					
-					tempoPorCommitPorMembro.put(membro.getUsername(),tempo_gasto);
-					
-					System.out.println(membro.getUsername() + " --- " + "Numero de horas gastas:" + tempo_gasto);
 				}
 				
+		tempoPorCommitPorMembro.put(membro.getUsername(),tempo_gasto);
+		
+		System.out.println(membro.getUsername() + " --- " + "Numero de horas gastas:" + tempo_gasto);
 			
 			
 		}

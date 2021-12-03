@@ -22,19 +22,11 @@ public class TrelloApiMain {
 	
 	public static void main(String[] args) {
 	     
-		//Trello trelloApi = new TrelloImpl(trelloKey, trelloAccessToken); 
-		
-		
-		String NomeMembro= "goncalobenido";
-		
-		//String QuadroNome = "Projeto_ES";
-	   
-	    
 		//PRIMEIRO METODO OBRIGATÓRIO A SER CHAMADO *******************************************************************************************************************
 		TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
 		
 		
-		List<Board> quadros = TrelloQuadros.BuscarQuadros(NomeMembro);
+		List<Board> quadros = TrelloQuadros.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
 		
 		String qu = quadros.get(0).getId();
 		
@@ -51,30 +43,30 @@ public class TrelloApiMain {
 		
 		
 	    
-//		List<Card> checklists =  TrelloCartas.getTodasAsCartas(QuadroNome);
+		//List<Card> checklists =  TrelloCartas.getTodasAsCartas(qu);
 	
 //	    List<Action> actions = TrelloAcoes.getAcoesPorQuadro("Projeto_ES");
 		
 		
-		//HashMap<String,String> filas = TrelloFilas.getFilasQuadro(trelloApi,"Projeto_ES");
+	//	List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(qu);
 	
-//		List<Card> checklists =  TrelloCartas.getTituloDasCartasPorFila("Reuniões",QuadroNome);
+		//String[] checklists =  TrelloCartas.getCartasTítuloPorFila("617aad529e383145723dfba5",qu);
 		
-//		List<Card> checklists =  TrelloCartas.getCartasDescricaoPorFila("Sprints","Projeto_ES");
+		//String[] checklists =  TrelloCartas.getCartasDescricaoPorFila("617aad529e383145723dfba5",qu);
 		
-//		List<Card> checklists =  TrelloCartas.getCartasDescricaoPorQuadro("[DS1] - Daily Scrum","Projeto_ES");
+	//	String checklists =  TrelloCartas.getCartasDescricaoPorQuadro("[DS1] - Daily Scrum",qu);
 		
 //		List<Checklist> checks = TrelloChecklists.getCheckList("Projeto_ES");
 	    
-//	    TrelloAcoes.getTempoPorQuadro(QuadroNome);
+	  //  TrelloAcoes.getTempoPorQuadro(qu);
 	    
-		/// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprintPorMembro(qu,"S2");
+		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprintPorMembro(qu,"S2");
 		 
 		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
 		 
-		// Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
+		 //Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
 		
-		HashMap<String,Double> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
+		//HashMap<String,Double> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
 		 
 		 
 	    
