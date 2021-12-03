@@ -8,6 +8,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,6 +27,8 @@ import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
+import org.trello4j.model.Member;
+
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
 
@@ -38,6 +41,8 @@ import net.miginfocom.swing.MigLayout;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubAPI;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubUser;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
+import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloMembros;
+import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloQuadros;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -54,6 +59,7 @@ public class GUIBuilder extends JFrame {
 	private JTextField tfTrelloTokenBar;
 	private static JTextArea textArea;
 	private JTextField tfQuadroID;
+	private String quadroId;
 	
 	//variaveis para o menu 
 			private static JMenuBar mb;
@@ -110,10 +116,15 @@ public class GUIBuilder extends JFrame {
 		menu.add(s2);
 		contentPane.add(mb);
 		
+		
 		JButton btnOK = new JButton("Enter");
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				credentials = new GitHubCredentials(tfGitHubTokenBar.getText());
+				//TrelloQuadros.Inicializar(tfTrelloKey.getText(), tfTrelloTokenBar.getText());
+				
+				//SO PARA TESTES APAGAR DEPOIS
+				TrelloQuadros.Inicializar("70ff5208fa5c52ac915ea4e71e3bf4ad","502e0e06ad5d44de9f68efa2d1b245238948b8357f277d3cf7c4aa016af5dfed" );
 				
 				try {
 					githubuser= GitHubAPI.getSelf(credentials);
@@ -126,7 +137,7 @@ public class GUIBuilder extends JFrame {
 				}
 				
 				textArea.setText("Bem Vindo " + githubuser.name);
-				
+							
 			}
 		});
 		btnOK.setBounds(764, 56, 66, 23);
@@ -163,6 +174,21 @@ public class GUIBuilder extends JFrame {
 		contentPane.add(tfTrelloTokenBar);
 
 		JButton btnEquipa = new JButton("Equipa");
+		btnEquipa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Enviar com Esta
+				//List<Member> membros = TrelloMembros.getMembrosDoQuadro(tfQuadroID.getText());
+				
+				//SO PARA TESTES APAGAR DEPOIS
+				List<Member> membros = TrelloMembros.getMembrosDoQuadro("615c89b6a359063061e30315");
+				//
+				String m = "";
+				for(Member membro : membros){
+					m = m + membro.getFullName()+"\n";
+				}
+				textArea.setText(m);
+			}
+		});
 		btnEquipa.setBounds(10, 87, 89, 23);
 		contentPane.add(btnEquipa);
 
@@ -203,6 +229,11 @@ public class GUIBuilder extends JFrame {
 		contentPane.add(lblQuadroID);
 		
 		JButton btnQuadroID = new JButton("Enter");
+		btnQuadroID.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				quadroId = tfQuadroID.getText();
+			}
+		});
 		btnQuadroID.setBounds(210, 188, 66, 23);
 		contentPane.add(btnQuadroID);
 		
