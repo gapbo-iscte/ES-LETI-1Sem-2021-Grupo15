@@ -14,7 +14,7 @@ public class GitHubBranch {
 	/**
 	 * Interpreta os dados devolvidos pelo GitHub em formato JSON e
 	 * constroi uma instância desta classe com os mesmos.
-	 * @param {@link String} branchJSON
+	 * @param branchJSON {@link String}
 	 */
 	
 	public GitHubBranch(String branchJSON) {

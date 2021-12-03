@@ -16,6 +16,12 @@ public class GitHubTag {
 
 	public final String name, commitURL,  zipBallURL, tarBallURL;
 	
+	/**
+	 * Interpreta os dados devolvidos pelo GitHub em formato JSON e
+	 * constroi uma instância desta classe com os mesmos.
+	 * @param tagJSON {@link String}
+	 */
+	
 	public GitHubTag(String tagJSON) {
 		
 		JSONObject json = new JSONObject(tagJSON);

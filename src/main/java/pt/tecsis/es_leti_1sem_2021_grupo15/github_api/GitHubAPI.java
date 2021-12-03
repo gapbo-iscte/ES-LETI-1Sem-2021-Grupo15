@@ -16,6 +16,30 @@ import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
 public class GitHubAPI {
 	
 	/**
+	 * Devolve os detalhes do utilizador indicado.
+	 * @param  username - nome de utilizador ({@link String})
+	 * @return {@link GitHubUser}
+	 * @throws IOException
+	 * @throws AuthenticationException
+	 */
+	
+	public static GitHubUser getUser(String username) throws IOException, Exception {
+		
+		String userURL = GithubEndpoints.GET_USER_URL(username); 
+		
+		Request.Builder requestBuilder = new Request.Builder().url(selfURL).addHeader("Accept", "application/json");
+		
+		Request request = requestBuilder.build();
+		Response response = new OkHttpClient().newCall(request).execute();
+		
+		if (response.code() != 200)
+			throw new Exception("Obtenção dos detalhes do utilizador GitHub falhou: HTTP Status " + response.code() + " " + response.message());
+		
+		return new GitHubUser(response.body().string());
+	}
+	
+	
+	/**
 	 * Devolve os detalhes do utilizador correspondente às credenciais indicadas.
 	 * @param  credentials - credenciais a utilizar ({@link GitHubCredentials})
 	 * @return {@link GitHubUser}
@@ -36,6 +60,37 @@ public class GitHubAPI {
 			throw new AuthenticationException("Obtenção dos detalhes do utilizador GitHub falhou: HTTP Status " + response.code() + " " + response.message());
 		
 		return new GitHubUser(response.body().string());
+	}
+	
+	
+	/**
+	 * Devolve os detalhes do repositório indicado.
+	 * @param  owner - nome de utilizador do dono do repositório ({@link String})
+	 * @param  repository - nome do repositório ({@link String})
+	 * @param  credentials - credenciais a utilizar ou {@code null} para aceder sem credenciais ({@link GitHubCredentials})
+	 * @throws IOException
+	 * @throws AuthenticationException
+	 */
+	
+	public static GitHubRepository getRepository(String owner, String repository, GitHubCredentials credentials) throws IOException, AuthenticationException {
+		
+		String repositoryURL = GithubEndpoints.GET_REPOSITORY_URL(owner, repository);
+		
+		Request.Builder requestBuilder = new Request.Builder().url(repositoryURL).addHeader("Accept", "application/json");
+		Response response;
+		
+		if (credentials == null) {
+			Request request = requestBuilder.build();
+			response = new OkHttpClient().newCall(request).execute();
+		} else {
+			Request request = credentials.authenticateRequest(requestBuilder).build();
+			response = credentials.getHttpClient().newCall(request).execute();
+		}
+		
+		if (response.code() != 200)
+			throw new AuthenticationException("Obtenção dos detalhes do repositório " + owner + "/" + repository + " falhou: HTTP Status " + response.code() + " " + response.message());
+		
+		return new GitHubRepository(response.body().string());
 	}
 	
 	
