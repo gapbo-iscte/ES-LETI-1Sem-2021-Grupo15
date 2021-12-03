@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -26,19 +28,32 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
+
+import javax.naming.AuthenticationException;
 import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import net.miginfocom.swing.MigLayout;
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubAPI;
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubUser;
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JToolBar;
 
 public class GUIBuilder extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField tfTokenBar;
+	private JTextField tfGitHubTokenBar;
+	private static GitHubUser githubuser;
+	private GitHubCredentials credentials;
+	private JTextField tfTrelloKey;
+	private JTextField tfTrelloTokenBar;
+	private static JTextArea textArea;
+	private JTextField tfQuadroID;
 	
 	//variaveis para o menu 
 			private static JMenuBar mb;
@@ -67,13 +82,14 @@ public class GUIBuilder extends JFrame {
 	public GUIBuilder() {
 		setTitle("Projeto Engenharia de Software");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 856, 792);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		mb= new JMenuBar();
+		mb.setBounds(0, 0, 840, 23);
 		menu= new JMenu("Graficos de tempo");
 		mb.add(menu);
 		s1= new JMenuItem("primeiro sprint backlog");
@@ -92,49 +108,105 @@ public class GUIBuilder extends JFrame {
 		s2 = new JMenuItem("segundo sprint backlog");
 		menu.add(s1);
 		menu.add(s2);
-		contentPane.setLayout(new BorderLayout());
-		contentPane.add(mb,BorderLayout.NORTH);
-
-		JLabel lbltoken = new JLabel("Token ID:");
-		lbltoken.setBounds(10,29, 47, 14);
-		lbltoken.setBackground(Color.WHITE);
-		contentPane.add(lbltoken);
-
-		tfTokenBar = new JTextField();
-		tfTokenBar.setBounds(67, 26, 288, 20);
-		contentPane.add(tfTokenBar);
-		tfTokenBar.setColumns(10);
-
-
+		contentPane.add(mb);
+		
 		JButton btnOK = new JButton("Enter");
-		btnOK.setBounds(365, 25, 59, 23);
+		btnOK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				credentials = new GitHubCredentials(tfGitHubTokenBar.getText());
+				
+				try {
+					githubuser= GitHubAPI.getSelf(credentials);
+				} catch (AuthenticationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				textArea.setText("Bem Vindo " + githubuser.name);
+				
+			}
+		});
+		btnOK.setBounds(764, 56, 66, 23);
 		contentPane.add(btnOK);
 
+		JLabel lblGitHubToken = new JLabel("GitHubToken:");
+		lblGitHubToken.setBounds(10, 32, 74, 14);
+		lblGitHubToken.setBackground(Color.WHITE);
+		contentPane.add(lblGitHubToken);
+		
+		JLabel lblTrelloKey = new JLabel("Trello Key:");
+		lblTrelloKey.setBackground(Color.WHITE);
+		lblTrelloKey.setBounds(10, 60, 61, 14);
+		contentPane.add(lblTrelloKey);
+		
+		JLabel lblTrelloToken = new JLabel("Trello Token:");
+		lblTrelloToken.setBackground(Color.WHITE);
+		lblTrelloToken.setBounds(393, 60, 69, 14);
+		contentPane.add(lblTrelloToken);
+
+		tfGitHubTokenBar = new JTextField();
+		tfGitHubTokenBar.setBounds(94, 29, 736, 20);
+		contentPane.add(tfGitHubTokenBar);
+		tfGitHubTokenBar.setColumns(10);
+		
+		tfTrelloKey = new JTextField();
+		tfTrelloKey.setColumns(10);
+		tfTrelloKey.setBounds(81, 56, 302, 20);
+		contentPane.add(tfTrelloKey);
+		
+		tfTrelloTokenBar = new JTextField();
+		tfTrelloTokenBar.setColumns(10);
+		tfTrelloTokenBar.setBounds(465, 56, 289, 20);
+		contentPane.add(tfTrelloTokenBar);
+
 		JButton btnEquipa = new JButton("Equipa");
-		btnEquipa.setBounds(10, 54, 89, 23);
+		btnEquipa.setBounds(10, 87, 89, 23);
 		contentPane.add(btnEquipa);
 
 		JButton btnSprints = new JButton("Sprints");
-
-		btnSprints.setBounds(100, 54, 89, 23);
+		btnSprints.setBounds(109, 87, 89, 23);
 		contentPane.add(btnSprints);
 
 		JButton btnCustos = new JButton("Custos");
-		btnCustos.setBounds(190, 54, 89, 23);
+		btnCustos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnCustos.setBounds(203, 87, 89, 23);
 		contentPane.add(btnCustos);
 
 		JButton btnTags = new JButton("Tags");
-		btnTags.setBounds(280, 54, 89, 23);
+		btnTags.setBounds(294, 87, 89, 23);
 		contentPane.add(btnTags);
 
 		JButton btnCommits = new JButton("Commits");
-		btnCommits.setBounds(10, 80, 89, 23);
+		btnCommits.setBounds(386, 87, 89, 23);
 		contentPane.add(btnCommits);
 
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 160, 414, 123);
-		contentPane.add(textArea);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 217, 820, 525);
+		contentPane.add(scrollPane);
+		
+		textArea = new JTextArea();
+		scrollPane.setViewportView(textArea);
+		
+		tfQuadroID = new JTextField();
+		tfQuadroID.setBounds(68, 189, 136, 20);
+		contentPane.add(tfQuadroID);
+		tfQuadroID.setColumns(10);
+		
+		JLabel lblQuadroID = new JLabel("QuadroID:");
+		lblQuadroID.setBounds(10, 192, 89, 14);
+		contentPane.add(lblQuadroID);
+		
+		JButton btnQuadroID = new JButton("Enter");
+		btnQuadroID.setBounds(210, 188, 66, 23);
+		contentPane.add(btnQuadroID);
 		
 	
 	}
 }
+
