@@ -27,7 +27,7 @@ public class GitHubAPI {
 		
 		String userURL = GithubEndpoints.GET_USER_URL(username); 
 		
-		Request.Builder requestBuilder = new Request.Builder().url(selfURL).addHeader("Accept", "application/json");
+		Request.Builder requestBuilder = new Request.Builder().url(userURL).addHeader("Accept", "application/json");
 		
 		Request request = requestBuilder.build();
 		Response response = new OkHttpClient().newCall(request).execute();
