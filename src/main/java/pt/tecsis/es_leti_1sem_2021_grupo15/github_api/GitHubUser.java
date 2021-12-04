@@ -20,7 +20,7 @@ public class GitHubUser {
 	/**
 	 * Interpreta os dados do utilizador do GitHub em formato JSON e
 	 * constroi uma instância desta classe com os mesmos.
-	 * @param {@link String} userJSON
+	 * @param userJSON {@link String}
 	 */
 	
 	public GitHubUser(String userJSON) throws JSONException {
