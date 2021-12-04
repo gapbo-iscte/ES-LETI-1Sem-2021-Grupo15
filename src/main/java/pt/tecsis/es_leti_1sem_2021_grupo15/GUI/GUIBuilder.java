@@ -72,7 +72,7 @@ public class GUIBuilder extends JFrame {
 	// variaveis para o menu
 	private static JMenuBar mb;
 	private static JMenu menu;
-	private static JMenuItem s1, s2;
+	private static JMenuItem s1, s2, s3;
 
 	private String quadroId;
 	private JTextField tfRepositorio;
@@ -111,7 +111,7 @@ public class GUIBuilder extends JFrame {
 		mb.setBounds(0, 0, 840, 23);
 		menu = new JMenu("Graficos de tempo");
 		mb.add(menu);
-		s1 = new JMenuItem("primeiro sprint backlog");
+		s1 = new JMenuItem("Tempo gasto por membro");
 		s1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -124,33 +124,84 @@ public class GUIBuilder extends JFrame {
 
 				DefaultPieDataset sprint1 = new DefaultPieDataset();
 
-//						[tempoPorMembro.size()];
 
 				int i = 0;
 				for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
-					
-//					System.out.println(entry.getKey());
-//					for (Double d: entry.getValue())
-//						System.out.println(d);
-//					System.out.println("_______________________");
+				
 
 					sprint1.insertValue(i, entry.getKey(), entry.getValue()[0]);
 					i++;
 				}
 				;
-				JFreeChart chart = ChartFactory.createPieChart("sprint backlog 1", sprint1, true, true, true);
-//				for (int j=0;j<=i;j++) {
-//				chart= ChartFactory.createPieChart("sprint backlog 1",sprint1[j],true, true,true);
-//				};
+				JFreeChart chart = ChartFactory.createPieChart("Tempo gast por membro", sprint1, true, true, true);				
 				PiePlot P = (PiePlot) chart.getPlot();
-				ChartFrame frame = new ChartFrame("Sprint backlog 1", chart);
+				ChartFrame frame = new ChartFrame("Tempo gasto por membro", chart);
 				frame.setVisible(true);
 				frame.setSize(450, 500);
 			}
 		});
-		s2 = new JMenuItem("segundo sprint backlog");
+		
+		s2 = new JMenuItem("Primeiro sprint backlog");
+		s2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+
+				HashMap<String, Double[]> tempoPorMembro = TrelloAcoes.getTempoPorSprintPorMembro(qu, "S1");
+
+				DefaultPieDataset sprint1 = new DefaultPieDataset();
+
+
+				int i = 0;
+				for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
+				
+
+					sprint1.insertValue(i, entry.getKey(), entry.getValue()[0]);
+					i++;
+				}
+				;
+				JFreeChart chart = ChartFactory.createPieChart("sprint backlog 1", sprint1, true, true, true);				
+				PiePlot P = (PiePlot) chart.getPlot();
+				ChartFrame frame = new ChartFrame("Sprint backlog 1", chart);
+				frame.setVisible(true);
+				frame.setSize(450, 500);
+				
+			}
+			});
+		s3= new JMenuItem("Segundo sprint backlog");
+		s3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+
+				HashMap<String, Double[]> tempoPorMembro = TrelloAcoes.getTempoPorSprintPorMembro(qu, "S2");
+
+				DefaultPieDataset sprint1 = new DefaultPieDataset();
+
+
+				int i = 0;
+				for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
+				
+
+					sprint1.insertValue(i, entry.getKey(), entry.getValue()[0]);
+					i++;
+				}
+				;
+				JFreeChart chart = ChartFactory.createPieChart("sprint backlog 2", sprint1, true, true, true);				
+				PiePlot P = (PiePlot) chart.getPlot();
+				ChartFrame frame = new ChartFrame("Sprint backlog 2", chart);
+				frame.setVisible(true);
+				frame.setSize(450, 500);
+				
+			}
+			});
 		menu.add(s1);
 		menu.add(s2);
+		menu.add(s3);
 		contentPane.add(mb);
 		
 		JButton btnOK = new JButton("Enter");
