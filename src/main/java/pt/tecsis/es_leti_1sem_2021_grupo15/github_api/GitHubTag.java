@@ -1,10 +1,7 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.github_api;
 
 import java.io.IOException;
-
 import javax.naming.AuthenticationException;
-
-import org.joda.time.DateTime;
 import org.json.JSONObject;
 
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
@@ -18,6 +15,12 @@ import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
 public class GitHubTag {
 
 	public final String name, commitURL,  zipBallURL, tarBallURL;
+	
+	/**
+	 * Interpreta os dados devolvidos pelo GitHub em formato JSON e
+	 * constroi uma instância desta classe com os mesmos.
+	 * @param tagJSON {@link String}
+	 */
 	
 	public GitHubTag(String tagJSON) {
 		
