@@ -8,6 +8,7 @@ import javax.naming.AuthenticationException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -26,6 +27,7 @@ public class GitHubAPI {
 	public static GitHubUser getUser(String username) throws IOException, Exception {
 		
 		String userURL = GithubEndpoints.GET_USER_URL(username); 
+		
 		
 		Request.Builder requestBuilder = new Request.Builder().url(selfURL).addHeader("Accept", "application/json");
 		

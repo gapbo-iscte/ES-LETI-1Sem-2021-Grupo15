@@ -43,6 +43,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import net.miginfocom.swing.MigLayout;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubAPI;
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubBranch;
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubCommit;
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubRepository;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubTag;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubUser;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
@@ -77,6 +80,7 @@ public class GUIBuilder extends JFrame {
 	private String quadroId;
 	private JTextField tfRepositorio;
 	private String nomeRepositorio;
+	private GitHubRepository repositorio;
 			
 
 	/**
@@ -279,9 +283,7 @@ public class GUIBuilder extends JFrame {
 		btnEquipa.setBounds(10, 87, 89, 23);
 		contentPane.add(btnEquipa);
 
-		JButton btnSprints = new JButton("Sprints");
-		btnSprints.setBounds(109, 87, 89, 23);
-		contentPane.add(btnSprints);
+		
 
 		JButton btnCustos = new JButton("Custos");
 		btnCustos.addActionListener(new ActionListener() {
@@ -319,11 +321,6 @@ public class GUIBuilder extends JFrame {
 		contentPane.add(btnTags);
 
 		JButton btnCommits = new JButton("Commits");
-		btnCommits.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
 		btnCommits.setBounds(386, 87, 89, 23);
 		contentPane.add(btnCommits);
 
@@ -365,6 +362,23 @@ public class GUIBuilder extends JFrame {
 		btnRepositorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nomeRepositorio = tfRepositorio.getText();
+	
+				
+				try {
+					repositorio = GitHubAPI.getRepository("gapbo-iscte", nomeRepositorio, credentials);
+					textArea.setText("Data de Inicio do Projeto: " + repositorio.createdAt.toString() + "\n Criado por: " + repositorio.getOwner().name );
+				} catch (AuthenticationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				
 			}
 		});
 		btnRepositorio.setBounds(510, 188, 66, 23);
