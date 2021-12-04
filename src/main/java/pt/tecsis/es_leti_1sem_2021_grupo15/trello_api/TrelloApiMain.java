@@ -2,6 +2,7 @@ package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
@@ -64,9 +65,29 @@ public class TrelloApiMain {
 		 
 		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
 		 
-		 //Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
-		
 		//HashMap<String,Double> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
+
+		/*for(Entry<String,Double[]> entry : gasto.entrySet()){
+			 
+			System.out.println(entry.getKey()); 
+			for(double d: entry.getValue()){
+				System.out.println(d);
+			}
+			System.out.println("----------------------------------");
+			
+			 
+		 }*/
+		 
+		/* Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
+		 
+		 for(int i = 0; i != arraygasto.length-1; i++){
+			 
+			System.out.println(arraygasto[i]); 
+			 
+		 }*/
+		
+		
+		//String[] datas = TrelloAcoes.getDataPorSprint(qu,"S1");
 		 
 		 
 	    
