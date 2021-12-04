@@ -84,28 +84,10 @@ public class TrelloCartas {
 	
 	
 	
-	//Retorna o conteudo de cada carta, feito com o id da Fila e o id do Quadro  (EX:[R0] - Entendimento do projeto e configura��es iniciais -------- etc...)
-	public static String[] getCartasDescricaoPorFila(String idFila, String idQuadro){  
-			
-		
-		List<Card> cartas = getCartasPorFila(idFila, idQuadro);
-		
-		String[] desc = new String[cartas.size()];
-		
-		int i = 0;
-
-		for (Card carta : cartas) {
-            System.out.println(carta.getName()+ "  -----------------  " + carta.getDesc() );
-            desc[i]=carta.getDesc();
-		}
-		
-		return desc;
-	     
-	     
-	}
 	
 	
 	
+	 
 	
 	
 	

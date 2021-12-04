@@ -61,13 +61,13 @@ public class TrelloApiMain {
 	    
 	  //  TrelloAcoes.getTempoPorQuadro(qu);
 	    
-		 HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu,"S1");
+		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu);
 		 
 		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
 		 
-		//HashMap<String,Double> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
+		HashMap<String,Double[]> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
 
-		for(Entry<String,Double[]> entry : gasto.entrySet()){
+		for(Entry<String,Double[]> entry : tempoPorCommitPorMembro.entrySet()){
 			 
 			System.out.println(entry.getKey()); 
 			for(double d: entry.getValue()){
@@ -77,6 +77,7 @@ public class TrelloApiMain {
 			
 			 
 		 }
+		
 		 
 		/* Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
 		 
@@ -88,6 +89,18 @@ public class TrelloApiMain {
 		
 		
 		//String[] datas = TrelloAcoes.getDataPorSprint(qu,"S1");
+		
+		
+		//String[] textos = TrelloFilas.textosPorSprint(qu,"S1");
+		
+		//String[] textos = TrelloFilas.getCartasDescricaoPorSprint(qu,"S3");
+		
+		/*for(int i = 0; i!=textos.length;i++){
+			
+			System.out.println(textos[i]);
+			
+			
+		}*/
 		 
 		 
 	    
