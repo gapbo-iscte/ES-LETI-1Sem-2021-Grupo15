@@ -179,8 +179,8 @@ public class TrelloAcoes {
 	
 	
 	
-	//NOME_DO_SPRINT = S1, S2 , etc..   Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Sprint, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint; Double[2]=tempo_restante_por_Sprint
-	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro, String NomeDoSprint ){
+	//NOME_DO_SPRINT = S1, S2 , etc..   Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Sprint, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint;
+	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro, String NomeDoSprint){
 			
 			//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
 			
@@ -192,7 +192,7 @@ public class TrelloAcoes {
 			
 			for(org.trello4j.model.List fila: filas){
 				
-				if(fila.getName().contains("[" + NomeDoSprint + "]")){
+				if(fila.getName().contains('[' + NomeDoSprint + ']')){
 					
 					
 					List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
@@ -226,7 +226,6 @@ public class TrelloAcoes {
 								
 								tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
 								tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
-								tempo_restante = tempo_previsto - tempo_gasto;
 								
 								
 							}
@@ -237,7 +236,7 @@ public class TrelloAcoes {
 					}
 					}
 						
-					Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};
+					Double[] tempos = {tempo_gasto, tempo_previsto};
 						
 						tempoPorSprint.put(fila.getName(),tempos);
 						
