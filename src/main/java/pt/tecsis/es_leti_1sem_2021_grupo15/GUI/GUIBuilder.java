@@ -72,7 +72,7 @@ public class GUIBuilder extends JFrame {
 	// variaveis para o menu
 	private static JMenuBar mb;
 	private static JMenu menu;
-	private static JMenuItem s1, s2, s3;
+	private static JMenuItem s1, s2, s3, s4;
 
 	private String quadroId;
 	private JTextField tfRepositorio;
@@ -199,9 +199,40 @@ public class GUIBuilder extends JFrame {
 				
 			}
 			});
+		s4= new JMenuItem("Tempo por sprint");
+		s4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+
+				HashMap<String, Double[]> tempoPorSprint = TrelloAcoes.getTempoPorSprint(qu);
+
+				DefaultPieDataset sprint1 = new DefaultPieDataset();
+
+
+				int i = 0;
+				for (Entry<String, Double[]> entry : tempoPorSprint.entrySet()) {
+				
+
+					sprint1.insertValue(i, entry.getKey(), entry.getValue()[0]);
+					i++;
+				}
+				;
+				JFreeChart chart = ChartFactory.createPieChart("Tempo por sprint", sprint1, true, true, true);				
+				PiePlot P = (PiePlot) chart.getPlot();
+				ChartFrame frame = new ChartFrame("Tempo por sprint", chart);
+				frame.setVisible(true);
+				frame.setSize(450, 500);
+				
+			}
+			});
+		
 		menu.add(s1);
 		menu.add(s2);
 		menu.add(s3);
+		menu.add(s4);
 		contentPane.add(mb);
 		
 		JButton btnOK = new JButton("Enter");
@@ -286,6 +317,8 @@ public class GUIBuilder extends JFrame {
 		JButton btnCustos = new JButton("Custos");
 		btnCustos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 			}
 		});
 		btnCustos.setBounds(203, 87, 89, 23);

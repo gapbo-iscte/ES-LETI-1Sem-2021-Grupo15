@@ -179,78 +179,77 @@ public class TrelloAcoes {
 	
 	
 	
-	//NOME_DO_SPRINT = S1, S2 , etc..   Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Sprint, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint; Double[2]=tempo_restante_por_Sprint
-	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro, String NomeDoSprint ){
-			
-			//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
-			
-			HashMap<String,Double[]> tempoPorSprint = new HashMap<String,Double[]>();
-			
-			List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
-			
-			System.out.println(filas.size());
-			
-			for(org.trello4j.model.List fila: filas){
+	//NOME_DO_SPRINT = S1, S2 , etc..   Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Sprint, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint;
+		public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro){
 				
-				if(fila.getName().contains("[" + NomeDoSprint + "]")){
+				//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
+				
+				HashMap<String,Double[]> tempoPorSprint = new HashMap<String,Double[]>();
+				
+				List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
+				
+				System.out.println(filas.size());
+				
+				for(org.trello4j.model.List fila: filas){
 					
-					
-					List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
-					
-					
-					tempo_gasto = 0.0;
-					tempo_previsto = 0.0;
-					tempo_restante = 0.0;
-					
-					for(Card carta: cartas){
+					if(fila.getName().toUpperCase().contains("SPRINT BACKLOG")){
 						
 						
-						List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
+						List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
 						
 						
-					System.out.println(acoes_carta.size());
-					
-					
-					for (Action action : acoes_carta) {
-						String horas = action.getData().getText();
+						tempo_gasto = 0.0;
+						tempo_previsto = 0.0;
+						tempo_restante = 0.0;
+						
+						for(Card carta: cartas){
+							
+							
+							List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
+							
+							
+						System.out.println(acoes_carta.size());
 						
 						
-						if( horas != null){
-							String[] parts = horas.split(" ");
-							if(parts[0].equalsIgnoreCase("plus!")){
-								
-								System.out.println(horas);
-								
-								String[] part = parts[1].split("/");
-								
-								
-								tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
-								tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
-								tempo_restante = tempo_previsto - tempo_gasto;
-								
+						for (Action action : acoes_carta) {
+							String horas = action.getData().getText();
+							
+							
+							if( horas != null){
+								String[] parts = horas.split(" ");
+								if(parts[0].equalsIgnoreCase("plus!")){
+									
+									System.out.println(horas);
+									
+									String[] part = parts[1].split("/");
+									
+									
+									tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
+									tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
+									
+									
+								}
 								
 							}
 							
+					
 						}
-						
+						}
+							
+						Double[] tempos = {tempo_gasto, tempo_previsto};
+							
+							tempoPorSprint.put(fila.getName(),tempos);
+							
+							System.out.println(fila.getName() + " --- " + "Numero de horas gastas:" + tempo_gasto);
+							//System.out.println(membro.getFullName() + " --- " + "Numero de horas previstas:" + tempo_previsto);
+							
+						}
+					
+					}
 				
-					}
-					}
-						
-					Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};
-						
-						tempoPorSprint.put(fila.getName(),tempos);
-						
-						System.out.println(fila.getName() + " --- " + "Numero de horas gastas:" + tempo_gasto);
-						//System.out.println(membro.getFullName() + " --- " + "Numero de horas previstas:" + tempo_previsto);
-						
-					}
 				
-				}
-			
-			
-			return tempoPorSprint;  	
-		}
+				return tempoPorSprint;  	
+			}
 	
 	
 	
