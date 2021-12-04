@@ -7,7 +7,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-<<<<<<< HEAD
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -45,7 +45,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import net.miginfocom.swing.MigLayout;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubAPI;
-<<<<<<< HEAD
+
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubBranch;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubCommit;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubRepository;
@@ -72,7 +72,7 @@ public class GUIBuilder extends JFrame {
 	private JTextField tfTrelloTokenBar;
 	private static JTextArea textArea;
 	private JTextField tfQuadroID;
-<<<<<<< HEAD
+
 
 	private static String trelloKey;
 	private static String trelloAccessToken;
@@ -116,7 +116,7 @@ public class GUIBuilder extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-<<<<<<< HEAD
+
 
 		mb = new JMenuBar();
 		mb.setBounds(0, 0, 840, 23);
@@ -213,7 +213,7 @@ public class GUIBuilder extends JFrame {
 			});
 		menu.add(s1);
 		menu.add(s2);
-<<<<<<< HEAD
+
 		menu.add(s3);
 
 		contentPane.add(mb);
@@ -222,7 +222,7 @@ public class GUIBuilder extends JFrame {
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				credentials = new GitHubCredentials(tfGitHubTokenBar.getText());
-<<<<<<< HEAD
+
 
 				trelloKey = tfTrelloKey.getText();
 				trelloAccessToken = tfTrelloTokenBar.getText();
@@ -277,7 +277,7 @@ public class GUIBuilder extends JFrame {
 		contentPane.add(tfTrelloTokenBar);
 
 		JButton btnEquipa = new JButton("Equipa");
-<<<<<<< HEAD
+
 		btnEquipa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Enviar com Esta
@@ -307,7 +307,7 @@ public class GUIBuilder extends JFrame {
 		contentPane.add(btnCustos);
 
 		JButton btnTags = new JButton("Tags");
-<<<<<<< HEAD
+
 		btnTags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//APAGAR DEPOIS SO PARA TESTES
@@ -342,7 +342,7 @@ public class GUIBuilder extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 217, 820, 525);
 		contentPane.add(scrollPane);
-<<<<<<< HEAD
+
 
 		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
@@ -351,7 +351,7 @@ public class GUIBuilder extends JFrame {
 		tfQuadroID.setBounds(68, 189, 136, 20);
 		contentPane.add(tfQuadroID);
 		tfQuadroID.setColumns(10);
-<<<<<<< HEAD
+
 
 		JLabel lblQuadroID = new JLabel("QuadroID:");
 		lblQuadroID.setBounds(10, 192, 51, 14);
