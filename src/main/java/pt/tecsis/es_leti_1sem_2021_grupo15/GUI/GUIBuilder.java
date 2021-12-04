@@ -63,6 +63,7 @@ public class GUIBuilder extends JFrame {
 	private GitHubCredentials credentials;
 	private JTextField tfTrelloKey;
 	private JTextField tfTrelloTokenBar;
+	private JTextField tfCusto;
 	private static JTextArea textArea;
 	private JTextField tfQuadroID;
 
@@ -290,6 +291,12 @@ public class GUIBuilder extends JFrame {
 		tfTrelloTokenBar.setColumns(10);
 		tfTrelloTokenBar.setBounds(465, 56, 289, 20);
 		contentPane.add(tfTrelloTokenBar);
+		
+		tfCusto = new JTextField();
+		tfCusto.setColumns(10);
+		tfCusto.setBounds(475, 87, 89, 23);
+		contentPane.add(tfCusto);
+
 
 		JButton btnEquipa = new JButton("Equipa");
 		btnEquipa.addActionListener(new ActionListener() {
@@ -319,9 +326,10 @@ public class GUIBuilder extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				
+				
 			}
 		});
-		btnCustos.setBounds(203, 87, 89, 23);
+		btnCustos.setBounds(386, 87, 89, 23);
 		contentPane.add(btnCustos);
 
 		JButton btnTags = new JButton("Tags");
@@ -357,7 +365,7 @@ public class GUIBuilder extends JFrame {
 				
 			}
 		});
-		btnCommits.setBounds(386, 87, 89, 23);
+		btnCommits.setBounds(203, 87, 89, 23);
 		contentPane.add(btnCommits);
 
 		JScrollPane scrollPane = new JScrollPane();
