@@ -30,7 +30,9 @@ public class TrelloAcoes {
 	}
 	
 	
+
 	//Este método retorna um array tempos[] onde tempos[0] = tempo_gasto; tempos[1]=tempo_previsto; tempos[2]=tempo_restante;
+
 	public static Double[] getTempoPorQuadro(String IdDoQuadro ){
 		
 		//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
@@ -125,20 +127,13 @@ public class TrelloAcoes {
 				List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
 			
 	
-			for(Card carta: cartas){
-				
-				
-							
-			List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
-			
-			for(Action acao: acoes_carta){
-				
-				
-				if(membro.getUsername().equalsIgnoreCase(acao.getMemberCreator().getUsername())){
-					
-					String horas = acao.getData().getText();
+				for(Card carta: cartas){
 					
 					
+								
+					List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
+					
+
 					if( horas != null){
 						String[] parts = horas.split(" ");
 						if(parts[0].equalsIgnoreCase("plus!")){
@@ -151,17 +146,37 @@ public class TrelloAcoes {
 							tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
 							tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
 							tempo_restante = tempo_previsto - tempo_gasto;
+
 							
 							
+							if(membro.getUsername().equalsIgnoreCase(acao.getMemberCreator().getUsername())){
+								
+								String horas = acao.getData().getText();
+								
+								
+								if( horas != null){
+									String[] parts = horas.split(" ");
+									if(parts[0].equalsIgnoreCase("plus!")){
+										
+										System.out.println(horas);
+										
+										String[] part = parts[1].split("/");
+										
+										
+										tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
+										tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
+										tempo_restante = tempo_previsto - tempo_gasto;
+										
+										
+									}
+									
+								}
+							}
 						}
 						
-					}
-				}
-			}
-					
+				
 			
-		
-			}
+				}
 			}
 			
 			Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};
@@ -179,8 +194,8 @@ public class TrelloAcoes {
 	
 	
 	
-	//NOME_DO_SPRINT = S1, S2 , etc..   Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Sprint, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint; Double[2]=tempo_restante_por_Sprint
-	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro, String NomeDoSprint ){
+	//NOME_DO_SPRINT = S1, S2 , etc..   Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Sprint, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint;
+	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro){
 			
 			//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
 			
@@ -192,7 +207,7 @@ public class TrelloAcoes {
 			
 			for(org.trello4j.model.List fila: filas){
 				
-				if(fila.getName().contains("[" + NomeDoSprint + "]")){
+				if(fila.getName().toUpperCase().contains("SPRINT BACKLOG")){
 					
 					
 					List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
@@ -226,7 +241,9 @@ public class TrelloAcoes {
 								
 								tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
 								tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
+
 								tempo_restante = tempo_previsto - tempo_gasto;
+
 								
 								
 							}
@@ -237,7 +254,9 @@ public class TrelloAcoes {
 					}
 					}
 						
+
 					Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};
+
 						
 						tempoPorSprint.put(fila.getName(),tempos);
 						
@@ -274,12 +293,7 @@ public class TrelloAcoes {
 						
 						
 						List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
-						
-						
-						
-						
-						
-							
+				
 						for(Member membro: membros){
 							
 							tempo_gasto = 0.0;
@@ -362,9 +376,10 @@ public class TrelloAcoes {
 						
 						
 						String[] desc = carta.getDesc().split("\\[Start Timestamp\\]");
-						
+				
 						System.out.println(desc[0]);
 						
+
 						String[] data = desc[1].split("\\[End Timestamp\\]");
 						
 						datas = data;
@@ -376,7 +391,9 @@ public class TrelloAcoes {
 				}
 			}
 			
+
 			System.out.println("Data de Ínicio:" + datas[0] + '\n' + "Data de Fim:" + datas[1]);
+
 			
 				
 			return datas;
