@@ -105,9 +105,9 @@ public class TrelloApiMain {
 		//GUITabelas.tabelaTotal(qu,"20");
 
 		
-		GUITabelas.tabelaPorSprint(qu, "S3");
+//		GUITabelas.tabelaPorSprint(qu, "S3");
 		 
-		GUITabelas.tabelaCustoPorSprint(qu, "S3", "20");
+	//	GUITabelas.tabelaCustoPorSprint(qu, "S3", "20");
 	    
 //	   List<Member> membros = TrelloMembros.getMemberDoQuadro("Projeto_ES");
 	    

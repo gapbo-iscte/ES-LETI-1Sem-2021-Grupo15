@@ -17,7 +17,7 @@ public class GitHubCommit {
 	/**
 	 * Interpreta os dados devolvidos pelo GitHub em formato JSON e
 	 * constroi uma instância desta classe com os mesmos.
-	 * @param {@link String} commitJSON
+	 * @param commitJSON {@link String}
 	 */
 	
 	public GitHubCommit(String commitJSON) {

@@ -87,9 +87,7 @@ public class TrelloAcoes {
 		
 		
 		for(Member membro: membros){
-			
-			
-			
+					
 			tempo_gasto = 0.0;
 			tempo_previsto = 0.0;
 			tempo_restante = 0.0;
@@ -99,43 +97,43 @@ public class TrelloAcoes {
 			
 	
 				for(Card carta: cartas){
+								
+					List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
 					
-					
-								
-				List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
-				
-				for(Action acao: acoes_carta){
-					
-					
-					if(membro.getUsername().equalsIgnoreCase(acao.getMemberCreator().getUsername())){
-						
-						String horas = acao.getData().getText();
-						
-						
-						if( horas != null){
-							String[] parts = horas.split(" ");
-							if(parts[0].equalsIgnoreCase("plus!")){
-								
-								System.out.println(horas);
-								
-								String[] part = parts[1].split("/");
-								
-								
-								tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
-								tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
-								tempo_restante = tempo_previsto - tempo_gasto;
-								
-								
-							}
+						for(Action acao: acoes_carta){
 							
-						}
+							
+							if(membro.getUsername().equalsIgnoreCase(acao.getMemberCreator().getUsername())){
+								
+								String horas = acao.getData().getText();
+									
+									
+									if( horas != null){
+										String[] parts = horas.split(" ");
+										if(parts[0].equalsIgnoreCase("plus!")){
+											
+											System.out.println(horas);
+											
+											String[] part = parts[1].split("/");
+											
+											
+											tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
+											tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
+											
+											
+										}
+										
+									}
+									
+							
+								}
+		
+							}
 					}
-				}
 						
 				
 			
 				}
-			}
 			
 			Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};
 			
@@ -143,11 +141,12 @@ public class TrelloAcoes {
 			
 			System.out.println(membro.getUsername() + " --- " + "Numero de horas gastas:" + tempo_gasto);
 			System.out.println(membro.getUsername() + " --- " + "Numero de horas previstas:" + tempo_previsto);
-		
-		}
+			
+			}
 		
 		return tempoPorMembro;  	
 	}
+
 	
 	
 	

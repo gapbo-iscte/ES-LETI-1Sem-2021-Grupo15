@@ -7,9 +7,11 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,14 +43,18 @@ import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import net.miginfocom.swing.MigLayout;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubAPI;
+
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubBranch;
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubCommit;
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubRepository;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubTag;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubUser;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
 import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloAcoes;
 import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloMembros;
 import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloQuadros;
+
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -63,8 +69,10 @@ public class GUIBuilder extends JFrame {
 	private GitHubCredentials credentials;
 	private JTextField tfTrelloKey;
 	private JTextField tfTrelloTokenBar;
+	private JTextField tfCusto;
 	private static JTextArea textArea;
 	private JTextField tfQuadroID;
+
 
 	private static String trelloKey;
 	private static String trelloAccessToken;
@@ -72,12 +80,14 @@ public class GUIBuilder extends JFrame {
 	// variaveis para o menu
 	private static JMenuBar mb;
 	private static JMenu menu;
-	private static JMenuItem s1, s2, s3;
+	private static JMenuItem s1, s2, s3, s4;
 
 	private String quadroId;
 	private JTextField tfRepositorio;
 	private String nomeRepositorio;
+	private GitHubRepository repositorio;
 			
+
 
 	/**
 	 * Launch the application.
@@ -107,9 +117,11 @@ public class GUIBuilder extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+
 		mb = new JMenuBar();
 		mb.setBounds(0, 0, 840, 23);
 		menu = new JMenu("Graficos de tempo");
+
 		mb.add(menu);
 		s1 = new JMenuItem("Tempo gasto por membro");
 		s1.addActionListener(new ActionListener() {
@@ -199,15 +211,49 @@ public class GUIBuilder extends JFrame {
 				
 			}
 			});
+		s4= new JMenuItem("Tempo por sprint");
+		s4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+
+				HashMap<String, Double[]> tempoPorSprint = TrelloAcoes.getTempoPorSprint(qu);
+
+				DefaultPieDataset sprint1 = new DefaultPieDataset();
+
+
+				int i = 0;
+				for (Entry<String, Double[]> entry : tempoPorSprint.entrySet()) {
+				
+
+					sprint1.insertValue(i, entry.getKey(), entry.getValue()[0]);
+					i++;
+				}
+				;
+				JFreeChart chart = ChartFactory.createPieChart("Tempo por sprint", sprint1, true, true, true);				
+				PiePlot P = (PiePlot) chart.getPlot();
+				ChartFrame frame = new ChartFrame("Tempo por sprint", chart);
+				frame.setVisible(true);
+				frame.setSize(450, 500);
+				
+			}
+			});
+		
 		menu.add(s1);
 		menu.add(s2);
+
 		menu.add(s3);
+		menu.add(s4);
+
 		contentPane.add(mb);
 		
 		JButton btnOK = new JButton("Enter");
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				credentials = new GitHubCredentials(tfGitHubTokenBar.getText());
+
 
 				trelloKey = tfTrelloKey.getText();
 				trelloAccessToken = tfTrelloTokenBar.getText();
@@ -250,6 +296,7 @@ public class GUIBuilder extends JFrame {
 		contentPane.add(tfGitHubTokenBar);
 		tfGitHubTokenBar.setColumns(10);
 
+
 		tfTrelloKey = new JTextField();
 		tfTrelloKey.setColumns(10);
 		tfTrelloKey.setBounds(81, 56, 302, 20);
@@ -259,8 +306,15 @@ public class GUIBuilder extends JFrame {
 		tfTrelloTokenBar.setColumns(10);
 		tfTrelloTokenBar.setBounds(465, 56, 289, 20);
 		contentPane.add(tfTrelloTokenBar);
+		
+		tfCusto = new JTextField();
+		tfCusto.setColumns(10);
+		tfCusto.setBounds(475, 87, 89, 23);
+		contentPane.add(tfCusto);
+
 
 		JButton btnEquipa = new JButton("Equipa");
+
 		btnEquipa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Enviar com Esta
@@ -279,19 +333,21 @@ public class GUIBuilder extends JFrame {
 		btnEquipa.setBounds(10, 87, 89, 23);
 		contentPane.add(btnEquipa);
 
-		JButton btnSprints = new JButton("Sprints");
-		btnSprints.setBounds(109, 87, 89, 23);
-		contentPane.add(btnSprints);
+		
 
 		JButton btnCustos = new JButton("Custos");
 		btnCustos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				
 			}
 		});
-		btnCustos.setBounds(203, 87, 89, 23);
+		btnCustos.setBounds(386, 87, 89, 23);
 		contentPane.add(btnCustos);
 
 		JButton btnTags = new JButton("Tags");
+
 		btnTags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//APAGAR DEPOIS SO PARA TESTES
@@ -315,6 +371,7 @@ public class GUIBuilder extends JFrame {
 				textArea.setText(tagString);
 			}
 		});
+
 		btnTags.setBounds(294, 87, 89, 23);
 		contentPane.add(btnTags);
 
@@ -324,12 +381,14 @@ public class GUIBuilder extends JFrame {
 				
 			}
 		});
-		btnCommits.setBounds(386, 87, 89, 23);
+		btnCommits.setBounds(203, 87, 89, 23);
+
 		contentPane.add(btnCommits);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 217, 820, 525);
 		contentPane.add(scrollPane);
+
 
 		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
@@ -338,6 +397,7 @@ public class GUIBuilder extends JFrame {
 		tfQuadroID.setBounds(68, 189, 136, 20);
 		contentPane.add(tfQuadroID);
 		tfQuadroID.setColumns(10);
+
 
 		JLabel lblQuadroID = new JLabel("QuadroID:");
 		lblQuadroID.setBounds(10, 192, 51, 14);
@@ -365,6 +425,23 @@ public class GUIBuilder extends JFrame {
 		btnRepositorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nomeRepositorio = tfRepositorio.getText();
+	
+				
+				try {
+					repositorio = GitHubAPI.getRepository("gapbo-iscte", nomeRepositorio, credentials);
+					textArea.setText("Data de Inicio do Projeto: " + repositorio.createdAt.toString() + "\n Criado por: " + repositorio.getOwner().name );
+				} catch (AuthenticationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				
 			}
 		});
 		btnRepositorio.setBounds(510, 188, 66, 23);
