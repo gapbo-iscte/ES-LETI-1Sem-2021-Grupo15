@@ -7,10 +7,22 @@ import org.trello4j.model.Action;
 import org.trello4j.model.Card;
 import org.trello4j.model.Member;
 
+
+
+/**
+ * @author Goncalo Benido
+ *
+ */
 public class TrelloGitTempos {
 	
 	
 	private static Double tempo_gasto = 0.0;
+	
+	
+	/**
+	 * @param IdDoQuadro - ID do quadro onde peretente encontrar o tempo que cada membro teve por commit ({@link String})
+	 * @return Metodo retorna HashMap<String,Double>, o String o nome do membro double=tempo_gasto_por_commit ({@link HashMap<String,Double>})
+	 */
 	
 	public static HashMap<String,Double> getTempoPorCommitPorMembro(String IdDoQuadro){
 		

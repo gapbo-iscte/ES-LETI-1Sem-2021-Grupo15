@@ -2,14 +2,24 @@ package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
 import java.util.List;
 
-import org.trello4j.Trello;
 import org.trello4j.model.Card;
-import org.trello4j.model.Card.Attachment;
 
+
+
+
+
+/**
+ * @author Gonçalo Benido
+ *
+ */
 public class TrelloCartas {
 	
 
-	//Vai devolver uma lista com todas as caratas existentes num Quadro (EX:Reuni�es, Daily Scrum, etc...)		
+	/**
+	 * Vai devolver uma lista com todas as caratas existentes num Quadro (EX:Reunioes, Daily Scrum, etc...)
+	 * @param IdDoQuadro - ID do quadro onde se encontram as cartas {@link String}
+	 * @return {@link List<Card>}
+	 */
 	public static List<Card> getTodasAsCartas(String IdDoQuadro){
 		
 		
@@ -24,7 +34,13 @@ public class TrelloCartas {
 		
 	}
 	
-	//Devolve a decrições da carta sabendo o título da carta
+
+	/**
+	 * Devolve a decricoes da carta sabendo o titulo da carta
+	 * @param NomeDaCarta - nome da carta que procura {@link String}
+	 * @param idQuadro - ID do quadro onde se encontram as cartas {@link String}
+	 * @return {@link String}
+	 */
 	public static String getCartasDescricaoPorQuadro(String NomeDaCarta, String idQuadro){  //, //Board projectName) {
 		
 		List<Card> cartas = getTodasAsCartas(idQuadro);
@@ -46,7 +62,12 @@ public class TrelloCartas {
 	
 	
 	
-	//Devolve as cartas existetes numa fila (Uma fila é considerada um conjunto de cartas restritas a um bloco)
+	/**
+	 * Devolve as cartas existetes numa fila (Uma fila e' considerada um conjunto de cartas restritas de um bloco)
+	 * @param idFila - ID da fila onde estão as cartas que procura {@link String}
+	 * @param IdDoQuadro - ID do quadro onde estão as cartas {@link String}
+	 * @return Lista com as cartas {@link List<Card>}
+	 */
 	public static List<Card> getCartasPorFila(String idFila, String IdDoQuadro){
 		
 		//String FilaID= TrelloID.getFilaID(TrelloQuadros.trelloApi, IdDoQuadro,Fila);
@@ -59,18 +80,24 @@ public class TrelloCartas {
 	
 	
 	
-	//Devolve os títulos de todas as cartas se encontrão numa fila especificada
-	public static String[] getCartasTítuloPorFila(String Fila, String IdDoQuadro){
+
+	/**
+	 * Devolve os titulos de todas as cartas que se encontrao numa fila especificada
+	 * @param  idFila - ID da fila onde estão as cartas que procura {@link String}
+	 * @param IdDoQuadro - ID do quadro onde estão as cartas {@link String}
+	 * @return {@link String[]}
+	 */
+	public static String[] getCartasTítuloPorFila(String idFila, String IdDoQuadro){
 		
 				
-			List<Card> cartasPorFila = getCartasPorFila(Fila, IdDoQuadro);
+			List<Card> cartasPorFila = getCartasPorFila(idFila, IdDoQuadro);
 			
 			String[] titulos = new String[cartasPorFila.size()];
 			
 			int i = 0;
 			
 			for (Card carta : cartasPorFila) {
-	            System.out.println(carta.getName());//+"- "+ cartas.getId()+"-"+cartas.getIdBoard());
+	            System.out.println(carta.getName());
 	            titulos[i]=carta.getName();
 	            i++;
 			}
@@ -84,7 +111,13 @@ public class TrelloCartas {
 	
 	
 	
-	//Retorna o conteudo de cada carta, feito com o id da Fila e o id do Quadro  (EX:[R0] - Entendimento do projeto e configura��es iniciais -------- etc...)
+
+	/**
+	 * Retorna o conteudo de cada carta, feito com o id da Fila e o id do Quadro  (EX:[R0] - Entendimento do projeto e configuracoes iniciais -------- etc...)
+	 * @param idFila - ID da fila onde estão as cartas que procura {@link String}
+	 * @param idQuadro - ID do quadro onde estão as cartas {@link String}
+	 * @return {@link String}
+	 */
 	public static String[] getCartasDescricaoPorFila(String idFila, String idQuadro){  
 			
 		
@@ -105,50 +138,4 @@ public class TrelloCartas {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	/*public static List<Attachment> getAttachmentPorCarta(Trello trelloApi, String Carta, String NomeDoQuadro){
-		
-		List<Card> cartas = getTituloDeTodasAsCartas(trelloApi,NomeDoQuadro);
-		
-		List<Attachment> attaches = null;
-		
-		for(Card carta : cartas){
-			if(carta.getName() == Carta){
-				
-				attaches = trelloApi.getAttachmentsByCard(carta.getId());		
-			}
-		}
-		
-		for(Attachment attach : attaches){
-			
-			System.out.println(attach.getName());
-			
-		}
-		
-		return attaches;
-		
-		
-	}*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

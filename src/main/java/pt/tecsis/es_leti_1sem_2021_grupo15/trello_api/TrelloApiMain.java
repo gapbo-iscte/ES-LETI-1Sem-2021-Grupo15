@@ -2,6 +2,7 @@ package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
@@ -11,6 +12,8 @@ import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
 import org.trello4j.model.Member;
+
+import pt.tecsis.es_leti_1sem_2021_grupo15.GUI.GUITabelas;
 
 
 public class TrelloApiMain {
@@ -60,15 +63,51 @@ public class TrelloApiMain {
 	    
 	  //  TrelloAcoes.getTempoPorQuadro(qu);
 	    
-		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprintPorMembro(qu,"S2");
+		/* HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu,"S2");
 		 
-		 HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
+		 for(Entry<String,Double[]> entry: gasto.entrySet()){
+				
+				System.out.println(entry.getKey());
+				
+				for(Double d: entry.getValue())
+					System.out.println(d);
+				
+				System.out.println("---------------------------------------");
+		 };
+		 */
+		
+		
+		 
+		// Double[] tempos = TrelloAcoes.getTempoPorQuadro(qu);
+		 
+		 
+		 
+		/* for(int i = 0; i!=tempos.length; i++){
+			 
+			 System.out.println(tempos[i]);
+			 
+		 }*/
+		 
+		 
+		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
 		 
 		 //Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
 		
 		//HashMap<String,Double> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
+		
+		
+		
+		//int numeroDeSprints = TrelloAcoes.getNumeroDeSprints(qu);
+		
+		//System.out.println(numeroDeSprints);
 		 
+		
+		//GUITabelas.tabelaTotal(qu,"20");
+
+		
+		GUITabelas.tabelaPorSprint(qu, "S3");
 		 
+		GUITabelas.tabelaCustoPorSprint(qu, "S3", "20");
 	    
 //	   List<Member> membros = TrelloMembros.getMemberDoQuadro("Projeto_ES");
 	    

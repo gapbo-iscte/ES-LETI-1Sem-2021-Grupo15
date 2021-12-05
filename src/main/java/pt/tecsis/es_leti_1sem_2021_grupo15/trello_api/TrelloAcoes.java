@@ -1,13 +1,20 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
-import java.lang.reflect.Array;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.trello4j.model.Action;
 import org.trello4j.model.Card;
 import org.trello4j.model.Member;
 
+
+
+/**
+ * @author Goncalo Benido
+ *
+ */
 public class TrelloAcoes {
 	
 	private static Double tempo_gasto = 0.0;
@@ -15,9 +22,13 @@ public class TrelloAcoes {
 	private static Double tempo_restante = 0.0;
 		
 	
+	
+
+	/**
+	 * @param IdDoQuadro - ID do quadro onde pretente procurar os comentarios ({@link String})
+	 * @return Devolve uma lista do objecto Action que contem os comentarios de cada carta do quadro ({@link List<Action>})
+	 */
 	public List<Action> getAcoesPorQuadro(String IdDoQuadro ){
-			
-		//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
 		
 		List<Action> actions = TrelloQuadros.trelloApi.getActionsByBoard(IdDoQuadro);
 		
@@ -29,82 +40,44 @@ public class TrelloAcoes {
 		return actions;  	
 	}
 	
-	
-	//Este método retorna um array tempos[] onde tempos[0] = tempo_gasto; tempos[1]=tempo_previsto; tempos[2]=tempo_restante;
+
+
+	/**
+	 * @param IdDoQuadro - ID do quadro que pertente obter o numero de horas de trabalho ({@link String})
+	 * @return Este metodo retorna um array tempos[] onde tempos[0] = tempo_gasto; tempos[1]=tempo_previsto; tempos[2]=tempo_restante; ({@link Double[]})
+	 */
 	public static Double[] getTempoPorQuadro(String IdDoQuadro ){
 		
-		//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
-		
-		List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
-		
-		System.out.println(filas.size());
-		
+		HashMap<String,Double[]> tempoPorSprintPorMembro = getTempoPorMembro(IdDoQuadro);
+			
 		tempo_gasto = 0.0;
 		tempo_previsto = 0.0;
 		tempo_restante = 0.0;
-		
-		for(org.trello4j.model.List fila: filas){
+			
+		for(Entry<String,Double[]> entry: tempoPorSprintPorMembro.entrySet()){
+									
+				tempo_gasto = tempo_gasto + entry.getValue()[0];
 				
+				tempo_previsto = tempo_previsto + entry.getValue()[1];
 				
-				List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
-				
-				
-				
-				for(Card carta: cartas){
-					
-					
-					List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
-					
-				
-				
-					for (Action action : acoes_carta) {
-						String horas = action.getData().getText();
-						
-						
-						if( horas != null){
-							String[] parts = horas.split(" ");
-							if(parts[0].equalsIgnoreCase("plus!")){
-								
-								System.out.println(horas);
-								
-								String[] part = parts[1].split("/");
-								
-								
-								tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
-								tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
-								tempo_restante = tempo_previsto - tempo_gasto;
-								
-								
-							}
-						}
-					}
-				}
+				tempo_restante = tempo_restante + entry.getValue()[2];
+
 		}
-		
-			Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};
-	
-					System.out.println("Numero de horas gastas:" + tempo_gasto);
-					System.out.println("Numero de horas previstas:" + tempo_previsto);
-					System.out.println("Número de horas restantes:" + tempo_restante);
-					
-					
-					return tempos;  	
 			
-					
-				}
+		Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};	
+				
+		return tempos;	
 			
 			
+	}
 		
 	
-	
-	
-	
-	//Método retorna HashMap<String,Double[]>, o double[0]=tempo_gasto_por_membro; double[1]=tempo_previsto_por_membro: double[2]=tempo_restante_por_membro
+
+	/**
+	 * @param IdDoQuadro - ID do quadro que pertente obter os tempo por membro ({@link String})
+	 * @return Metodo retorna HashMap<String,Double[]>, o double[0]=tempo_gasto_por_membro; double[1]=tempo_previsto_por_membro: double[2]=tempo_restante_por_membro ({@link HashMap<String,Double[]>})
+	 */
 	public static HashMap<String,Double[]> getTempoPorMembro(String IdDoQuadro ){
-		
-		//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
-		
-		
 		
 		HashMap<String,Double[]> tempoPorMembro = new HashMap<String,Double[]>();
 		
@@ -125,94 +98,18 @@ public class TrelloAcoes {
 				List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
 			
 	
-			for(Card carta: cartas){
+				for(Card carta: cartas){
+					
+					
+								
+				List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
 				
-				
-							
-			List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
-			
-			for(Action acao: acoes_carta){
-				
-				
-				if(membro.getUsername().equalsIgnoreCase(acao.getMemberCreator().getUsername())){
-					
-					String horas = acao.getData().getText();
+				for(Action acao: acoes_carta){
 					
 					
-					if( horas != null){
-						String[] parts = horas.split(" ");
-						if(parts[0].equalsIgnoreCase("plus!")){
-							
-							System.out.println(horas);
-							
-							String[] part = parts[1].split("/");
-							
-							
-							tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
-							tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
-							tempo_restante = tempo_previsto - tempo_gasto;
-							
-							
-						}
+					if(membro.getUsername().equalsIgnoreCase(acao.getMemberCreator().getUsername())){
 						
-					}
-				}
-			}
-					
-			
-		
-			}
-			}
-			
-			Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};
-			
-			tempoPorMembro.put(membro.getUsername(),tempos);
-			
-			System.out.println(membro.getUsername() + " --- " + "Numero de horas gastas:" + tempo_gasto);
-			System.out.println(membro.getUsername() + " --- " + "Numero de horas previstas:" + tempo_previsto);
-		
-		}
-		
-		return tempoPorMembro;  	
-	}
-	
-	
-	
-	
-	//NOME_DO_SPRINT = S1, S2 , etc..   Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Sprint, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint; Double[2]=tempo_restante_por_Sprint
-	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro, String NomeDoSprint ){
-			
-			//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
-			
-			HashMap<String,Double[]> tempoPorSprint = new HashMap<String,Double[]>();
-			
-			List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
-			
-			System.out.println(filas.size());
-			
-			for(org.trello4j.model.List fila: filas){
-				
-				if(fila.getName().contains("[" + NomeDoSprint + "]")){
-					
-					
-					List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
-					
-					
-					tempo_gasto = 0.0;
-					tempo_previsto = 0.0;
-					tempo_restante = 0.0;
-					
-					for(Card carta: cartas){
-						
-						
-						List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
-						
-						
-					System.out.println(acoes_carta.size());
-					
-					
-					for (Action action : acoes_carta) {
-						String horas = action.getData().getText();
+						String horas = acao.getData().getText();
 						
 						
 						if( horas != null){
@@ -232,36 +129,112 @@ public class TrelloAcoes {
 							}
 							
 						}
-						
-				
 					}
-					}
-						
-					Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};
-						
-						tempoPorSprint.put(fila.getName(),tempos);
-						
-						System.out.println(fila.getName() + " --- " + "Numero de horas gastas:" + tempo_gasto);
-						//System.out.println(membro.getFullName() + " --- " + "Numero de horas previstas:" + tempo_previsto);
-						
-					}
-				
 				}
+						
+				
 			
+				}
+			}
 			
-			return tempoPorSprint;  	
+			Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};
+			
+			tempoPorMembro.put(membro.getUsername(),tempos);
+			
+			System.out.println(membro.getUsername() + " --- " + "Numero de horas gastas:" + tempo_gasto);
+			System.out.println(membro.getUsername() + " --- " + "Numero de horas previstas:" + tempo_previsto);
+		
 		}
+		
+		return tempoPorMembro;  	
+	}
 	
 	
 	
+
+	/**
+	 * @param IdDoQuadro - ID do quadro que pretende saber o numero de sprints que existem ({@link String})
+	 * @return Devolve o nÃºmero de Sprints no quadro ({@link Integer})
+	 */
+	public static int getNumeroDeSprints(String IdDoQuadro){
+		
+		int numeroDeSprints = 0;
+		
+		List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
+		
+		System.out.println(filas.size());
+		
+		for(org.trello4j.model.List fila: filas){
+			
+			if(fila.getName().contains("[S")){
+				
+				numeroDeSprints++;
+				
+			}
+			
+		}
+		
+		return numeroDeSprints;
+		
+		
+	}
 	
+
 	
+	/**
+	 * @param IdDoQuadro - ID do quadro que pretende saber o tempo por Sprint ({@link String})
+	 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
+	 * @return Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Sprint, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint; Double[2]=tempo_restante_por_Sprint ({@link HashMap<String,Double[]>})
+	 */
+	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro, String NomeDoSprint ){
+			
+			//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
+		
+		String SprintName = '[' + NomeDoSprint + ']' + "Sprint Backlog"; 
+		
+		
+			
+		HashMap<String,Double[]> tempoPorSprint = new HashMap<String,Double[]>();
+			
+
+		HashMap<String,Double[]> tempoPorSprintPorMembro = getTempoPorSprintPorMembro(IdDoQuadro, NomeDoSprint );
+			
+		tempo_gasto = 0.0;
+		tempo_previsto = 0.0;
+		tempo_restante = 0.0;
+			
+		for(Entry<String,Double[]> entry: tempoPorSprintPorMembro.entrySet()){
+									
+				tempo_gasto = tempo_gasto + entry.getValue()[0];
+				
+				tempo_previsto = tempo_previsto + entry.getValue()[1];
+			
+				tempo_restante = tempo_restante + entry.getValue()[2];
+
+				
+		}
+			
+		Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};	
+			
+		tempoPorSprint.put(SprintName,tempos);	
+			
+			
+		return tempoPorSprint;	
+			
+			
+	}
+			
+
+	
+		/**
+		 * @param IdDoQuadro - ID do quadro que pretende saber o tempo por Sprint po Membro ({@link String})
+		 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String}) 
+		 * @return Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Membro, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint; Double[2]=tempo_restante_por_Sprint ({@link HashMap<String,Double[]>})
+		 */
 	
 		public static HashMap<String,Double[]> getTempoPorSprintPorMembro(String IdDoQuadro, String NomeDoSprint ){
 				
-				//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
-				
-				HashMap<String,Double[]> tempoPorSprintPorMembro = new HashMap<String,Double[]>();
+			HashMap<String,Double[]> tempoPorSprintPorMembro = new HashMap<String,Double[]>();
 				
 				List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
 				
@@ -274,12 +247,7 @@ public class TrelloAcoes {
 						
 						
 						List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
-						
-						
-						
-						
-						
-							
+					
 						for(Member membro: membros){
 							
 							tempo_gasto = 0.0;
@@ -290,35 +258,35 @@ public class TrelloAcoes {
 								
 								
 											
-							List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
-							
-							for(Action acao: acoes_carta){
+								List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
 								
-								
-								if(membro.getUsername().equalsIgnoreCase(acao.getMemberCreator().getUsername())){
-									
-									String horas = acao.getData().getText();
-									
-									
-									if( horas != null){
-										String[] parts = horas.split(" ");
-										if(parts[0].equalsIgnoreCase("plus!")){
-											
-											System.out.println(horas);
-											
-											String[] part = parts[1].split("/");
-											
-											
-											tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
-											tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
-											tempo_restante = tempo_previsto - tempo_gasto;
-											
-											
-										}
+									for(Action acao: acoes_carta){
 										
+										
+										if(membro.getUsername().equalsIgnoreCase(acao.getMemberCreator().getUsername())){
+											
+											String horas = acao.getData().getText();
+											
+											
+											if( horas != null){
+												String[] parts = horas.split(" ");
+												if(parts[0].equalsIgnoreCase("plus!")){
+													
+													System.out.println(horas);
+													
+													String[] part = parts[1].split("/");
+													
+													
+													tempo_gasto = Double.parseDouble(part[0]) + tempo_gasto;
+													tempo_previsto = Double.parseDouble(part[1]) + tempo_previsto;
+													tempo_restante = tempo_previsto - tempo_gasto;
+													
+													
+												}
+												
+											}
+										}
 									}
-								}
-							}
 									
 							
 						
@@ -342,7 +310,12 @@ public class TrelloAcoes {
 		
 		
 		
-		//Obter a data de ínicio e fim de um Sprint
+
+		/**
+		 * @param IdDoQuadro - ID do quadro que pretende saber o o numero de Sprints existentes nesse quadro ({@link String})
+		 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
+		 * @return Devolve um String[] datas, onde datas[0] = data_de_inicio; datas[1] = data_de_fim; ({@link String[]})
+		 */
 		public static String[] getDataPorSprint(String IdDoQuadro, String NomeDoSprint ){
 			
 			String [] datas = new String[2];
@@ -376,7 +349,7 @@ public class TrelloAcoes {
 				}
 			}
 			
-			System.out.println("Data de Ínicio:" + datas[0] + '\n' + "Data de Fim:" + datas[1]);
+			System.out.println("Data de ï¿½nicio:" + datas[0] + '\n' + "Data de Fim:" + datas[1]);
 			
 				
 			return datas;
