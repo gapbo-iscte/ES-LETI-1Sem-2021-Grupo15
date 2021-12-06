@@ -43,6 +43,7 @@ import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubAPI;
 
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubBranch;
@@ -72,6 +73,7 @@ public class GUIBuilder extends JFrame {
 	private JTextField tfCusto;
 	private static JTextArea textArea;
 	private JTextField tfQuadroID;
+	String m = "";
 
 
 	private static String trelloKey;
@@ -104,6 +106,7 @@ public class GUIBuilder extends JFrame {
 			}
 		});
 	}
+
 
 	/**
 	 * Create the frame.
@@ -164,8 +167,10 @@ public class GUIBuilder extends JFrame {
 		s2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+
 				List<Board> quadros = TrelloQuadros
 						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
 
 				String qu = quadros.get(0).getId();
 
@@ -199,8 +204,7 @@ public class GUIBuilder extends JFrame {
 		s3= new JMenuItem("Segundo sprint backlog");
 		s3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List<Board> quadros = TrelloQuadros
-						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+				List<Board> quadros = TrelloQuadros.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
 
 				String qu = quadros.get(0).getId();
 
@@ -320,8 +324,10 @@ public class GUIBuilder extends JFrame {
 
 				trelloKey = tfTrelloKey.getText();
 				trelloAccessToken = tfTrelloTokenBar.getText();
-				TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
-
+				//ENVIAR COM ESTE
+				//TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
+				//APAGAR DEPOIS SO PARA TESTES
+				TrelloQuadros.Inicializar("70ff5208fa5c52ac915ea4e71e3bf4ad", "502e0e06ad5d44de9f68efa2d1b245238948b8357f277d3cf7c4aa016af5dfed");
 				try {
 					githubuser = GitHubAPI.getSelf(credentials);
 				} catch (AuthenticationException e1) {
@@ -384,16 +390,6 @@ public class GUIBuilder extends JFrame {
 
 		btnEquipa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Enviar com Esta
-				//List<Member> membros = TrelloMembros.getMembrosDoQuadro(quadroId);
-				
-				//SO PARA TESTES APAGAR DEPOIS
-				List<Member> membros = TrelloMembros.getMembrosDoQuadro("615c89b6a359063061e30315");
-				//
-				String m = "";
-				for(Member membro : membros){
-					m = m + membro.getFullName()+"\n";
-				}
 				textArea.setText(m);
 			}
 		});
@@ -555,11 +551,21 @@ public class GUIBuilder extends JFrame {
 		btnRepositorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nomeRepositorio = tfRepositorio.getText();
-	
+				//Enviar com Esta
+				//List<Member> membros = TrelloMembros.getMembrosDoQuadro(quadroId);
+				
+				//SO PARA TESTES APAGAR DEPOIS
+				List<Member> membros = TrelloMembros.getMembrosDoQuadro("615c89b6a359063061e30315");
+				//
+				
+				for(Member membro : membros){
+					m = m + membro.getFullName()+"\n";
+				}
 				
 				try {
 					repositorio = GitHubAPI.getRepository("gapbo-iscte", nomeRepositorio, credentials);
-					textArea.setText("Data de Inicio do Projeto: " + repositorio.createdAt.toString() + "\n Criado por: " + repositorio.getOwner().name );
+					textArea.setText("Data de Inicio do Projeto: " + repositorio.createdAt.toString() + "\n Criado por: " + repositorio.getOwner().name + 
+							"\n Descrição: " + repositorio.descricao +"\n Membros: \n" + m);
 				} catch (AuthenticationException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

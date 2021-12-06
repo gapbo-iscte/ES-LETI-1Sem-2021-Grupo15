@@ -112,30 +112,46 @@ public class TrelloCartas {
 	
 	
 
-	/**
-	 * Retorna o conteudo de cada carta, feito com o id da Fila e o id do Quadro  (EX:[R0] - Entendimento do projeto e configuracoes iniciais -------- etc...)
-	 * @param idFila - ID da fila onde estão as cartas que procura {@link String}
-	 * @param idQuadro - ID do quadro onde estão as cartas {@link String}
-	 * @return {@link String}
-	 */
-	public static String[] getCartasDescricaoPorFila(String idFila, String idQuadro){  
-			
+	
+	/*public static List<Attachment> getAttachmentPorCarta(Trello trelloApi, String Carta, String NomeDoQuadro){
 		
-		List<Card> cartas = getCartasPorFila(idFila, idQuadro);
+		List<Card> cartas = getTituloDeTodasAsCartas(trelloApi,NomeDoQuadro);
 		
-		String[] desc = new String[cartas.size()];
+		List<Attachment> attaches = null;
 		
-		int i = 0;
-
-		for (Card carta : cartas) {
-            System.out.println(carta.getName()+ "  -----------------  " + carta.getDesc() );
-            desc[i]=carta.getDesc();
+		for(Card carta : cartas){
+			if(carta.getName() == Carta){
+				
+				attaches = trelloApi.getAttachmentsByCard(carta.getId());		
+			}
 		}
 		
-		return desc;
-	     
-	     
-	}
+		for(Attachment attach : attaches){
+			
+			System.out.println(attach.getName());
+			
+		}
+		
+		return attaches;
+		
+		
+	}*/
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
 }

@@ -17,17 +17,17 @@ public class TrelloGitTempos {
 	
 	
 	private static Double tempo_gasto = 0.0;
+	private static Double numeroDeAtividades = 0.0;
 	
 	
-	/**
-	 * @param IdDoQuadro - ID do quadro onde peretente encontrar o tempo que cada membro teve por commit ({@link String})
-	 * @return Metodo retorna HashMap<String,Double>, o String o nome do membro double=tempo_gasto_por_commit ({@link HashMap<String,Double>})
-	 */
-	
-	public static HashMap<String,Double> getTempoPorCommitPorMembro(String IdDoQuadro){
+
+	//Vai precisar de dar o ID do Quadro, vai devolver um HashMap coma chave o nome do membro, e Double[] com o Double[0] = numero de atividades ; Double[1] = total de horas por commit 
+	public static HashMap<String,Double[]> getTempoPorCommitPorMembro(String IdDoQuadro){
+
 		
+		//Double numeroDeAtividades = 0.0;
 				
-		HashMap<String,Double> tempoPorCommitPorMembro = new HashMap<String,Double>();
+		HashMap<String,Double[]> tempoPorCommitPorMembro = new HashMap<String,Double[]>();
 		
 		List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
 		
@@ -36,6 +36,9 @@ public class TrelloGitTempos {
 		
 		for(Member membro: membros){
 			tempo_gasto = 0.0;
+			numeroDeAtividades = 0.0;
+			
+			
 		for(org.trello4j.model.List fila: filas){
 			
 							
@@ -47,18 +50,22 @@ public class TrelloGitTempos {
 			
 					for(Card carta: cartas){
 						
+						numeroDeAtividades++;
+						
+						System.out.println(numeroDeAtividades);
+						
+						
 						String desc = carta.getDesc().strip().toUpperCase();
 						
 						if(desc.contains("COMMIT")){
-						
-						
-									
+							
 							List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
 					
 								for(Action acao: acoes_carta){
 						
 						
 									if(membro.getUsername().equalsIgnoreCase(acao.getMemberCreator().getUsername())){
+										
 										
 										String horas = acao.getData().getText();
 							
@@ -85,10 +92,14 @@ public class TrelloGitTempos {
 					}					
 					
 				}
+		
+		
+		Double[] dados = {numeroDeAtividades,tempo_gasto};
 				
-		tempoPorCommitPorMembro.put(membro.getUsername(),tempo_gasto);
+		tempoPorCommitPorMembro.put(membro.getUsername(),dados);
 		
 		System.out.println(membro.getUsername() + " --- " + "Numero de horas gastas:" + tempo_gasto);
+		System.out.println(membro.getUsername() + " --- " + "Numero de atividades:" + numeroDeAtividades);
 			
 			
 		}
