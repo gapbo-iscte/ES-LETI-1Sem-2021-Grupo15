@@ -28,12 +28,7 @@ public class GitHubAPI {
 		
 		String userURL = GithubEndpoints.GET_USER_URL(username); 
 		
-<<<<<<< HEAD
-		
-		Request.Builder requestBuilder = new Request.Builder().url(selfURL).addHeader("Accept", "application/json");
-=======
 		Request.Builder requestBuilder = new Request.Builder().url(userURL).addHeader("Accept", "application/json");
->>>>>>> origin/main
 		
 		Request request = requestBuilder.build();
 		Response response = new OkHttpClient().newCall(request).execute();
@@ -261,5 +256,43 @@ public class GitHubAPI {
 			branches[i] = new GitHubBranch(responseJSON.get(i).toString());
 		
 		return branches;
+	}
+	
+	
+	/**
+	 * Devolve os commits do branch do repositório indicado.
+	 * @param  owner - nome de utilizador do dono do repositório ({@link String})
+	 * @param  repository - nome do repositório ({@link String})
+	 * @param  credentials - credenciais a utilizar ou {@code null} para aceder sem credenciais ({@link GitHubCredentials})
+	 * @return os commits deste branch ({@link GitHubCommit}[])
+	 * @throws IOException 
+	 * @throws AuthenticationException 
+	 */
+	
+	public static GitHubCommit[] getBranchCommits(String owner, String repository, String branch, GitHubCredentials credentials) throws IOException, AuthenticationException {
+		
+		String branchCommitsURL = GithubEndpoints.GET_BRANCH_COMMITS_URL(owner, repository, branch);
+		
+		Request.Builder requestBuilder = new Request.Builder().url(branchCommitsURL).addHeader("Accept", "application/json");
+		Response response;
+		
+		if (credentials == null) {
+			Request request = requestBuilder.build();
+			response = new OkHttpClient().newCall(request).execute();
+		} else {
+			Request request = credentials.authenticateRequest(requestBuilder).build();
+			response = credentials.getHttpClient().newCall(request).execute();
+		}
+		
+		if (response.code() != 200)
+			throw new AuthenticationException("Obtenção dos branches do repositório " + owner + "/" + repository + " falhou: HTTP Status " + response.code() + " " + response.message());
+		
+		// Parse response
+		JSONArray responseJSON = new JSONArray(response.body().string());
+		GitHubCommit commits[] = new GitHubCommit[responseJSON.length()];
+				
+		for (int i = 0; i < commits.length; i++)
+			commits[i] = new GitHubCommit(responseJSON.getJSONObject(i).toString());
+		return commits;
 	}
 }
