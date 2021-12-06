@@ -79,7 +79,7 @@ public class TrelloApiMain {
 		 
 		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
 		 
-		HashMap<String,Double[]> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
+		/*HashMap<String,Double[]> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
 
 		for(Entry<String,Double[]> entry : tempoPorCommitPorMembro.entrySet()){
 			 
@@ -90,7 +90,7 @@ public class TrelloApiMain {
 			System.out.println("----------------------------------");
 			
 			 
-		 }
+		 }*/
 		
 		 
 		/* Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
@@ -126,11 +126,11 @@ public class TrelloApiMain {
 		 
 	//	GUITabelas.tabelaCustoPorSprint(qu, "S3", "20");
 		
-		//GUITabelas.exportTabela(GUITabelas.tabelaTotal(qu,"20"), coloca_um_path_onde_o_ficheiro_vai_ser_guardado);
+		//GUITabelas.exportTabela(GUITabelas.tabelaTotal(qu,"20"), path);
 		
-		//GUITabelas.exportTabela(GUITabelas.tabelaCustoPorSprint(qu, "S3", "20"), coloca_um_path_onde_o_ficheiro_vai_ser_guardado);
+		//GUITabelas.exportTabela(GUITabelas.tabelaCustoPorSprint(qu, "S3", "20"), path);
 		
-		//GUITabelas.exportTabela(GUITabelas.tabelaPorSprint(qu, "S3"), coloca_um_path_onde_o_ficheiro_vai_ser_guardado);
+		//GUITabelas.exportTabela(GUITabelas.tabelaPorSprint(qu, "S3"), path);
 		
 		
 		
