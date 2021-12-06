@@ -70,6 +70,7 @@ public class GUIBuilder extends JFrame {
 	private GitHubCredentials credentials;
 	private JTextField tfTrelloKey;
 	private JTextField tfTrelloTokenBar;
+	private JTextField tfCusto;
 	private static JTextArea textArea;
 	private JTextField tfQuadroID;
 	String m = "";
@@ -81,7 +82,7 @@ public class GUIBuilder extends JFrame {
 	// variaveis para o menu
 	private static JMenuBar mb;
 	private static JMenu menu;
-	private static JMenuItem s1, s2, s3;
+	private static JMenuItem s1, s2, s3, s4;
 
 	private String quadroId;
 	private JTextField tfRepositorio;
@@ -211,10 +212,41 @@ public class GUIBuilder extends JFrame {
 				
 			}
 			});
+		s4= new JMenuItem("Tempo por sprint");
+		s4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+
+				HashMap<String, Double[]> tempoPorSprint = TrelloAcoes.getTempoPorSprint(qu);
+
+				DefaultPieDataset sprint1 = new DefaultPieDataset();
+
+
+				int i = 0;
+				for (Entry<String, Double[]> entry : tempoPorSprint.entrySet()) {
+				
+
+					sprint1.insertValue(i, entry.getKey(), entry.getValue()[0]);
+					i++;
+				}
+				;
+				JFreeChart chart = ChartFactory.createPieChart("Tempo por sprint", sprint1, true, true, true);				
+				PiePlot P = (PiePlot) chart.getPlot();
+				ChartFrame frame = new ChartFrame("Tempo por sprint", chart);
+				frame.setVisible(true);
+				frame.setSize(450, 500);
+				
+			}
+			});
+		
 		menu.add(s1);
 		menu.add(s2);
 
 		menu.add(s3);
+		menu.add(s4);
 
 		contentPane.add(mb);
 		
@@ -277,6 +309,12 @@ public class GUIBuilder extends JFrame {
 		tfTrelloTokenBar.setColumns(10);
 		tfTrelloTokenBar.setBounds(465, 56, 289, 20);
 		contentPane.add(tfTrelloTokenBar);
+		
+		tfCusto = new JTextField();
+		tfCusto.setColumns(10);
+		tfCusto.setBounds(475, 87, 89, 23);
+		contentPane.add(tfCusto);
+
 
 		JButton btnEquipa = new JButton("Equipa");
 
@@ -293,9 +331,12 @@ public class GUIBuilder extends JFrame {
 		JButton btnCustos = new JButton("Custos");
 		btnCustos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				
 			}
 		});
-		btnCustos.setBounds(203, 87, 89, 23);
+		btnCustos.setBounds(386, 87, 89, 23);
 		contentPane.add(btnCustos);
 
 		JButton btnTags = new JButton("Tags");
@@ -328,7 +369,13 @@ public class GUIBuilder extends JFrame {
 		contentPane.add(btnTags);
 
 		JButton btnCommits = new JButton("Commits");
-		btnCommits.setBounds(386, 87, 89, 23);
+		btnCommits.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnCommits.setBounds(203, 87, 89, 23);
+
 		contentPane.add(btnCommits);
 
 		JScrollPane scrollPane = new JScrollPane();

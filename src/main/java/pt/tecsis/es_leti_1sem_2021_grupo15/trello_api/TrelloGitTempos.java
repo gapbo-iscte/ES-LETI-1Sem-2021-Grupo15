@@ -7,6 +7,12 @@ import org.trello4j.model.Action;
 import org.trello4j.model.Card;
 import org.trello4j.model.Member;
 
+
+
+/**
+ * @author Goncalo Benido
+ *
+ */
 public class TrelloGitTempos {
 	
 	
@@ -14,10 +20,10 @@ public class TrelloGitTempos {
 	private static Double numeroDeAtividades = 0.0;
 	
 	
-	
-	
+
 	//Vai precisar de dar o ID do Quadro, vai devolver um HashMap coma chave o nome do membro, e Double[] com o Double[0] = numero de atividades ; Double[1] = total de horas por commit 
 	public static HashMap<String,Double[]> getTempoPorCommitPorMembro(String IdDoQuadro){
+
 		
 		//Double numeroDeAtividades = 0.0;
 				

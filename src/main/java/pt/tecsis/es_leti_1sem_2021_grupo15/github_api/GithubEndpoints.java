@@ -63,4 +63,12 @@ public class GithubEndpoints {
 	public static String GET_BRANCHES_URL(String owner, String repository) {
 		return BASE_URL + "/repos/" + owner + "/" + repository + "/branches";
 	}
+	
+	/** 
+	 * URL do endpoint {@code repos/<owner>/<repository>/commits?sha=<branch>}. <br>
+	 * Este endpoint devolve os branches do branch do repositório indicado.
+	 */
+	public static String GET_BRANCH_COMMITS_URL(String owner, String repository, String branch) {
+		return BASE_URL + "/repos/" + owner + "/" + repository + "/commits?sha=" + branch;
+	}
 }

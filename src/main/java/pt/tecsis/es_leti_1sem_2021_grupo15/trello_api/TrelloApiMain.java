@@ -13,6 +13,10 @@ import org.trello4j.model.Board;
 import org.trello4j.model.Card;
 import org.trello4j.model.Member;
 
+import pt.tecsis.es_leti_1sem_2021_grupo15.GUI.GUICsv;
+import pt.tecsis.es_leti_1sem_2021_grupo15.GUI.GUITabelas;
+import pt.tecsis.es_leti_1sem_2021_grupo15.GUI.GUITabelas.Tabela;
+
 
 public class TrelloApiMain {
 	
@@ -61,9 +65,19 @@ public class TrelloApiMain {
 	    
 	  //  TrelloAcoes.getTempoPorQuadro(qu);
 	    
+
 		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu);
+
 		 
-		 HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
+		 
+		/* for(int i = 0; i!=tempos.length; i++){
+			 
+			 System.out.println(tempos[i]);
+			 
+		 }*/
+		 
+		 
+		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
 		 
 		HashMap<String,Double[]> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
 
@@ -90,6 +104,7 @@ public class TrelloApiMain {
 		
 		//String[] datas = TrelloAcoes.getDataPorSprint(qu,"S1");
 		
+
 		
 		//String[] textos = TrelloFilas.textosPorSprint(qu,"S1");
 		
@@ -101,8 +116,26 @@ public class TrelloApiMain {
 			
 			
 		}*/
+
 		 
+		
+		//GUITabelas.tabelaTotal(qu,"20");
+
+		
+//		GUITabelas.tabelaPorSprint(qu, "S3");
 		 
+	//	GUITabelas.tabelaCustoPorSprint(qu, "S3", "20");
+		
+		//GUITabelas.exportTabela(GUITabelas.tabelaTotal(qu,"20"), coloca_um_path_onde_o_ficheiro_vai_ser_guardado);
+		
+		//GUITabelas.exportTabela(GUITabelas.tabelaCustoPorSprint(qu, "S3", "20"), coloca_um_path_onde_o_ficheiro_vai_ser_guardado);
+		
+		//GUITabelas.exportTabela(GUITabelas.tabelaPorSprint(qu, "S3"), coloca_um_path_onde_o_ficheiro_vai_ser_guardado);
+		
+		
+		
+	//	String bem = GUICsv.pathCorrection("Custo total do Projeto");
+	//	System.out.println(bem);
 	    
 //	   List<Member> membros = TrelloMembros.getMemberDoQuadro("Projeto_ES");
 	    

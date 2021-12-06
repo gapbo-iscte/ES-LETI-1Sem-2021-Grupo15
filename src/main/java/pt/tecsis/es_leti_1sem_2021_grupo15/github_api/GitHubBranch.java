@@ -1,6 +1,9 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.github_api;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
 
 /**
  * Representa um branch de um repositório GitHub.
