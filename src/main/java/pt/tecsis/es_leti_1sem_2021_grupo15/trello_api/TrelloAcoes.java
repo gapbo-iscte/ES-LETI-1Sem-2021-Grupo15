@@ -182,21 +182,24 @@ public class TrelloAcoes {
 	
 	/**
 	 * @param IdDoQuadro - ID do quadro que pretende saber o tempo por Sprint ({@link String})
-	 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
 	 * @return Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Sprint, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint; Double[2]=tempo_restante_por_Sprint ({@link HashMap<String,Double[]>})
 	 */
-	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro, String NomeDoSprint ){
-			
-			//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
+	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro){//, String NomeDoSprint ){
 		
-		String SprintName = '[' + NomeDoSprint + ']' + "Sprint Backlog"; 
+		int numeroDeSprints = getNumeroDeSprints(IdDoQuadro);
 		
 		
-			
 		HashMap<String,Double[]> tempoPorSprint = new HashMap<String,Double[]>();
+		
+		
+		for(int i = 0; i != numeroDeSprints; i++){
+		
+		String SprintName = '[' + i + ']' + "Sprint Backlog"; 
+		
+		String nomeDoSprint = 'S' + String.valueOf(i); 
+		
+		HashMap<String,Double[]> tempoPorSprintPorMembro = getTempoPorSprintPorMembro(IdDoQuadro, nomeDoSprint );
 			
-
-		HashMap<String,Double[]> tempoPorSprintPorMembro = getTempoPorSprintPorMembro(IdDoQuadro, NomeDoSprint );
 			
 		tempo_gasto = 0.0;
 		tempo_previsto = 0.0;
@@ -216,6 +219,8 @@ public class TrelloAcoes {
 		Double[] tempos = {tempo_gasto, tempo_previsto, tempo_restante};	
 			
 		tempoPorSprint.put(SprintName,tempos);	
+		
+		}
 			
 			
 		return tempoPorSprint;	
@@ -348,7 +353,7 @@ public class TrelloAcoes {
 				}
 			}
 			
-			System.out.println("Data de �nicio:" + datas[0] + '\n' + "Data de Fim:" + datas[1]);
+			System.out.println("Data de ínicio:" + datas[0] + '\n' + "Data de Fim:" + datas[1]);
 			
 				
 			return datas;
