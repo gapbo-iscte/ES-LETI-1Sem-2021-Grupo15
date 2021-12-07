@@ -152,12 +152,12 @@ public class TrelloApiMain {
 
 		 
 		
-	//	GUITabelas.tabelaTotal(qu,"20");
+		GUITabelas.tabelaTotal(qu,20);
 
 		
 		//GUITabelas.tabelaPorSprint(qu, "S3");
 		 
-	//	GUITabelas.tabelaCustoPorSprint(qu, "S3", "20");
+		GUITabelas.tabelaCustoPorSprint(qu, "S3", 20);
 		
 		//GUITabelas.exportTabela(GUITabelas.tabelaTotal(qu,"20"), path);
 		
@@ -167,9 +167,9 @@ public class TrelloApiMain {
 		
 		//GUITabelas.tabelaTempoTestes(qu);
 		
-		//GUITabelas.tabelaGerouCommits(qu,"20");
+		GUITabelas.tabelaGerouCommits(qu, 20);
 		
-		GUITabelas.tabelaNaoGerouCommits(qu,"20");
+		GUITabelas.tabelaNaoGerouCommits(qu, 20);
 		
 		
 		
