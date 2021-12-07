@@ -73,7 +73,8 @@ public class GUIBuilder extends JFrame {
 	private JTextField tfCusto;
 	private static JTextArea textArea;
 	private JTextField tfQuadroID;
-	String m = "";
+	private String m = "";
+	private String branch;
 
 
 	private static String trelloKey;
@@ -86,9 +87,10 @@ public class GUIBuilder extends JFrame {
 
 	private String quadroId;
 	private JTextField tfRepositorio;
-	private String nomeRepositorio;
+	private String nomeRepositorio = "ES-LETI-1Sem-2021-Grupo15"; //APAGAR O NOME PARA A ENTREGA 	
 	private GitHubRepository repositorio;
-			
+	private JTextField tfBranch;
+	
 
 
 	/**
@@ -317,7 +319,6 @@ public class GUIBuilder extends JFrame {
 
 
 		JButton btnEquipa = new JButton("Equipa");
-
 		btnEquipa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textArea.setText(m);
@@ -340,12 +341,8 @@ public class GUIBuilder extends JFrame {
 		contentPane.add(btnCustos);
 
 		JButton btnTags = new JButton("Tags");
-
 		btnTags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//APAGAR DEPOIS SO PARA TESTES
-				nomeRepositorio = "ES-LETI-1Sem-2021-Grupo15"; 
-				//
 				GitHubTag[] tags= null;
 				try {
 					tags = GitHubAPI.getRepositoryTags("gapbo-iscte", nomeRepositorio, credentials);
@@ -370,7 +367,24 @@ public class GUIBuilder extends JFrame {
 
 		JButton btnCommits = new JButton("Commits");
 		btnCommits.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e){
+				GitHubCommit[] commits= null;
+				
+				try {
+					commits = GitHubAPI.getBranchCommits("gabpo-iscte", nomeRepositorio, branch, credentials);
+				} catch (AuthenticationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				String commitsString = "";
+				for(int i = 0; i < commits.length; i++){
+					commitsString = commitsString + commits[i].message;
+				}
+				textArea.setText(commitsString);
+				
 				
 			}
 		});
@@ -449,5 +463,23 @@ public class GUIBuilder extends JFrame {
 		});
 		btnRepositorio.setBounds(510, 188, 66, 23);
 		contentPane.add(btnRepositorio);
+		
+		tfBranch = new JTextField();
+		tfBranch.setBounds(358, 164, 148, 20);
+		contentPane.add(tfBranch);
+		tfBranch.setColumns(10);
+		
+		JLabel lblBranch = new JLabel("Branch:");
+		lblBranch.setBounds(294, 167, 37, 14);
+		contentPane.add(lblBranch);
+		
+		JButton btnBranch = new JButton("Enter");
+		btnBranch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				branch = tfBranch.getText();
+			}
+		});
+		btnBranch.setBounds(510, 163, 66, 23);
+		contentPane.add(btnBranch);
 	}
 }
