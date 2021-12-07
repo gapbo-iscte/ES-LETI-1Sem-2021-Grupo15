@@ -8,15 +8,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import pt.tecsis.es_leti_1sem_2021_grupo15.GUI.GUI;
+import pt.tecsis.es_leti_1sem_2021_grupo15.GUI.GUIBuilder;
 
-public class GUITeste extends GUI {
+public class GUITeste extends GUIBuilder {
 	
 	private static GUI gui;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		gui = new GUI();
+		gui = new GUIBuilder();
 	}
 
 	@AfterClass

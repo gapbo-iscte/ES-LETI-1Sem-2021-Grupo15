@@ -65,23 +65,9 @@ public class TrelloApiMain {
 	    
 	  //  TrelloAcoes.getTempoPorQuadro(qu);
 	    
-		/* HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu,"S2");
-		 
-		 for(Entry<String,Double[]> entry: gasto.entrySet()){
-				
-				System.out.println(entry.getKey());
-				
-				for(Double d: entry.getValue())
-					System.out.println(d);
-				
-				System.out.println("---------------------------------------");
-		 };
-		 */
-		
-		
-		 
-		// Double[] tempos = TrelloAcoes.getTempoPorQuadro(qu);
-		 
+
+		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu);
+
 		 
 		 
 		/* for(int i = 0; i!=tempos.length; i++){
@@ -93,15 +79,44 @@ public class TrelloApiMain {
 		 
 		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorMembro(qu);
 		 
-		 //Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
+		/*HashMap<String,Double[]> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
+
+		for(Entry<String,Double[]> entry : tempoPorCommitPorMembro.entrySet()){
+			 
+			System.out.println(entry.getKey()); 
+			for(double d: entry.getValue()){
+				System.out.println(d);
+			}
+			System.out.println("----------------------------------");
+			
+			 
+		 }*/
 		
-		//HashMap<String,Double> tempoPorCommitPorMembro = TrelloGitTempos.getTempoPorCommitPorMembro(qu);
+		 
+		/* Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
+		 
+		 for(int i = 0; i != arraygasto.length-1; i++){
+			 
+			System.out.println(arraygasto[i]); 
+			 
+		 }*/
 		
 		
+		//String[] datas = TrelloAcoes.getDataPorSprint(qu,"S1");
 		
-		//int numeroDeSprints = TrelloAcoes.getNumeroDeSprints(qu);
+
 		
-		//System.out.println(numeroDeSprints);
+		//String[] textos = TrelloFilas.textosPorSprint(qu,"S1");
+		
+		//String[] textos = TrelloFilas.getCartasDescricaoPorSprint(qu,"S3");
+		
+		/*for(int i = 0; i!=textos.length;i++){
+			
+			System.out.println(textos[i]);
+			
+			
+		}*/
+
 		 
 		
 		//GUITabelas.tabelaTotal(qu,"20");
@@ -111,11 +126,11 @@ public class TrelloApiMain {
 		 
 	//	GUITabelas.tabelaCustoPorSprint(qu, "S3", "20");
 		
-		//GUITabelas.exportTabela(GUITabelas.tabelaTotal(qu,"20"), coloca_um_path_onde_o_ficheiro_vai_ser_guardado);
+		//GUITabelas.exportTabela(GUITabelas.tabelaTotal(qu,"20"), path);
 		
-		//GUITabelas.exportTabela(GUITabelas.tabelaCustoPorSprint(qu, "S3", "20"), coloca_um_path_onde_o_ficheiro_vai_ser_guardado);
+		//GUITabelas.exportTabela(GUITabelas.tabelaCustoPorSprint(qu, "S3", "20"), path);
 		
-		//GUITabelas.exportTabela(GUITabelas.tabelaPorSprint(qu, "S3"), coloca_um_path_onde_o_ficheiro_vai_ser_guardado);
+		//GUITabelas.exportTabela(GUITabelas.tabelaPorSprint(qu, "S3"), path);
 		
 		
 		
