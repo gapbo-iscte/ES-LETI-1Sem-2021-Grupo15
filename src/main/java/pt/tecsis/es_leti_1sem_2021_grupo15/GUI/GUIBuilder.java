@@ -53,6 +53,7 @@ import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubTag;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubUser;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
 import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloAcoes;
+import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloApiMain;
 import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloMembros;
 import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloQuadros;
 
@@ -635,7 +636,7 @@ public class GUIBuilder extends JFrame {
 	private void inicializarAPIs() {
 		
 		credentials = new GitHubCredentials(githubAccessToken);
-		TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
+		TrelloApiMain.Inicializar(trelloKey, trelloAccessToken);
 		
 		try {
 			githubuser = GitHubAPI.getSelf(credentials);

@@ -30,7 +30,7 @@ public class TrelloApiMain {
 	 * @param trelloKey - Key do Utilizador ({@link String})
 	 * @param trelloAccessToken - Token do utilizador ({@link String})
 	 */
-	public static void Inicializar(String trelloKey, String trelloAccessToken) throws IOException {
+	public static void Inicializar(String trelloKey, String trelloAccessToken){
 			
 	trelloApi = new TrelloImpl(trelloKey, trelloAccessToken);
 			     
@@ -47,7 +47,7 @@ public class TrelloApiMain {
 		public static void main(String[] args) {
 	     
 		//PRIMEIRO METODO OBRIGATÓRIO A SER CHAMADO *******************************************************************************************************************
-		TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
+		Inicializar(trelloKey, trelloAccessToken);
 		
 		
 		List<Board> quadros = TrelloQuadros.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());

@@ -2,8 +2,6 @@ package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
 import java.util.List;
 
-import org.trello4j.Trello;
-import org.trello4j.TrelloImpl;
 import org.trello4j.model.Board;
 
 
@@ -16,19 +14,7 @@ public class TrelloQuadros {
 	
 	
 	public static List<Board> quadros= null;
-	public static Trello trelloApi = null;
-	
-	
 
-	
-	public static void Inicializar(String trelloKey, String trelloAccessToken) {
-			
-			trelloApi = new TrelloImpl(trelloKey, trelloAccessToken);
-		     
-			
-	}
-	
-	
 	
 
 	/**
@@ -38,7 +24,7 @@ public class TrelloQuadros {
 	 */
 	public static List<Board> BuscarQuadros(String NomeDoMembro) {
 		
-		quadros = trelloApi.getBoardsByMember(NomeDoMembro);
+		quadros = TrelloApiMain.trelloApi.getBoardsByMember(NomeDoMembro);
 		
 		return quadros;
 	}

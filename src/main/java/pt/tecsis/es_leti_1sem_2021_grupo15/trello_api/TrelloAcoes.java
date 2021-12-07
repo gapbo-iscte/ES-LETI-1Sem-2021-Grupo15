@@ -30,7 +30,7 @@ public class TrelloAcoes {
 	 */
 	public List<Action> getAcoesPorQuadro(String IdDoQuadro ){
 		
-		List<Action> actions = TrelloQuadros.trelloApi.getActionsByBoard(IdDoQuadro);
+		List<Action> actions = TrelloApiMain.trelloApi.getActionsByBoard(IdDoQuadro);
 		
 		for (Action action : actions) {
             System.out.println(action.getMemberCreator().getUsername()+"-"+action.getData().getText() + action.getDate());
@@ -83,7 +83,7 @@ public class TrelloAcoes {
 		
 		List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
 		
-		List<Member> membros = TrelloQuadros.trelloApi.getMembersByBoard(IdDoQuadro);
+		List<Member> membros = TrelloApiMain.trelloApi.getMembersByBoard(IdDoQuadro);
 		
 		
 		for(Member membro: membros){
@@ -98,7 +98,7 @@ public class TrelloAcoes {
 	
 				for(Card carta: cartas){
 								
-					List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
+					List<Action> acoes_carta = TrelloApiMain.trelloApi.getActionsByCard(carta.getId());
 					
 						for(Action acao: acoes_carta){
 							
@@ -242,7 +242,7 @@ public class TrelloAcoes {
 				
 				List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
 				
-				List<Member> membros = TrelloQuadros.trelloApi.getMembersByBoard(IdDoQuadro);
+				List<Member> membros = TrelloApiMain.trelloApi.getMembersByBoard(IdDoQuadro);
 				
 				
 				for(org.trello4j.model.List fila: filas){
@@ -262,7 +262,7 @@ public class TrelloAcoes {
 								
 								
 											
-								List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
+								List<Action> acoes_carta = TrelloApiMain.trelloApi.getActionsByCard(carta.getId());
 								
 									for(Action acao: acoes_carta){
 										

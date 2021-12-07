@@ -34,7 +34,7 @@ public class TrelloGitTempos {
 		
 		List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
 		
-		List<Member> membros = TrelloQuadros.trelloApi.getMembersByBoard(IdDoQuadro);
+		List<Member> membros = TrelloApiMain.trelloApi.getMembersByBoard(IdDoQuadro);
 		
 		
 		for(Member membro: membros){
@@ -60,7 +60,7 @@ public class TrelloGitTempos {
 							
 							participouNoCommit = true; 
 							
-							List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
+							List<Action> acoes_carta = TrelloApiMain.trelloApi.getActionsByCard(carta.getId());
 					
 								for(Action acao: acoes_carta){
 									

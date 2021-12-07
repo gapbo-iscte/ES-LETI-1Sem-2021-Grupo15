@@ -23,7 +23,7 @@ public class TrelloFilas {
 
 			//String ProjectID= TrelloID.getQuadroID(NomeDoQuadro);
 
-			List<org.trello4j.model.List> filasQuadro = TrelloQuadros.trelloApi.getListByBoard(IdDoQuadro);
+			List<org.trello4j.model.List> filasQuadro = TrelloApiMain.trelloApi.getListByBoard(IdDoQuadro);
 	
 			for (org.trello4j.model.List  fila: filasQuadro) {	
 				System.out.println(fila.getName() + "-" + fila.getId() );	
