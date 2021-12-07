@@ -94,10 +94,10 @@ public class GUITabelas {
 		/**
 		 * Cria a tabela Total, uma tabela que contem todas as informacoes do projeto
 		 * @param idDoQuadro - ID do quadro que pretende criar a tabela ({@link String})
-		 * @param Custo - Valor do custo por hora ({@link String})
+		 * @param Custo - Valor do custo por hora ({@link Integer})
 		 * @return Vai criar duas tabelas Tabela[0] = Contem_as_informacoes_gerais_por_membro_no_projeto; Tabela[1] = Contem_a_informacao_geral_do_projeto ({@link Tabela[]})
 		 */
-		public static Tabela[] tabelaTotal(String idDoQuadro, String Custo){
+		public static Tabela[] tabelaTotal(String idDoQuadro, Integer custo){
 	
 			Tabela[] tabelas = new Tabela[2];
 			
@@ -110,8 +110,6 @@ public class GUITabelas {
 			tabela.pane.setBounds(10,10,924,550);
 			
 			Object[]  row = new Object[5];
-			
-			int custo = Integer.parseInt(Custo);
 			
 			int numeroDeSprints = TrelloAcoes.getNumeroDeSprints(idDoQuadro);
 			
@@ -221,10 +219,10 @@ public class GUITabelas {
 		 * 
 		 * @param idDoQuadro - ID do quadro que pretende criar a tabela ({@link String})
 		 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
-		 * @param Custo - Valor do custo por hora ({@link String})
+		 * @param Custo - Valor do custo por hora ({@link Integer})
 		 * @return Vai devolver uma tabela com os Custos de um Sprint específico
 		 */
-		public static Tabela tabelaCustoPorSprint(String idDoQuadro, String NomeDoSprint, String Custo) {
+		public static Tabela tabelaCustoPorSprint(String idDoQuadro, String NomeDoSprint, Integer custo) {
 			
 			String[] titulosDasColunas = {"Nome do Membro", "Horas Previstas","Horas Gastas", "Custo"};
 			
@@ -236,12 +234,7 @@ public class GUITabelas {
 			
 			
 			
-			Object[]  row = new Object[4];
-			
-			
-			int custo = Integer.parseInt(Custo);
-			
-			
+			Object[]  row = new Object[4];	
 			
 			HashMap<String,Double[]> temposPorMembro =  TrelloAcoes.getTempoPorSprintPorMembro(idDoQuadro, NomeDoSprint );
 			
@@ -272,7 +265,7 @@ public class GUITabelas {
 		 * Os testes tem de estar indentificados num carta no Trello com o Titulo da carta como (Testes)
 		 * @param idDoQuadro - ID do quadro que pretende criar a tabela ({@link String})
 		 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
-		 * @param Custo - Valor do custo por hora ({@link String})
+		 * @param Custo - Valor do custo por hora ({@link Integer})
 		 * @return Vai devolver uma tabela com o tempo que cada teste foi realizado
 		 */
 		public static Tabela tabelaTempoTestes(String idDoQuadro) {
@@ -316,10 +309,10 @@ public class GUITabelas {
 		
 		/**
 		 * @param idDoQuadro - ID do quadro que pretende criar a tabela ({@link String})
-		 * @param Custo - Valor do custo por hora ({@link String})
+		 * @param Custo - Valor do custo por hora ({@link Integer})
 		 * @return Vai criar duas tabelas Tabela[0] = Contem_as_informacoes_das_horas_que_originaram_commits_por_membro; Tabela[1] = Contem_a_informacao_das_horas_que_originaram_commits_no_projeto ({@link Tabela[]})
 		 */
-		public static Tabela[] tabelaGerouCommits(String idDoQuadro, String Custo){
+		public static Tabela[] tabelaGerouCommits(String idDoQuadro, Integer custo){
 			
 			Double atividades_totais = 0.0;
 			Double horas_totais = 0.0; 
@@ -336,10 +329,7 @@ public class GUITabelas {
 			tabela.pane.setBounds(10,10,924,550);
 			
 			Object[]  row = new Object[4];
-			
-			int custo = Integer.parseInt(Custo);
-			
-						
+
 			
 			HashMap<String,Double[]> horasPorCommit =  TrelloGitTempos.getTempoPorCommitPorMembro(idDoQuadro);
 
@@ -396,10 +386,10 @@ public class GUITabelas {
 
 		/**
 		 * @param idDoQuadro - ID do quadro que pretende criar a tabela ({@link String})
-		 * @param Custo - Valor do custo por hora ({@link String})
+		 * @param Custo - Valor do custo por hora ({@link Integer})
 		 * @return Vai criar duas tabelas Tabela[0] = Contem_as_informacoes_das_horas_que_originaram_commits_por_membro; Tabela[1] = Contem_a_informacao_das_horas_que_originaram_commits_no_projeto ({@link Tabela[]})
 		 */
-		public static Tabela[] tabelaNaoGerouCommits(String idDoQuadro, String Custo){
+		public static Tabela[] tabelaNaoGerouCommits(String idDoQuadro, Integer custo){
 			
 			Double atividades_totais = 0.0;
 			Double horas_totais = 0.0; 
@@ -415,9 +405,6 @@ public class GUITabelas {
 			tabela.pane.setBounds(10,10,924,550);
 			
 			Object[]  row = new Object[4];
-			
-			int custo = Integer.parseInt(Custo);
-			
 						
 			
 			HashMap<String,Double[]> horasPorCommit =  TrelloGitTempos.getTempoPorCommitPorMembro(idDoQuadro);
