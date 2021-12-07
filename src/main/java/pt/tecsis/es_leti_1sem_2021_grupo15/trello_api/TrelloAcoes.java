@@ -312,50 +312,5 @@ public class TrelloAcoes {
 			}
 		
 		
-		
-		
-
-		/**
-		 * @param IdDoQuadro - ID do quadro que pretende saber o o numero de Sprints existentes nesse quadro ({@link String})
-		 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
-		 * @return Devolve um String[] datas, onde datas[0] = data_de_inicio; datas[1] = data_de_fim; ({@link String[]})
-		 */
-		public static String[] getDataPorSprint(String IdDoQuadro, String NomeDoSprint ){
-			
-			String [] datas = new String[2];
-			
-			List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
-			
-			for(org.trello4j.model.List fila: filas){
-				
-				if(fila.getName().strip().toUpperCase().equalsIgnoreCase("Sprints")){
-					
-					
-					List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
-					
-					for(Card carta: cartas){
-						
-						if(carta.getName().contains(NomeDoSprint)){
-						
-						
-						String[] desc = carta.getDesc().split("\\[Start Timestamp\\]");
-						
-						System.out.println(desc[0]);
-						
-						String[] data = desc[1].split("\\[End Timestamp\\]");
-						
-						datas = data;
-						}
-						
-					}
-					
-					
-				}
-			}
-			
-			System.out.println("Data de ínicio:" + datas[0] + '\n' + "Data de Fim:" + datas[1]);
-			
-				
-			return datas;
-		}
+	
 }

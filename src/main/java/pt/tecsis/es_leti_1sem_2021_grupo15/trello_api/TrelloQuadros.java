@@ -20,10 +20,7 @@ public class TrelloQuadros {
 	
 	
 
-	/**Usado para estabelecer a conexão ao TrelloApi
-	 * @param trelloKey - Key do Utilizador ({@link String})
-	 * @param trelloAccessToken - Token do utilizador ({@link String})
-	 */
+	
 	public static void Inicializar(String trelloKey, String trelloAccessToken) {
 			
 			trelloApi = new TrelloImpl(trelloKey, trelloAccessToken);

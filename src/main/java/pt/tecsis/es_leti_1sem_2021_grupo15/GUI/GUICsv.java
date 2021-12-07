@@ -7,6 +7,8 @@ import java.io.IOException;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import pt.tecsis.es_leti_1sem_2021_grupo15.GUI.GUITabelas.Tabela;
+
 /**
  * @author Gonçalo Benido
  *
@@ -71,7 +73,47 @@ public class GUICsv {
 	}
 	
 	
+		/**
+		 *  Caso queira exportar multiplas Tabelas
+		 * @param tabelas - tabelas que pretente exportar ({@link Tabela[]})
+		 *  @param pathToExportTo - path onde pretende guardar o ficheiro ({@link String})
+		 * @return um ficheiro csv com os conteudos das tabelas ({@link .csv})
+		 */
+		public static boolean exportTabela(Tabela[] tabelas, String pathToExportTo) {		
+			
+			boolean deu = false;
 	
+			for(int i=0; i != tabelas.length; i++){
+				
+				String pathCorrigido = pathCorrection(tabelas[i].frame.getAccessibleContext().getAccessibleName());
+				
+				deu = GUICsv.exportToCSV(tabelas[i].table, pathToExportTo + pathCorrigido +".csv");
+				
+			}
+			
+			return deu;
+			
+			
+		}
+	
+		
+		/**
+		 * Caso queira exportar somente uma tabela
+		 * @param tabela - tabela que pretente exportar ({@link Tabela})
+		 * @param pathToExportTo - path onde pretende guardar o ficheiro ({@link String})
+		 * @return um ficheiro csv com os conteudos da tabela ({@link .csv})
+		 */
+		public static boolean exportTabela(Tabela tabela, String pathToExportTo) {	
+			
+			String pathCorrigido = pathCorrection(tabela.frame.getAccessibleContext().getAccessibleName());
+				
+			boolean deu = GUICsv.exportToCSV(tabela.table,pathToExportTo + pathCorrigido +".csv");
+			
+			return deu;
+			
+			
+		}
+		
 	
 	
 
