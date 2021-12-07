@@ -73,6 +73,7 @@ public class GUIBuilder extends JFrame {
 	private JTextField tfQuadroID;
 	private String m = "";
 	private String branch;
+	private int custo;
 
 	public static String githubAccessToken;
 	public static String trelloKey;
@@ -82,6 +83,10 @@ public class GUIBuilder extends JFrame {
 	private static JMenuBar mb;
 	private static JMenu menu;
 	private static JMenuItem s1, s2, s3, s4, s5;
+	
+	private static JMenuBar mbc;
+	private static JMenu menuc;
+	private static JMenuItem c1,c2,c3,c4;
 
 	private String quadroId;
 	private JTextField tfRepositorio;
@@ -126,8 +131,129 @@ public class GUIBuilder extends JFrame {
 		mb = new JMenuBar();
 		mb.setBounds(0, 0, 840, 23);
 		menu = new JMenu("Graficos de tempo");
+		
+		menuc=new JMenu("Graficos de custo");
 
 		mb.add(menu);
+		mb.add(menuc);
+		
+		c1= new JMenuItem("Custo de cada membro");
+		c1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+
+				HashMap<String, Double[]> tempoPorMembro = TrelloAcoes.getTempoPorMembro(qu);
+
+				DefaultPieDataset sprint1 = new DefaultPieDataset();
+				
+
+				int i = 0;
+				for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
+
+
+					sprint1.insertValue(i, entry.getKey(), custo*(entry.getValue()[0]));
+					i++;
+				};
+				JFreeChart chart = ChartFactory.createPieChart("Tempo gasto por membro", sprint1, true, true, true);
+				PiePlot P = (PiePlot) chart.getPlot();
+				ChartFrame frame = new ChartFrame("Tempo gasto por membro", chart);
+				frame.setVisible(true);
+				frame.setSize(450, 500);
+			}
+		});
+		
+		c2= new JMenuItem("Custo de cada membro no sprint1");
+		c2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+
+				HashMap<String, Double[]> tempoPorMembro = TrelloAcoes.getTempoPorSprintPorMembro(qu,"S1");
+
+				DefaultPieDataset sprint1 = new DefaultPieDataset();
+				
+
+				int i = 0;
+				for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
+
+
+					sprint1.insertValue(i, entry.getKey(), custo*(entry.getValue()[0]));
+					i++;
+				};
+				JFreeChart chart = ChartFactory.createPieChart("Tempo gasto por membro", sprint1, true, true, true);
+				PiePlot P = (PiePlot) chart.getPlot();
+				ChartFrame frame = new ChartFrame("Tempo gasto por membro", chart);
+				frame.setVisible(true);
+				frame.setSize(450, 500);
+			}
+		});
+		
+		c3= new JMenuItem("Custo de cada membro no sprint2");
+		c3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+
+				HashMap<String, Double[]> tempoPorMembro = TrelloAcoes.getTempoPorSprintPorMembro(qu,"S2");
+
+				DefaultPieDataset sprint1 = new DefaultPieDataset();
+				
+
+				int i = 0;
+				for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
+
+
+					sprint1.insertValue(i, entry.getKey(), custo*(entry.getValue()[0]));
+					i++;
+				};
+				JFreeChart chart = ChartFactory.createPieChart("Tempo gasto por membro", sprint1, true, true, true);
+				PiePlot P = (PiePlot) chart.getPlot();
+				ChartFrame frame = new ChartFrame("Tempo gasto por membro", chart);
+				frame.setVisible(true);
+				frame.setSize(450, 500);
+			}
+		});
+		
+		c4= new JMenuItem("Custo de cada membro no sprint3");
+		c4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+
+				HashMap<String, Double[]> tempoPorMembro = TrelloAcoes.getTempoPorSprintPorMembro(qu,"S3");
+
+				DefaultPieDataset sprint1 = new DefaultPieDataset();
+				
+
+				int i = 0;
+				for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
+
+
+					sprint1.insertValue(i, entry.getKey(), custo*(entry.getValue()[0]));
+					i++;
+				};
+				JFreeChart chart = ChartFactory.createPieChart("Tempo gasto por membro", sprint1, true, true, true);
+				PiePlot P = (PiePlot) chart.getPlot();
+				ChartFrame frame = new ChartFrame("Tempo gasto por membro", chart);
+				frame.setVisible(true);
+				frame.setSize(450, 500);
+			}
+		});
+		
+		menuc.add(c1);
+		menuc.add(c2);
+		menuc.add(c3);
+		menuc.add(c4);
+		
 		s1 = new JMenuItem("Tempo gasto por membro");
 		s1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -316,6 +442,7 @@ public class GUIBuilder extends JFrame {
 		menu.add(s5);
 
 		contentPane.add(mb);
+		contentPane.add(mbc);
 		
 		JButton btnSprints = new JButton("Tabela");
 		btnSprints.setBounds(109, 30, 89, 23);
@@ -341,7 +468,6 @@ public class GUIBuilder extends JFrame {
 		JButton btnCustos = new JButton("Custos");
 		btnCustos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int custo;
 				
 				if(!tfCusto.getText().isEmpty()) {
 					try
@@ -350,29 +476,6 @@ public class GUIBuilder extends JFrame {
 						
 						textArea.setText("Cada hora deste projeto custou:"+custo);
 
-						List<Board> quadros = TrelloQuadros
-								.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
-
-						String qu = quadros.get(0).getId();
-
-						HashMap<String, Double[]> tempoPorMembro = TrelloAcoes.getTempoPorMembro(qu);
-
-						DefaultPieDataset sprint1 = new DefaultPieDataset();
-						
-
-						int i = 0;
-						for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
-
-
-							sprint1.insertValue(i, entry.getKey(), custo*(entry.getValue()[0]));
-							i++;
-						};
-						JFreeChart chart = ChartFactory.createPieChart("Tempo gasto por membro", sprint1, true, true, true);
-						PiePlot P = (PiePlot) chart.getPlot();
-						ChartFrame frame = new ChartFrame("Tempo gasto por membro", chart);
-						frame.setVisible(true);
-						frame.setSize(450, 500);
-					
 					}
 					catch(Exception ee) {
 						textArea.setText("Digite o custo em digitos por favor");
@@ -380,33 +483,7 @@ public class GUIBuilder extends JFrame {
 					
 				}else {
 					custo=20;
-					List<Board> quadros = TrelloQuadros
-							.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
-
-					String qu = quadros.get(0).getId();
-
-					HashMap<String, Double[]> tempoPorMembro = TrelloAcoes.getTempoPorMembro(qu);
-
-					DefaultPieDataset sprint1 = new DefaultPieDataset();
-					
-
-					int i = 0;
-					for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
-
-
-						sprint1.insertValue(i, entry.getKey(), custo*(entry.getValue()[0]));
-						i++;
-					};
-					JFreeChart chart = ChartFactory.createPieChart("Tempo gasto por membro", sprint1, true, true, true);
-					PiePlot P = (PiePlot) chart.getPlot();
-					ChartFrame frame = new ChartFrame("Tempo gasto por membro", chart);
-					frame.setVisible(true);
-					frame.setSize(450, 500);
-					
-					
 				}
-				
-				
 			}
 		});
 		btnCustos.setBounds(420, 30, 89, 23);
