@@ -43,6 +43,7 @@ import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubAPI;
 
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubBranch;
@@ -73,9 +74,9 @@ public class GUIBuilder extends JFrame {
 	private static JTextArea textArea;
 	private JTextField tfQuadroID;
 
-
-	private static String trelloKey;
-	private static String trelloAccessToken;
+	public static String githubAccessToken;
+	public static String trelloKey;
+	public static String trelloAccessToken;
 
 	// variaveis para o menu
 	private static JMenuBar mb;
@@ -86,29 +87,14 @@ public class GUIBuilder extends JFrame {
 	private JTextField tfRepositorio;
 	private String nomeRepositorio;
 	private GitHubRepository repositorio;
-			
-
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIBuilder frame = new GUIBuilder();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
+	
 	/**
 	 * Create the frame.
 	 */
+	
 	public GUIBuilder() {
+		
 		setTitle("Projeto Engenharia de Software");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 856, 792);
@@ -139,15 +125,13 @@ public class GUIBuilder extends JFrame {
 
 				int i = 0;
 				for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
-				
-
 					sprint1.insertValue(i, entry.getKey(), entry.getValue()[0]);
 					i++;
-				}
-				;
-				JFreeChart chart = ChartFactory.createPieChart("Tempo gast por membro", sprint1, true, true, true);				
-				PiePlot P = (PiePlot) chart.getPlot();
+				};
+				
+				JFreeChart chart = ChartFactory.createPieChart("Tempo gast por membro", sprint1, true, true, true);
 				ChartFrame frame = new ChartFrame("Tempo gasto por membro", chart);
+				
 				frame.setVisible(true);
 				frame.setSize(450, 500);
 			}
@@ -252,30 +236,14 @@ public class GUIBuilder extends JFrame {
 		JButton btnOK = new JButton("Enter");
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				credentials = new GitHubCredentials(tfGitHubTokenBar.getText());
 
-
-				trelloKey = tfTrelloKey.getText();
-				trelloAccessToken = tfTrelloTokenBar.getText();
-				TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
-
-				try {
-					githubuser = GitHubAPI.getSelf(credentials);
-				} catch (AuthenticationException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-				textArea.setText("Bem Vindo " + githubuser.name);
+				
 
 			}
 		});
 		btnOK.setBounds(764, 56, 59, 23);
 		contentPane.add(btnOK);
-
+		
 		JLabel lblGitHubToken = new JLabel("GitHubToken:");
 		lblGitHubToken.setBounds(10, 29, 66, 14);
 		lblGitHubToken.setBackground(Color.WHITE);
@@ -424,8 +392,8 @@ public class GUIBuilder extends JFrame {
 		JButton btnRepositorio = new JButton("Enter");
 		btnRepositorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				nomeRepositorio = tfRepositorio.getText();
-	
 				
 				try {
 					repositorio = GitHubAPI.getRepository("gapbo-iscte", nomeRepositorio, credentials);
@@ -446,5 +414,24 @@ public class GUIBuilder extends JFrame {
 		});
 		btnRepositorio.setBounds(510, 188, 66, 23);
 		contentPane.add(btnRepositorio);
+		
+		inicializarAPIs();
+	}
+	
+	
+	private void inicializarAPIs() {
+		
+		credentials = new GitHubCredentials(githubAccessToken);
+		TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
+		
+		try {
+			githubuser = GitHubAPI.getSelf(credentials);
+		} catch (AuthenticationException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		textArea.setText("Bem Vindo " + githubuser.name);
 	}
 }
