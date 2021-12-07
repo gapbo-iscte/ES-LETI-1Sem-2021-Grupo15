@@ -85,7 +85,7 @@ public class GUIBuilder extends JFrame {
 
 	private String quadroId;
 	private JTextField tfRepositorio;
-	private String nomeRepositorio = "ES-LETI-1Sem-2021-Grupo15"; //APAGAR O NOME PARA A ENTREGA 	
+	private String nomeRepositorio;
 	private GitHubRepository repositorio;
 	private JTextField tfBranch;
 	
@@ -505,13 +505,7 @@ public class GUIBuilder extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				nomeRepositorio = tfRepositorio.getText();
-				
-				//Enviar com Esta
-				//List<Member> membros = TrelloMembros.getMembrosDoQuadro(quadroId);
-				
-				//SO PARA TESTES APAGAR DEPOIS
-				List<Member> membros = TrelloMembros.getMembrosDoQuadro("615c89b6a359063061e30315");
-				//
+				List<Member> membros = TrelloMembros.getMembrosDoQuadro(quadroId);
 				
 				for(Member membro : membros){
 					m = m + membro.getFullName()+"\n";
@@ -520,7 +514,7 @@ public class GUIBuilder extends JFrame {
 				try {
 					repositorio = GitHubAPI.getRepository("gapbo-iscte", nomeRepositorio, credentials);
 					textArea.setText("Data de Inicio do Projeto: " + repositorio.createdAt.toString() + "\n Criado por: " + repositorio.getOwner().name + 
-							"\n Descri��o: " + repositorio.descricao +"\n Membros: \n" + m);
+							"\n Descricao: " + repositorio.descricao +"\n Membros: \n" + m);
 				} catch (AuthenticationException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -540,12 +534,12 @@ public class GUIBuilder extends JFrame {
 		
 
 		tfBranch = new JTextField();
-		tfBranch.setBounds(358, 164, 148, 20);
+		tfBranch.setBounds(665, 30, 89, 24);
 		contentPane.add(tfBranch);
 		tfBranch.setColumns(10);
 		
 		JLabel lblBranch = new JLabel("Branch:");
-		lblBranch.setBounds(294, 167, 37, 14);
+		lblBranch.setBounds(619, 34, 37, 14);
 		contentPane.add(lblBranch);
 		
 		JButton btnBranch = new JButton("Enter");
@@ -554,7 +548,7 @@ public class GUIBuilder extends JFrame {
 				branch = tfBranch.getText();
 			}
 		});
-		btnBranch.setBounds(510, 163, 66, 23);
+		btnBranch.setBounds(759, 29, 66, 24);
 		contentPane.add(btnBranch);
 
 		inicializarAPIs();
