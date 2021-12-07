@@ -61,15 +61,13 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JToolBar;
+import javax.swing.JToggleButton;
 
 public class GUIBuilder extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField tfGitHubTokenBar;
 	private static GitHubUser githubuser;
 	private GitHubCredentials credentials;
-	private JTextField tfTrelloKey;
-	private JTextField tfTrelloTokenBar;
 	private JTextField tfCusto;
 	private static JTextArea textArea;
 	private JTextField tfQuadroID;
@@ -94,10 +92,11 @@ public class GUIBuilder extends JFrame {
 	 */
 	
 	public GUIBuilder() {
+		setResizable(false);
 		
 		setTitle("Projeto Engenharia de Software");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 856, 792);
+		setBounds(100, 100, 851, 662);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -299,43 +298,12 @@ public class GUIBuilder extends JFrame {
 		contentPane.add(mb);
 		
 		JButton btnSprints = new JButton("Tabela");
-		btnSprints.setBounds(109, 87, 89, 23);
+		btnSprints.setBounds(109, 30, 89, 23);
 		contentPane.add(btnSprints);
-		
-		JLabel lblGitHubToken = new JLabel("GitHubToken:");
-		lblGitHubToken.setBounds(10, 29, 66, 14);
-		lblGitHubToken.setBackground(Color.WHITE);
-		contentPane.add(lblGitHubToken);
-
-		JLabel lblTrelloKey = new JLabel("Trello Key:");
-		lblTrelloKey.setBackground(Color.WHITE);
-		lblTrelloKey.setBounds(24, 60, 52, 14);
-		contentPane.add(lblTrelloKey);
-
-		JLabel lblTrelloToken = new JLabel("Trello Token:");
-		lblTrelloToken.setBackground(Color.WHITE);
-		lblTrelloToken.setBounds(393, 60, 64, 14);
-		contentPane.add(lblTrelloToken);
-
-		tfGitHubTokenBar = new JTextField();
-		tfGitHubTokenBar.setBounds(81, 29, 749, 20);
-		contentPane.add(tfGitHubTokenBar);
-		tfGitHubTokenBar.setColumns(10);
-
-
-		tfTrelloKey = new JTextField();
-		tfTrelloKey.setColumns(10);
-		tfTrelloKey.setBounds(81, 56, 302, 20);
-		contentPane.add(tfTrelloKey);
-
-		tfTrelloTokenBar = new JTextField();
-		tfTrelloTokenBar.setColumns(10);
-		tfTrelloTokenBar.setBounds(465, 56, 289, 20);
-		contentPane.add(tfTrelloTokenBar);
 		
 		tfCusto = new JTextField();
 		tfCusto.setColumns(10);
-		tfCusto.setBounds(475, 87, 89, 23);
+		tfCusto.setBounds(520, 31, 89, 23);
 		contentPane.add(tfCusto);
 
 
@@ -346,7 +314,7 @@ public class GUIBuilder extends JFrame {
 				textArea.setText(m);
 			}
 		});
-		btnEquipa.setBounds(10, 87, 89, 23);
+		btnEquipa.setBounds(10, 30, 89, 23);
 		contentPane.add(btnEquipa);
 
 		
@@ -422,7 +390,7 @@ public class GUIBuilder extends JFrame {
 				
 			}
 		});
-		btnCustos.setBounds(386, 87, 89, 23);
+		btnCustos.setBounds(420, 30, 89, 23);
 		contentPane.add(btnCustos);
 
 		JButton btnTags = new JButton("Tags");
@@ -451,7 +419,7 @@ public class GUIBuilder extends JFrame {
 			}
 		});
 
-		btnTags.setBounds(294, 87, 89, 23);
+		btnTags.setBounds(320, 30, 89, 23);
 		contentPane.add(btnTags);
 
 		JButton btnCommits = new JButton("Commits");
@@ -460,12 +428,12 @@ public class GUIBuilder extends JFrame {
 				
 			}
 		});
-		btnCommits.setBounds(203, 87, 89, 23);
+		btnCommits.setBounds(208, 30, 102, 23);
 
 		contentPane.add(btnCommits);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 217, 820, 525);
+		scrollPane.setBounds(10, 96, 820, 525);
 		contentPane.add(scrollPane);
 
 
@@ -473,13 +441,13 @@ public class GUIBuilder extends JFrame {
 		scrollPane.setViewportView(textArea);
 
 		tfQuadroID = new JTextField();
-		tfQuadroID.setBounds(68, 189, 136, 20);
+		tfQuadroID.setBounds(85, 67, 136, 20);
 		contentPane.add(tfQuadroID);
 		tfQuadroID.setColumns(10);
 
 
 		JLabel lblQuadroID = new JLabel("QuadroID:");
-		lblQuadroID.setBounds(10, 192, 51, 14);
+		lblQuadroID.setBounds(12, 69, 80, 14);
 		contentPane.add(lblQuadroID);
 
 		JButton btnQuadroID = new JButton("Enter");
@@ -488,16 +456,16 @@ public class GUIBuilder extends JFrame {
 				quadroId = tfQuadroID.getText();
 			}
 		});
-		btnQuadroID.setBounds(210, 188, 66, 23);
+		btnQuadroID.setBounds(227, 65, 85, 23);
 		contentPane.add(btnQuadroID);
 		
 		JLabel lblRepositorio = new JLabel("Repositorio:");
-		lblRepositorio.setBounds(294, 193, 58, 14);
+		lblRepositorio.setBounds(335, 69, 89, 14);
 		contentPane.add(lblRepositorio);
 		
 		tfRepositorio = new JTextField();
 		tfRepositorio.setColumns(10);
-		tfRepositorio.setBounds(358, 189, 148, 20);
+		tfRepositorio.setBounds(429, 67, 148, 20);
 		contentPane.add(tfRepositorio);
 		
 		JButton btnRepositorio = new JButton("Enter");
@@ -535,7 +503,7 @@ public class GUIBuilder extends JFrame {
 				
 			}
 		});
-		btnRepositorio.setBounds(510, 188, 66, 23);
+		btnRepositorio.setBounds(581, 65, 80, 23);
 		contentPane.add(btnRepositorio);
 		
 		inicializarAPIs();
