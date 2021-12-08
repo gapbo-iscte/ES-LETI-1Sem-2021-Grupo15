@@ -184,7 +184,7 @@ public class TrelloAcoes {
 	 * @param IdDoQuadro - ID do quadro que pretende saber o tempo por Sprint ({@link String})
 	 * @return Vai devolver um HashMap<Strin,Double[]> sendo a String o nome de cada Sprint, Double[0]=tempo_gasto_por_Sprint; Double[1]=tempo_previsto_por_sprint; Double[2]=tempo_restante_por_Sprint ({@link HashMap<String,Double[]>})
 	 */
-	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro){//, String NomeDoSprint ){
+	public static HashMap<String,Double[]> getTempoPorSprint(String IdDoQuadro){
 		
 		int numeroDeSprints = getNumeroDeSprints(IdDoQuadro);
 		

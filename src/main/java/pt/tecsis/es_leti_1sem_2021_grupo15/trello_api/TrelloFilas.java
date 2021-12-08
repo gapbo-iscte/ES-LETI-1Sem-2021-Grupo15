@@ -2,7 +2,6 @@ package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
 import java.util.List;
 
-import org.trello4j.Trello;
 import org.trello4j.model.Card;
 
 
@@ -34,8 +33,12 @@ public class TrelloFilas {
 		}
 	
 	
-	
-	//Retorna o conteudo de cada carta, feito com o nome do Sprint (EX: S1, S2 , S3, etc..) e o ID do Quadro, devolve uma String com o Conteudo das cartas da fila do Sprint Backlog correspondente
+
+		/**
+		 * @param idQuadro - ID do quadro ({@link String})
+		 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
+		 * @return Retorna o conteudo de cada carta, feito com o nome do Sprint (EX: S1, S2 , S3, etc..) e o ID do Quadro, devolve uma String com o Conteudo das cartas da fila do Sprint Backlog correspondente ({@link String[]})
+		 */
 		public static String[] getCartasDescricaoPorSprint(String idQuadro, String NomeDoSprint){  
 			
 			List<org.trello4j.model.List> filas = getFilasQuadro(idQuadro);
@@ -67,11 +70,14 @@ public class TrelloFilas {
 		     
 		     
 		}
+
 		
 		
-		
-		//Método que retorna um String[] onde String[0]= Sprint Planning ; Sprint[1]= Sprint Review; Sprint[2]= Sprint Retrospective
-		
+		/**
+		 * @param idQuadro - ID do quadro ({@link String})
+		 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
+		 * @return Método que retorna um String[] onde String[0]= Sprint Planning ; Sprint[1]= Sprint Review; Sprint[2]= Sprint Retrospective ({@link String[]})
+		 */
 		public static String[] textosPorSprint(String idDoQuadro, String NomeDoSprint) {
 			
 			String planning = null;

@@ -63,8 +63,18 @@ public class TrelloApiMain {
 		}
 	   
 		
+		HashMap<String,Double[]> datas = TrelloAcoes.getTempoPorSprint(qu);
 		
-		
+		for(Entry<String,Double[]> entry : datas.entrySet()){
+			 
+			System.out.println(entry.getKey()); 
+			for(double d: entry.getValue()){
+				System.out.println(d);
+			}
+			System.out.println("----------------------------------");
+			
+			
+		 }
 		
 	    
 		//List<Card> checklists =  TrelloCartas.getTodasAsCartas(qu);
@@ -171,17 +181,17 @@ public class TrelloApiMain {
 		 
 //		GUITabelas.tabelaCustoPorSprint(qu, "S3", 20);
 		
-		//GUITabelas.exportTabela(GUITabelas.tabelaTotal(qu,"20"), path);
+		//GUICsv.exportTabela(GUITabelas.tabelaTotal(qu,20), path);
 		
-		//GUITabelas.exportTabela(GUITabelas.tabelaCustoPorSprint(qu, "S3", "20"), path);
+		//GUICsv.exportTabela(GUITabelas.tabelaCustoPorSprint(qu, "S3", "20"), path);
 		
-		//GUITabelas.exportTabela(GUITabelas.tabelaPorSprint(qu, "S3"), path);
+		//GUICsv.exportTabela(GUITabelas.tabelaPorSprint(qu, "S3"), path);
 		
-		//GUITabelas.tabelaTempoTestes(qu);
+		//GUICsv.exportTabela(GUITabelas.tabelaTempoTestes(qu), "C:\\Users\\Public\\Downloads\\");
 		
-	//	GUITabelas.tabelaGerouCommits(qu, 20);
+		//GUICsv.exportTabela(GUITabelas.tabelaGerouCommits(qu, 20), "C:\\Users\\Public\\Downloads\\");
 		
-		//GUITabelas.tabelaNaoGerouCommits(qu, 20);
+		//GUICsv.exportTabela(GUITabelas.tabelaNaoGerouCommits(qu, 20), "C:\\Users\\Public\\Downloads\\");
 		
 		
 		

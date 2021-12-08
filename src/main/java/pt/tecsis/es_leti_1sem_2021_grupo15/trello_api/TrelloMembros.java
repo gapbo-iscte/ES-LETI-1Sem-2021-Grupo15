@@ -39,6 +39,8 @@ public class TrelloMembros {
 		
 		Member user = TrelloApiMain.trelloApi.getMemberByToken(trelloAccessToken);
 		
+		System.out.println(user.getId());
+		
 	return user;
 	}
 

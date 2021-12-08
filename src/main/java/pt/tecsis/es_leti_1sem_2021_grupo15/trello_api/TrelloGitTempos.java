@@ -19,10 +19,12 @@ public class TrelloGitTempos {
 	private static Double tempo_gasto = 0.0;
 	private static Double numeroDeAtividadesComCommit = 0.0;
 	private static Double numeroTotalDeAtividades = 0.0;
-	
-	
 
-	//Vai precisar de dar o ID do Quadro, vai devolver um HashMap coma chave o nome do membro, e Double[] com o Double[0] = numero de atividades ; Double[1] = total de horas por commit; Double[2] = numero_de_atividades_sem_commit; 
+
+	/**
+	 * @param IdDoQuadro - ID do quadro do trello ({@link String})
+	 * @return vai devolver um HashMap coma chave o nome do membro, e Double[] com o Double[0] = numero de atividades ; Double[1] = total de horas por commit; Double[2] = numero_de_atividades_sem_commit;({@link HashMap<String,Double[]>}) 
+	 */
 	public static HashMap<String,Double[]> getTempoPorCommitPorMembro(String IdDoQuadro){
 
 		

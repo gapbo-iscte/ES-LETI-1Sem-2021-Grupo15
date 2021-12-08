@@ -109,37 +109,7 @@ public class TrelloCartas {
 			
 	}
 	
-	
-	
 
-	
-	/*public static List<Attachment> getAttachmentPorCarta(Trello trelloApi, String Carta, String NomeDoQuadro){
-		
-		List<Card> cartas = getTituloDeTodasAsCartas(trelloApi,NomeDoQuadro);
-		
-		List<Attachment> attaches = null;
-		
-		for(Card carta : cartas){
-			if(carta.getName() == Carta){
-				
-				attaches = trelloApi.getAttachmentsByCard(carta.getId());		
-			}
-		}
-		
-		for(Attachment attach : attaches){
-			
-			System.out.println(attach.getName());
-			
-		}
-		
-		return attaches;
-		
-		
-	}*/
-	
-	
-	
-	
 	
 	
 	

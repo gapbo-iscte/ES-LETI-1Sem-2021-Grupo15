@@ -45,8 +45,7 @@ public class TrelloDatas {
 				
 			}
 		}
-		
-		//System.out.println("Data de ínicio:" + datas[0] + '\n' + "Data de Fim:" + datas[1]);
+
 		
 			
 		return datas;
