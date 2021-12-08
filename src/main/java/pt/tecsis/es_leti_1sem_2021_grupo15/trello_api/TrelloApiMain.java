@@ -85,7 +85,19 @@ public class TrelloApiMain {
 	  //  TrelloAcoes.getTempoPorQuadro(qu);
 	    
 
-		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu);
+	/*	 HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu);
+		 
+		 
+		 for(Entry<String,Double[]> entry : gasto.entrySet()){
+			 
+				System.out.println(entry.getKey()); 
+				for(double d: entry.getValue()){
+					System.out.println(d);
+				}
+				System.out.println("----------------------------------");
+				
+				
+			 }*/
 
 		 
 		 
@@ -152,12 +164,12 @@ public class TrelloApiMain {
 
 		 
 		
-		GUITabelas.tabelaTotal(qu,20);
+		//GUITabelas.tabelaTotal(qu,20);
 
 		
 		//GUITabelas.tabelaPorSprint(qu, "S3");
 		 
-		GUITabelas.tabelaCustoPorSprint(qu, "S3", 20);
+//		GUITabelas.tabelaCustoPorSprint(qu, "S3", 20);
 		
 		//GUITabelas.exportTabela(GUITabelas.tabelaTotal(qu,"20"), path);
 		
@@ -167,9 +179,9 @@ public class TrelloApiMain {
 		
 		//GUITabelas.tabelaTempoTestes(qu);
 		
-		GUITabelas.tabelaGerouCommits(qu, 20);
+	//	GUITabelas.tabelaGerouCommits(qu, 20);
 		
-		GUITabelas.tabelaNaoGerouCommits(qu, 20);
+		//GUITabelas.tabelaNaoGerouCommits(qu, 20);
 		
 		
 		

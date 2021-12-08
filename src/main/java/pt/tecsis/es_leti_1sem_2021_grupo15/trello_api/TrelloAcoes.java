@@ -188,13 +188,15 @@ public class TrelloAcoes {
 		
 		int numeroDeSprints = getNumeroDeSprints(IdDoQuadro);
 		
+		System.out.println(numeroDeSprints);
+		
 		
 		HashMap<String,Double[]> tempoPorSprint = new HashMap<String,Double[]>();
 		
 		
-		for(int i = 0; i != numeroDeSprints; i++){
+		for(int i = 1; i != numeroDeSprints+1; i++){
 		
-		String SprintName = '[' + i + ']' + "Sprint Backlog"; 
+		String SprintName = "[" + i + "]" + "Sprint Backlog"; 
 		
 		String nomeDoSprint = 'S' + String.valueOf(i); 
 		
