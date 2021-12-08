@@ -1,4 +1,4 @@
-package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
+package pt.tecsis.es_leti_1sem_2021_grupo15.Testes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TrelloApiMainTest {
+class TrelloAcoesTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {

@@ -262,6 +262,7 @@ public class GitHubAPI {
 	 * Devolve os commits do branch do repositório indicado.
 	 * @param  owner - nome de utilizador do dono do repositório ({@link String})
 	 * @param  repository - nome do repositório ({@link String})
+	 * @param  branch - nome do branch ({@link String})
 	 * @param  credentials - credenciais a utilizar ou {@code null} para aceder sem credenciais ({@link GitHubCredentials})
 	 * @return os commits deste branch ({@link GitHubCommit}[])
 	 * @throws IOException 

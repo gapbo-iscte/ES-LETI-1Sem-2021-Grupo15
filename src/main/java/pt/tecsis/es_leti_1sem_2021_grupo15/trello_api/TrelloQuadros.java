@@ -1,52 +1,37 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
-
-import java.util.HashMap;
 import java.util.List;
 
-import org.trello4j.Trello;
-import org.trello4j.TrelloImpl;
-import org.trello4j.model.Action;
 import org.trello4j.model.Board;
-import org.trello4j.model.Card;
-import org.trello4j.model.Member;
 
 
 
+/**
+ * @author Goncalo Benido
+ *
+ */
 public class TrelloQuadros {
 	
 	
-	
-	//public static HashMap<String,String> projetos = new HashMap<String,String>();
-	
 	public static List<Board> quadros= null;
-	public static Trello trelloApi = null;
-	
-	
-	//INICIALIZAR O TRELLO
-	public static void Inicializar(String trelloKey, String trelloAccessToken) {
-			
-			trelloApi = new TrelloImpl(trelloKey, trelloAccessToken);
-		     
-			
-	}
-	
 
 	
-	//Método de inicialização da conexão das credencias do utilizador com a API trello4j, vai devolver todos os quadros existentes na conta do utilizador (EX:Projeto_ES)
+
+	/**
+	 * 
+	 * @param NomeDoMembro - nome do utilizador ({@link String})
+	 * @return Devolve todos os quadros existentes na conta do utilizador ({@link List<Board>})
+	 */
 	public static List<Board> BuscarQuadros(String NomeDoMembro) {
 		
-		quadros = trelloApi.getBoardsByMember(NomeDoMembro);
-	     
-		for (Board  quadro: quadros) {
-	    
-			System.out.println(quadro.getName() + "-" + quadro.getId() );
-					
-		}
+		quadros = TrelloApiMain.trelloApi.getBoardsByMember(NomeDoMembro);
 		
 		return quadros;
 	}
-
+	
+	
+	
+	
 	
 	
 	

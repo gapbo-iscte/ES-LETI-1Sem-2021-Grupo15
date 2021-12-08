@@ -4,15 +4,21 @@ import java.util.List;
 
 import org.trello4j.model.Member;
 
+
+/**
+ * @author Goncalo Benido
+ *
+ */
 public class TrelloMembros {
 	
-	
-	//Devolve uma lista do tipo Member onde contém todos os membros existentes em um quadro
-	public static List<Member> getMemberDoQuadro(String IdDoQuadro) {
+
+	/**
+	 * @param IdDoQuadro - ID do quadro que está a usar ({@link String})
+	 * @return Devolve uma lista do tipo Member onde conte'm todos os membros existentes em um quadro ({@link List<Member>})
+	 */
+	public static List<Member> getMembrosDoQuadro(String IdDoQuadro) {
 		
-		//String QuadroID = TrelloID.getQuadroID(NomeDoQuadro);
-		
-		List<Member> membros = TrelloQuadros.trelloApi.getMembersByBoard(IdDoQuadro);
+		List<Member> membros = TrelloApiMain.trelloApi.getMembersByBoard(IdDoQuadro);
 		
 		for(Member membro : membros){
 			
@@ -21,6 +27,21 @@ public class TrelloMembros {
 		
 		return membros;
 		
+	}
+	
+	
+	
+	/**
+	 * @param trelloAccessToken - Token do utilizador ({@link String})
+	 * @return Devolve o utilizador a que o token pertence({@link Member})
+	 */
+	public static Member getMembroDoQuadro(String trelloAccessToken) {
+		
+		Member user = TrelloApiMain.trelloApi.getMemberByToken(trelloAccessToken);
+		
+		System.out.println(user.getId());
+		
+	return user;
 	}
 
 }

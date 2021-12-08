@@ -1,4 +1,4 @@
-package pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth;
+package pt.tecsis.es_leti_1sem_2021_grupo15.Testes.github_api.auth;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.function.ThrowingRunnable;
 
 import okhttp3.Request;
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
 
 public class GitHubCredentialsTest {
 
