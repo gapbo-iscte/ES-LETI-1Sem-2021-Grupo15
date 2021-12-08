@@ -86,7 +86,9 @@ public class GUIBuilder extends JFrame {
 	private static JMenuItem s1, s2, s3, s4, s5;
 	
 	private static JMenu menuc;
+	private static JMenu subMenucsv;
 	private static JMenuItem c1,c2,c3,c4, c5;
+	private static JMenuItem cs1,cs2,cs3,cs4,cs5,cs6;
 
 	private String quadroId;
 	private JTextField tfRepositorio;
@@ -133,9 +135,89 @@ public class GUIBuilder extends JFrame {
 		menu = new JMenu("Graficos de tempo");
 		
 		menuc=new JMenu("Graficos de custo");
+		
+		subMenucsv= new JMenu("Exportar por CSV");
 
 		mb.add(menu);
 		mb.add(menuc);
+		mb.add(subMenucsv);
+		
+		cs1= new JMenuItem("Exportar Tabela total");
+		cs1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+				
+				GUICsv.exportTabela(GUITabelas.tabelaTotal(qu,custo), "C:\\Users\\Public\\Downloads\\");
+				
+			}
+		});
+		
+		cs2= new JMenuItem("Exportar tabela custo por sprint");
+		cs2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+				
+				GUICsv.exportTabela(GUITabelas.tabelaCustoPorSprint(qu, "S3", custo), "C:\\Users\\Public\\Downloads\\");
+				
+			}
+		});
+		
+		cs3= new JMenuItem("Exportar Tabela por sprint");
+		cs3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+				
+				GUICsv.exportTabela(GUITabelas.tabelaPorSprint(qu, "S3"), "C:\\Users\\Public\\Downloads\\");
+				
+			}
+		});
+		
+		cs4= new JMenuItem("Exportar Tabela por testes");
+		cs4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+				
+				GUICsv.exportTabela(GUITabelas.tabelaTempoTestes(qu), "C:\\Users\\Public\\Downloads\\");
+				
+			}
+		});
+		
+		cs5= new JMenuItem("Exportar Tabela gerou commit");
+		cs5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+				
+				GUICsv.exportTabela(GUITabelas.tabelaGerouCommits(qu, custo), "C:\\Users\\Public\\Downloads\\");
+				
+			}
+		});
+		
+		cs6 = new JMenuItem("Exportar tabela nao gerou commmit");
+		cs6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Board> quadros = TrelloQuadros
+						.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
+
+				String qu = quadros.get(0).getId();
+				
+				GUICsv.exportTabela(GUITabelas.tabelaNaoGerouCommits(qu, custo), "C:\\Users\\Public\\Downloads\\");				
+			}
+		});
 		
 		c1= new JMenuItem("Custo de cada membro");
 		c1.addActionListener(new ActionListener() {
@@ -271,11 +353,17 @@ public class GUIBuilder extends JFrame {
 		});
 			
 		
-		
+		subMenucsv.add(cs1);
+		subMenucsv.add(cs2);
+		subMenucsv.add(cs3);
+		subMenucsv.add(cs4);
+		subMenucsv.add(cs5);
+		subMenucsv.add(cs6);
 		menuc.add(c1);
 		menuc.add(c2);
 		menuc.add(c3);
 		menuc.add(c4);
+	
 		
 		
 		s1 = new JMenuItem("Tempo gasto por membro");
@@ -433,14 +521,13 @@ public class GUIBuilder extends JFrame {
 
 				String qu = quadros.get(0).getId();
 
-				HashMap<String, Double[]> tempoPorMembro = TrelloAcoes.getTempoPorSprint(qu);
-
 				DefaultPieDataset sprint1 = new DefaultPieDataset();
 				DefaultPieDataset estimate = new DefaultPieDataset();
-
+				
+				HashMap<String, Double[]> tempoPorSprint = TrelloAcoes.getTempoPorSprint(qu);
 
 				int i = 0;
-				for (Entry<String, Double[]> entry : tempoPorMembro.entrySet()) {
+				for (Entry<String, Double[]> entry : tempoPorSprint.entrySet()) {
 				
 
 					sprint1.insertValue(i, entry.getKey(), entry.getValue()[0]);
