@@ -13,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 
 
 import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloAcoes;
+import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloDatas;
+import pt.tecsis.es_leti_1sem_2021_grupo15.trello_api.TrelloGitTempos;
 
 
 /**
@@ -92,9 +94,10 @@ public class GUITabelas {
 		/**
 		 * Cria a tabela Total, uma tabela que contem todas as informacoes do projeto
 		 * @param idDoQuadro - ID do quadro que pretende criar a tabela ({@link String})
-		 * @param Custo - Valor do custo por hora ({@link String})
+		 * @param Custo - Valor do custo por hora ({@link Integer})
+		 * @return Vai criar duas tabelas Tabela[0] = Contem_as_informacoes_gerais_por_membro_no_projeto; Tabela[1] = Contem_a_informacao_geral_do_projeto ({@link Tabela[]})
 		 */
-		public static Tabela[] tabelaTotal(String idDoQuadro, String Custo){
+		public static Tabela[] tabelaTotal(String idDoQuadro, Integer custo){
 	
 			Tabela[] tabelas = new Tabela[2];
 			
@@ -107,8 +110,6 @@ public class GUITabelas {
 			tabela.pane.setBounds(10,10,924,550);
 			
 			Object[]  row = new Object[5];
-			
-			int custo = Integer.parseInt(Custo);
 			
 			int numeroDeSprints = TrelloAcoes.getNumeroDeSprints(idDoQuadro);
 			
@@ -218,10 +219,10 @@ public class GUITabelas {
 		 * 
 		 * @param idDoQuadro - ID do quadro que pretende criar a tabela ({@link String})
 		 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
-		 * @param Custo - Valor do custo por hora ({@link String})
+		 * @param Custo - Valor do custo por hora ({@link Integer})
 		 * @return Vai devolver uma tabela com os Custos de um Sprint específico
 		 */
-		public static Tabela tabelaCustoPorSprint(String idDoQuadro, String NomeDoSprint, String Custo) {
+		public static Tabela tabelaCustoPorSprint(String idDoQuadro, String NomeDoSprint, Integer custo) {
 			
 			String[] titulosDasColunas = {"Nome do Membro", "Horas Previstas","Horas Gastas", "Custo"};
 			
@@ -233,12 +234,7 @@ public class GUITabelas {
 			
 			
 			
-			Object[]  row = new Object[4];
-			
-			
-			int custo = Integer.parseInt(Custo);
-			
-			
+			Object[]  row = new Object[4];	
 			
 			HashMap<String,Double[]> temposPorMembro =  TrelloAcoes.getTempoPorSprintPorMembro(idDoQuadro, NomeDoSprint );
 			
@@ -264,52 +260,210 @@ public class GUITabelas {
 		}	
 			
 			
-	
+		
 		/**
-		 *  Caso queira exportar multiplas Tabelas
-		 * @param tabelas - tabelas que pretente exportar ({@link Tabela[]})
-		 *  @param pathToExportTo - path onde pretende guardar o ficheiro ({@link String})
-		 * @return um ficheiro csv com os conteudos das tabelas ({@link .csv})
+		 * Os testes tem de estar indentificados num carta no Trello com o Titulo da carta como (Testes)
+		 * @param idDoQuadro - ID do quadro que pretende criar a tabela ({@link String})
+		 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
+		 * @param Custo - Valor do custo por hora ({@link Integer})
+		 * @return Vai devolver uma tabela com o tempo que cada teste foi realizado
 		 */
-		public static boolean exportTabela(Tabela[] tabelas, String pathToExportTo) {		
+		public static Tabela tabelaTempoTestes(String idDoQuadro) {
 			
-			boolean deu = false;
+			String[] titulosDasColunas = {"Data De ínicio", "Data De Fim","Teste realizado"};
+			
+			Tabela tabela =  contrutorDeTabelas(titulosDasColunas, "Testes Datas");
+			
+			
+			tabela.frame.setBounds(100,100,957,410);
+			tabela.pane.setBounds(10,10,924,610);
+			
+				
+			Object[]  row = new Object[4];
 
-			for(int i=0; i != tabelas.length; i++){
-				
-				String pathCorrigido = GUICsv.pathCorrection(tabelas[i].frame.getAccessibleContext().getAccessibleName());
-				
-				deu = GUICsv.exportToCSV(tabelas[i].table, pathToExportTo + pathCorrigido +".csv");
+			
+			HashMap<String,String[]> NomeDatas =  TrelloDatas.getDataTestes(idDoQuadro);
+			
+			System.out.println(NomeDatas.size());
+			
+			
+			for(Entry<String,String[]> entry: NomeDatas.entrySet()){
+				 
+				row[0] = entry.getValue()[0];
+				row[1] = entry.getValue()[1];
+				row[2] = entry.getKey();
+					
+				tabela.model.addRow(row);
 				
 			}
 			
-			return deu;
 			
+			tabela.frame.setVisible(true);
 			
-		}
+			return tabela;
+			
+		}	
+		
+			
 		
 		
-		
-	
 		/**
-		 * Caso queira exportar somente uma tabela
-		 * @param tabela - tabela que pretente exportar ({@link Tabela})
-		 * @param pathToExportTo - path onde pretende guardar o ficheiro ({@link String})
-		 * @return um ficheiro csv com os conteudos da tabela ({@link .csv})
+		 * @param idDoQuadro - ID do quadro que pretende criar a tabela ({@link String})
+		 * @param Custo - Valor do custo por hora ({@link Integer})
+		 * @return Vai criar duas tabelas Tabela[0] = Contem_as_informacoes_das_horas_que_originaram_commits_por_membro; Tabela[1] = Contem_a_informacao_das_horas_que_originaram_commits_no_projeto ({@link Tabela[]})
 		 */
-		public static boolean exportTabela(Tabela tabela, String pathToExportTo) {	
+		public static Tabela[] tabelaGerouCommits(String idDoQuadro, Integer custo){
 			
-			String pathCorrigido = GUICsv.pathCorrection(tabela.frame.getAccessibleContext().getAccessibleName());
+			Double atividades_totais = 0.0;
+			Double horas_totais = 0.0; 
+
+			
+			Tabela[] tabelas = new Tabela[2];
+			
+			String[] titulosDasColunas = {"Nome do Membro", "Número De Atividades","Horas Gastas", "Custo Por Membro"};
+			
+			Tabela tabela =  contrutorDeTabelas(titulosDasColunas, "Origem a artefactos");
+			
+			
+			tabela.frame.setBounds(100,100,957,550);
+			tabela.pane.setBounds(10,10,924,550);
+			
+			Object[]  row = new Object[4];
+
+			
+			HashMap<String,Double[]> horasPorCommit =  TrelloGitTempos.getTempoPorCommitPorMembro(idDoQuadro);
+
+							
 				
-			boolean deu = GUICsv.exportToCSV(tabela.table,pathToExportTo + pathCorrigido +".csv");
+			for(Entry<String,Double[]> entry: horasPorCommit.entrySet()){
+					
+				row[0] = entry.getKey();
+				row[1] = entry.getValue()[0];
+				row[2] = entry.getValue()[1];
+				row[3] = entry.getValue()[1] * custo;
+					
+						
+				tabela.model.addRow(row);
+				
+				
+				atividades_totais = atividades_totais + entry.getValue()[0];
+				horas_totais = horas_totais + entry.getValue()[1]; 
+
+							
+			}
 			
-			return deu;
+			tabela.frame.setVisible(true);
 			
+			
+			String[] titulosDasColunas2 = {"Número De Atividades","Horas totais do Projeto", "Custo Total Do Projeto"};
+			
+			Tabela tabela2 =  contrutorDeTabelas(titulosDasColunas2, "Tempo e Custo total do Projeto");
+			
+			
+			tabela2.frame.setBounds(100,100,557, 100);
+			tabela2.pane.setBounds(10,10,524,100);
+			
+			Object[]  row2 = new Object[3];
+
+			row2[0] = atividades_totais;
+			row2[1] = horas_totais;
+			row2[2] = horas_totais * custo;
+			
+			tabela2.model.addRow(row2);
+			
+			
+			tabela2.frame.setVisible(true);
+			
+			tabelas[0] = tabela;
+			tabelas[1] = tabela2;
+			
+			return tabelas;
 			
 		}
+		
+		
+		
+
+		/**
+		 * @param idDoQuadro - ID do quadro que pretende criar a tabela ({@link String})
+		 * @param Custo - Valor do custo por hora ({@link Integer})
+		 * @return Vai criar duas tabelas Tabela[0] = Contem_as_informacoes_das_horas_que_originaram_commits_por_membro; Tabela[1] = Contem_a_informacao_das_horas_que_originaram_commits_no_projeto ({@link Tabela[]})
+		 */
+		public static Tabela[] tabelaNaoGerouCommits(String idDoQuadro, Integer custo){
+			
+			Double atividades_totais = 0.0;
+			Double horas_totais = 0.0; 
+			
+			Tabela[] tabelas = new Tabela[2];
+			
+			String[] titulosDasColunas = {"Nome do Membro", "Número De Atividades","Horas Gastas", "Custo Por Membro"};
+			
+			Tabela tabela =  contrutorDeTabelas(titulosDasColunas, "Atividades onde não gerou artefactos");
 			
 			
+			tabela.frame.setBounds(100,100,957,550);
+			tabela.pane.setBounds(10,10,924,550);
 			
+			Object[]  row = new Object[4];
+						
+			
+			HashMap<String,Double[]> horasPorCommit =  TrelloGitTempos.getTempoPorCommitPorMembro(idDoQuadro);
+			
+			HashMap<String,Double[]> horasTotaisPorMembro =  TrelloAcoes.getTempoPorMembro(idDoQuadro);
+			
+							
+			for(Entry<String,Double[]> entry: horasPorCommit.entrySet()){	
+				
+				for(Entry<String,Double[]> entry2: horasTotaisPorMembro.entrySet()){
+					
+					if(entry.getKey().equalsIgnoreCase(entry2.getKey())){
+						
+					row[0] = entry.getKey();
+					row[1] = entry.getValue()[2];
+					row[2] = entry2.getValue()[0] - entry.getValue()[1] ;
+					row[3] = (entry2.getValue()[0] - entry.getValue()[1]) * custo;
+						
+							
+					tabela.model.addRow(row);
+					
+					
+					atividades_totais = atividades_totais + entry.getValue()[0];
+					horas_totais = horas_totais +(entry2.getValue()[0] - entry.getValue()[1]);
+					
+					}
+	
+						
+				}
+			}
+			
+			tabela.frame.setVisible(true);
+			
+			
+			String[] titulosDasColunas2 = {"Número De Atividades","Horas totais do Projeto", "Custo Total Do Projeto"};
+			
+			Tabela tabela2 =  contrutorDeTabelas(titulosDasColunas2, "Tempo e Custo total Sem Commit");
+			
+			
+			tabela2.frame.setBounds(100,100,557, 100);
+			tabela2.pane.setBounds(10,10,524,100);
+			
+			Object[]  row2 = new Object[3];
+
+			row2[0] = atividades_totais;
+			row2[1] = horas_totais;
+			row2[2] = horas_totais * custo;
+			
+			tabela2.model.addRow(row2);
+			
+			
+			tabela2.frame.setVisible(true);
+			
+			tabelas[0] = tabela;
+			tabelas[1] = tabela2;
+			
+			return tabelas;
+			
+		}
 			
 			
 			

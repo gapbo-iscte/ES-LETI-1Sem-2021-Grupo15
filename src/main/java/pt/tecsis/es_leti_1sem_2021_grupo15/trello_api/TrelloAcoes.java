@@ -30,7 +30,7 @@ public class TrelloAcoes {
 	 */
 	public List<Action> getAcoesPorQuadro(String IdDoQuadro ){
 		
-		List<Action> actions = TrelloQuadros.trelloApi.getActionsByBoard(IdDoQuadro);
+		List<Action> actions = TrelloApiMain.trelloApi.getActionsByBoard(IdDoQuadro);
 		
 		for (Action action : actions) {
             System.out.println(action.getMemberCreator().getUsername()+"-"+action.getData().getText() + action.getDate());
@@ -83,7 +83,7 @@ public class TrelloAcoes {
 		
 		List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
 		
-		List<Member> membros = TrelloQuadros.trelloApi.getMembersByBoard(IdDoQuadro);
+		List<Member> membros = TrelloApiMain.trelloApi.getMembersByBoard(IdDoQuadro);
 		
 		
 		for(Member membro: membros){
@@ -98,7 +98,7 @@ public class TrelloAcoes {
 	
 				for(Card carta: cartas){
 								
-					List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
+					List<Action> acoes_carta = TrelloApiMain.trelloApi.getActionsByCard(carta.getId());
 					
 						for(Action acao: acoes_carta){
 							
@@ -188,13 +188,15 @@ public class TrelloAcoes {
 		
 		int numeroDeSprints = getNumeroDeSprints(IdDoQuadro);
 		
+		System.out.println(numeroDeSprints);
+		
 		
 		HashMap<String,Double[]> tempoPorSprint = new HashMap<String,Double[]>();
 		
 		
-		for(int i = 0; i != numeroDeSprints; i++){
+		for(int i = 1; i != numeroDeSprints+1; i++){
 		
-		String SprintName = '[' + i + ']' + "Sprint Backlog"; 
+		String SprintName = "[" + i + "]" + "Sprint Backlog"; 
 		
 		String nomeDoSprint = 'S' + String.valueOf(i); 
 		
@@ -242,7 +244,7 @@ public class TrelloAcoes {
 				
 				List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
 				
-				List<Member> membros = TrelloQuadros.trelloApi.getMembersByBoard(IdDoQuadro);
+				List<Member> membros = TrelloApiMain.trelloApi.getMembersByBoard(IdDoQuadro);
 				
 				
 				for(org.trello4j.model.List fila: filas){
@@ -262,7 +264,7 @@ public class TrelloAcoes {
 								
 								
 											
-								List<Action> acoes_carta = TrelloQuadros.trelloApi.getActionsByCard(carta.getId());
+								List<Action> acoes_carta = TrelloApiMain.trelloApi.getActionsByCard(carta.getId());
 								
 									for(Action acao: acoes_carta){
 										
@@ -312,50 +314,5 @@ public class TrelloAcoes {
 			}
 		
 		
-		
-		
-
-		/**
-		 * @param IdDoQuadro - ID do quadro que pretende saber o o numero de Sprints existentes nesse quadro ({@link String})
-		 * @param NomeDoSprint - NOME_DO_SPRINT = "S1", S1 representa Sprint 1 ({@link String})
-		 * @return Devolve um String[] datas, onde datas[0] = data_de_inicio; datas[1] = data_de_fim; ({@link String[]})
-		 */
-		public static String[] getDataPorSprint(String IdDoQuadro, String NomeDoSprint ){
-			
-			String [] datas = new String[2];
-			
-			List<org.trello4j.model.List> filas = TrelloFilas.getFilasQuadro(IdDoQuadro);
-			
-			for(org.trello4j.model.List fila: filas){
-				
-				if(fila.getName().strip().toUpperCase().equalsIgnoreCase("Sprints")){
-					
-					
-					List<Card> cartas = TrelloCartas.getCartasPorFila(fila.getId(), IdDoQuadro);
-					
-					for(Card carta: cartas){
-						
-						if(carta.getName().contains(NomeDoSprint)){
-						
-						
-						String[] desc = carta.getDesc().split("\\[Start Timestamp\\]");
-						
-						System.out.println(desc[0]);
-						
-						String[] data = desc[1].split("\\[End Timestamp\\]");
-						
-						datas = data;
-						}
-						
-					}
-					
-					
-				}
-			}
-			
-			System.out.println("Data de ínicio:" + datas[0] + '\n' + "Data de Fim:" + datas[1]);
-			
-				
-			return datas;
-		}
+	
 }

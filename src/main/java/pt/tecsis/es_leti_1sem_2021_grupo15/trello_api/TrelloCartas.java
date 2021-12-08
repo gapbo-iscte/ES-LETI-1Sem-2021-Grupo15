@@ -23,7 +23,7 @@ public class TrelloCartas {
 	public static List<Card> getTodasAsCartas(String IdDoQuadro){
 		
 		
-		List<Card> cartas = TrelloQuadros.trelloApi.getCardsByBoard(IdDoQuadro);
+		List<Card> cartas = TrelloApiMain.trelloApi.getCardsByBoard(IdDoQuadro);
 		
 		for (Card carta : cartas) {
             System.out.println(carta.getName());
@@ -72,7 +72,7 @@ public class TrelloCartas {
 		
 		//String FilaID= TrelloID.getFilaID(TrelloQuadros.trelloApi, IdDoQuadro,Fila);
 		
-		List<Card> cards = TrelloQuadros.trelloApi.getCardsByList(idFila);
+		List<Card> cards = TrelloApiMain.trelloApi.getCardsByList(idFila);
 		
 		return cards;
 		

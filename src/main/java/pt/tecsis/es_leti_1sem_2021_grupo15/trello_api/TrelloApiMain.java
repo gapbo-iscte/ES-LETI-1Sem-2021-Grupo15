@@ -1,5 +1,6 @@
 package pt.tecsis.es_leti_1sem_2021_grupo15.trello_api;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -20,15 +21,33 @@ import pt.tecsis.es_leti_1sem_2021_grupo15.GUI.GUITabelas.Tabela;
 
 public class TrelloApiMain {
 	
-	
-	private static final String trelloKey="dab38c0e84b88819e31482cf6017c733";
-	private static final String trelloAccessToken="835f871fa169a6727334a677943a48dbc4369af0ebb26356f9b2c3cc291e1ff0";
+	public static Trello trelloApi = null;
 	
 	
-	public static void main(String[] args) {
+	
+		
+	/**Usado para estabelecer a conexão ao TrelloApi
+	 * @param trelloKey - Key do Utilizador ({@link String})
+	 * @param trelloAccessToken - Token do utilizador ({@link String})
+	 */
+	public static void Inicializar(String trelloKey, String trelloAccessToken){
+			
+	trelloApi = new TrelloImpl(trelloKey, trelloAccessToken);
+			     
+	}
+	
+	
+	//////////////////////////////////////////////////////////////////VAI DESAPARECER//////////////////////////////////////////////////////////////////////////////////////////
+		
+			
+			
+		private static final String trelloKey="dab38c0e84b88819e31482cf6017c733";
+		private static final String trelloAccessToken="835f871fa169a6727334a677943a48dbc4369af0ebb26356f9b2c3cc291e1ff0";
+		
+		public static void main(String[] args) {
 	     
 		//PRIMEIRO METODO OBRIGATÓRIO A SER CHAMADO *******************************************************************************************************************
-		TrelloQuadros.Inicializar(trelloKey, trelloAccessToken);
+		Inicializar(trelloKey, trelloAccessToken);
 		
 		
 		List<Board> quadros = TrelloQuadros.BuscarQuadros(TrelloMembros.getMembroDoQuadro(trelloAccessToken).getUsername());
@@ -66,7 +85,19 @@ public class TrelloApiMain {
 	  //  TrelloAcoes.getTempoPorQuadro(qu);
 	    
 
-		// HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu);
+	/*	 HashMap<String,Double[]> gasto = TrelloAcoes.getTempoPorSprint(qu);
+		 
+		 
+		 for(Entry<String,Double[]> entry : gasto.entrySet()){
+			 
+				System.out.println(entry.getKey()); 
+				for(double d: entry.getValue()){
+					System.out.println(d);
+				}
+				System.out.println("----------------------------------");
+				
+				
+			 }*/
 
 		 
 		 
@@ -89,17 +120,21 @@ public class TrelloApiMain {
 			}
 			System.out.println("----------------------------------");
 			
-			 
+			
 		 }*/
 		
 		 
-		/* Double[] arraygasto = TrelloAcoes.getTempoPorQuadro(qu);
+		 /*String[] arraygasto = TrelloDatas.getDataPorSprint(qu,"S2");
 		 
-		 for(int i = 0; i != arraygasto.length-1; i++){
+		 System.out.println(arraygasto.length);
+		 
+		 for(int i = 0; i != arraygasto.length; i++){
 			 
 			System.out.println(arraygasto[i]); 
 			 
 		 }*/
+		
+		
 		
 		
 		//String[] datas = TrelloAcoes.getDataPorSprint(qu,"S1");
@@ -110,21 +145,31 @@ public class TrelloApiMain {
 		
 		//String[] textos = TrelloFilas.getCartasDescricaoPorSprint(qu,"S3");
 		
-		/*for(int i = 0; i!=textos.length;i++){
+		
+		
+		/*HashMap<String, String[]> datas = TrelloDatas.getDataTestes(qu);
+		
+		for(Entry<String,String[]> entry : datas.entrySet()){
+			 
+			System.out.println(entry.getKey()); 
+			for(String d: entry.getValue()){
+				System.out.println(d);
+			}
+			System.out.println("----------------------------------");
 			
-			System.out.println(textos[i]);
+			System.out.println(datas.size());
 			
-			
-		}*/
+			 
+		 }*/
 
 		 
 		
-		//GUITabelas.tabelaTotal(qu,"20");
+		//GUITabelas.tabelaTotal(qu,20);
 
 		
-//		GUITabelas.tabelaPorSprint(qu, "S3");
+		//GUITabelas.tabelaPorSprint(qu, "S3");
 		 
-	//	GUITabelas.tabelaCustoPorSprint(qu, "S3", "20");
+//		GUITabelas.tabelaCustoPorSprint(qu, "S3", 20);
 		
 		//GUITabelas.exportTabela(GUITabelas.tabelaTotal(qu,"20"), path);
 		
@@ -132,10 +177,27 @@ public class TrelloApiMain {
 		
 		//GUITabelas.exportTabela(GUITabelas.tabelaPorSprint(qu, "S3"), path);
 		
+		//GUITabelas.tabelaTempoTestes(qu);
+		
+	//	GUITabelas.tabelaGerouCommits(qu, 20);
+		
+		//GUITabelas.tabelaNaoGerouCommits(qu, 20);
+		
+		
 		
 		
 	//	String bem = GUICsv.pathCorrection("Custo total do Projeto");
 	//	System.out.println(bem);
+		
+		
+		
+		/*String[] textos = TrelloFilas.textosPorSprint(qu, "S3");
+		
+		 for(int i = 0; i != textos.length; i++){
+			 
+				System.out.println(textos[i]); 
+				 
+			 }*/
 	    
 //	   List<Member> membros = TrelloMembros.getMemberDoQuadro("Projeto_ES");
 	    

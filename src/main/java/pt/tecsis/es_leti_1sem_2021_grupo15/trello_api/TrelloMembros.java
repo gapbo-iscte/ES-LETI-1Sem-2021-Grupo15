@@ -18,7 +18,7 @@ public class TrelloMembros {
 	 */
 	public static List<Member> getMembrosDoQuadro(String IdDoQuadro) {
 		
-		List<Member> membros = TrelloQuadros.trelloApi.getMembersByBoard(IdDoQuadro);
+		List<Member> membros = TrelloApiMain.trelloApi.getMembersByBoard(IdDoQuadro);
 		
 		for(Member membro : membros){
 			
@@ -37,7 +37,7 @@ public class TrelloMembros {
 	 */
 	public static Member getMembroDoQuadro(String trelloAccessToken) {
 		
-		Member user = TrelloQuadros.trelloApi.getMemberByToken(trelloAccessToken);
+		Member user = TrelloApiMain.trelloApi.getMemberByToken(trelloAccessToken);
 		
 	return user;
 	}
