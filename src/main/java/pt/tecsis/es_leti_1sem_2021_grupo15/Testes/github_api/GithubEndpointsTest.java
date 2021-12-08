@@ -1,12 +1,14 @@
-package pt.tecsis.es_leti_1sem_2021_grupo15.github_api;
+package pt.tecsis.es_leti_1sem_2021_grupo15.Testes.github_api;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GithubEndpoints;
 
 public class GithubEndpointsTest {
 

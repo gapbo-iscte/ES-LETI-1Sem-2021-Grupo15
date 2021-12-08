@@ -8,7 +8,6 @@ import javax.naming.AuthenticationException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -28,12 +27,7 @@ public class GitHubAPI {
 		
 		String userURL = GithubEndpoints.GET_USER_URL(username); 
 		
-
-
-		
 		Request.Builder requestBuilder = new Request.Builder().url(userURL).addHeader("Accept", "application/json");
-
-
 		
 		Request request = requestBuilder.build();
 		Response response = new OkHttpClient().newCall(request).execute();
@@ -268,6 +262,7 @@ public class GitHubAPI {
 	 * Devolve os commits do branch do repositório indicado.
 	 * @param  owner - nome de utilizador do dono do repositório ({@link String})
 	 * @param  repository - nome do repositório ({@link String})
+	 * @param  branch - nome do branch ({@link String})
 	 * @param  credentials - credenciais a utilizar ou {@code null} para aceder sem credenciais ({@link GitHubCredentials})
 	 * @return os commits deste branch ({@link GitHubCommit}[])
 	 * @throws IOException 

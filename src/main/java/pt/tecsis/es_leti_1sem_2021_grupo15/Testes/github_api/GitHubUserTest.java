@@ -1,4 +1,4 @@
-package pt.tecsis.es_leti_1sem_2021_grupo15.github_api;
+package pt.tecsis.es_leti_1sem_2021_grupo15.Testes.github_api;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.GitHubUser;
 import pt.tecsis.es_leti_1sem_2021_grupo15.github_api.auth.GitHubCredentials;
 
 public class GitHubUserTest {
@@ -75,7 +76,6 @@ public class GitHubUserTest {
 		assertEquals("https://api.github.com/users/torvalds", linusTorvalds.url);
 		assertEquals("https://github.com/torvalds", linusTorvalds.htmlUrl);
 		assertEquals("https://api.github.com/users/torvalds/repos", linusTorvalds.reposUrl);
-		assertEquals("User", linusTorvalds.type);
 		assertEquals("Linus Torvalds", linusTorvalds.name);
 		assertEquals("Portland, OR", linusTorvalds.location);
 		assertEquals(6, linusTorvalds.publicRepos);
